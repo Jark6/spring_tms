@@ -3,7 +3,7 @@ package com.jark.TMS.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="LINLED_TASK_TYPE")
+@Table(name="LINKED_TASK_TYPE")
 public class LinkedTaskType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

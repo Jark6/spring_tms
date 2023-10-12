@@ -1,42 +1,51 @@
 package com.jark.TMS.controllers;
 
+import com.jark.TMS.models.Status;
 import com.jark.TMS.models.Tasks;
+import com.jark.TMS.repo.StatusRepository;
 import com.jark.TMS.repo.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Date;
 
 @Controller
-public class BlogController {
+public class TMSController {
     @Autowired
     private TasksRepository tasksRepository;
-    @GetMapping("/blog")
-    public String blogMain(Model model){
-        Iterable<Post> posts = tasksRepository.findAll();
-        model.addAttribute("posts", posts);
-        return "blog-main";
+    @Autowired
+    private StatusRepository statusRepository;
+    @GetMapping("/tasks")
+    public String tasksMain(Model model){
+        Iterable<Tasks> tasks = tasksRepository.findAll();
+        model.addAttribute("tasks", tasks);
+        return "tasks-main";
     }
 
-    @GetMapping("/blog/add")
-    public String blogAdd(Model model){
-        return "blog-add";
+    @GetMapping("/tasks/add")
+    public String taskAdd(Model model){
+        Iterable<Status> statuses = statusRepository.findAll();
+        model.addAttribute("statuses", statuses);
+        return "tasks-add";
     }
 
-    @PostMapping("/blog/add")
-    public String blogPostAdd(@RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model){
-        Post post = new Post(title, anons, full_text);
-        tasksRepository.save(post);
-        return "redirect:/blog";
+    @PostMapping("/tasks/add")
+    public String taskPostAdd(@RequestParam Long task_type_id, @RequestParam Long status_id, @RequestParam String short_description,
+                              @RequestParam String full_description, @RequestParam Long linked_task_id,
+                              @RequestParam Long linked_task_type_id, @RequestParam Date deadline,
+                              @RequestParam Long project_id, @RequestParam Long executor_id,
+                              @RequestParam Long author_id, @RequestParam Long priority_id, Model model){
+        Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
+                linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id);
+        tasksRepository.save(task);
+        return "redirect:/tasks";
     }
 
-    @GetMapping("/blog/{id}")
+    /*@GetMapping("/blog/{id}")
     public String blogDetails(@PathVariable(value = "id") long id, Model model){
         if(!tasksRepository.existsById(id)){
             return "redirect:/blog";
@@ -75,5 +84,5 @@ public class BlogController {
         Post post = tasksRepository.findById(id).orElseThrow();
         tasksRepository.delete(post);
         return "redirect:/blog";
-    }
+    }*/
 }
