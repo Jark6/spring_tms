@@ -1,8 +1,8 @@
 package com.jark.TMS.repo;
 
-import com.jark.TMS.models.Tasks;
+import com.jark.TMS.models.LinkedTaskType;
 import org.springframework.data.repository.CrudRepository;
 
-public interface LinkedTaskTypeRepository extends CrudRepository<Tasks, Long> {
+public interface LinkedTaskTypeRepository extends CrudRepository<LinkedTaskType, Long> {
 
 }

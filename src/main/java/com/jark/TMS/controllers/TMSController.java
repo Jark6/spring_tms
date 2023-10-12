@@ -1,9 +1,7 @@
 package com.jark.TMS.controllers;
 
-import com.jark.TMS.models.Status;
-import com.jark.TMS.models.Tasks;
-import com.jark.TMS.repo.StatusRepository;
-import com.jark.TMS.repo.TasksRepository;
+import com.jark.TMS.models.*;
+import com.jark.TMS.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +17,18 @@ public class TMSController {
     private TasksRepository tasksRepository;
     @Autowired
     private StatusRepository statusRepository;
+    @Autowired
+    private TaskTypeRepository taskTypeRepository;
+    @Autowired
+    private LinkedTaskTypeRepository linkedTaskTypeRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
+    @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
+    private PriorityRepository priorityRepository;
+
+
     @GetMapping("/tasks")
     public String tasksMain(Model model){
         Iterable<Tasks> tasks = tasksRepository.findAll();
@@ -30,6 +40,18 @@ public class TMSController {
     public String taskAdd(Model model){
         Iterable<Status> statuses = statusRepository.findAll();
         model.addAttribute("statuses", statuses);
+        Iterable<TaskType> taskTypes = taskTypeRepository.findAll();
+        model.addAttribute("taskTypes", taskTypes);
+        Iterable<Tasks> tasks = tasksRepository.findAll();
+        model.addAttribute("linkedTasks", tasks);
+        Iterable<LinkedTaskType> linkedTaskTypes = linkedTaskTypeRepository.findAll();
+        model.addAttribute("linkedTaskTypes", linkedTaskTypes);
+        Iterable<Project> projects = projectRepository.findAll();
+        model.addAttribute("projects", projects);
+        Iterable<Users> users = usersRepository.findAll();
+        model.addAttribute("users", users);
+        Iterable<Priority> priorities = priorityRepository.findAll();
+        model.addAttribute("priorities", priorities);
         return "tasks-add";
     }
 
