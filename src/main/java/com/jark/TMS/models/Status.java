@@ -1,4 +1,4 @@
-package com.jark.blog.models;
+package com.jark.TMS.models;
 
 import jakarta.persistence.*;
 

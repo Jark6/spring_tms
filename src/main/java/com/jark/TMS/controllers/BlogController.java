@@ -1,7 +1,7 @@
-package com.jark.blog.controllers;
+package com.jark.TMS.controllers;
 
-import com.jark.blog.models.Post;
-import com.jark.blog.repo.PostRepository;
+import com.jark.TMS.models.Tasks;
+import com.jark.TMS.repo.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +16,10 @@ import java.util.Optional;
 @Controller
 public class BlogController {
     @Autowired
-    private PostRepository postRepository;
+    private TasksRepository tasksRepository;
     @GetMapping("/blog")
     public String blogMain(Model model){
-        Iterable<Post> posts = postRepository.findAll();
+        Iterable<Post> posts = tasksRepository.findAll();
         model.addAttribute("posts", posts);
         return "blog-main";
     }
@@ -32,16 +32,16 @@ public class BlogController {
     @PostMapping("/blog/add")
     public String blogPostAdd(@RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model){
         Post post = new Post(title, anons, full_text);
-        postRepository.save(post);
+        tasksRepository.save(post);
         return "redirect:/blog";
     }
 
     @GetMapping("/blog/{id}")
     public String blogDetails(@PathVariable(value = "id") long id, Model model){
-        if(!postRepository.existsById(id)){
+        if(!tasksRepository.existsById(id)){
             return "redirect:/blog";
         }
-        Optional <Post> post = postRepository.findById(id);
+        Optional <Post> post = tasksRepository.findById(id);
         ArrayList <Post> res = new ArrayList<>();
         post.ifPresent(res::add);
         model.addAttribute("post", res);
@@ -50,10 +50,10 @@ public class BlogController {
 
     @GetMapping("/blog/{id}/edit")
     public String blogEdit(@PathVariable(value = "id") long id, Model model){
-        if(!postRepository.existsById(id)){
+        if(!tasksRepository.existsById(id)){
             return "redirect:/blog";
         }
-        Optional <Post> post = postRepository.findById(id);
+        Optional <Post> post = tasksRepository.findById(id);
         ArrayList <Post> res = new ArrayList<>();
         post.ifPresent(res::add);
         model.addAttribute("post", res);
@@ -62,18 +62,18 @@ public class BlogController {
 
     @PostMapping("/blog/{id}/edit")
     public String blogPostUpdate(@PathVariable(value = "id") long id, @RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model){
-        Post post = postRepository.findById(id).orElseThrow();
+        Post post = tasksRepository.findById(id).orElseThrow();
         post.setTitle(title);
         post.setAnons(anons);
         post.setFull_text(full_text);
-        postRepository.save(post);
+        tasksRepository.save(post);
         return "redirect:/blog";
     }
 
     @PostMapping("/blog/{id}/remove")
     public String blogPostDelete(@PathVariable(value = "id") long id, Model model){
-        Post post = postRepository.findById(id).orElseThrow();
-        postRepository.delete(post);
+        Post post = tasksRepository.findById(id).orElseThrow();
+        tasksRepository.delete(post);
         return "redirect:/blog";
     }
 }

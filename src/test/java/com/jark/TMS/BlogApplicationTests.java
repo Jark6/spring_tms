@@ -1,4 +1,4 @@
-package com.jark.blog;
+package com.jark.TMS;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

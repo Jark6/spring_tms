@@ -1,20 +1,20 @@
-package com.jark.blog.models;
+package com.jark.TMS.models;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="LINLED_TASK_TYPE")
-public class linkedTaskType {
+public class LinkedTaskType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long linked_task_type_id;
     @Column
     private String linked_task_type;
 
-    public linkedTaskType() {
+    public LinkedTaskType() {
     }
 
-    public linkedTaskType(String linked_task_type) {
+    public LinkedTaskType(String linked_task_type) {
         this.linked_task_type = linked_task_type;
     }
 

@@ -1,4 +1,4 @@
-package com.jark.blog.controllers;
+package com.jark.TMS.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

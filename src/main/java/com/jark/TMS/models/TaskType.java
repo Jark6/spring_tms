@@ -1,20 +1,20 @@
-package com.jark.blog.models;
+package com.jark.TMS.models;
 
 import jakarta.persistence.*;
 
     @Entity
     @Table(name="TASK_TYPE")
-    public class taskType {
+    public class TaskType {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Long task_type_id;
         @Column
         private String task_type;
 
-        public taskType(){
+        public TaskType(){
         }
 
-        public taskType(String task_type) {
+        public TaskType(String task_type) {
             this.task_type = task_type;
         }
 
