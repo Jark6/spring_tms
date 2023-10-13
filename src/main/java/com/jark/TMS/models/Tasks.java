@@ -1,6 +1,7 @@
 package com.jark.TMS.models;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -23,6 +24,7 @@ public class Tasks {
     @Column
     private Long linked_task_type_id;
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
     @Column
     private Long project_id;

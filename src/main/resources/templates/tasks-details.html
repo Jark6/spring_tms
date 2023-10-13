@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+<head>
+    <title>Задачи подробнее</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5">
+    <div th:each="el : ${tasks}" class="alert alert-secondary mt-2">
+        <h1 th:text="'T-'+${el.task_id}"/>
+        <h4 th:text="'Тема: '+${el.short_description}"/>
+        <p th:text="'Описание: '+${el.full_description}"/>
+        <p th:text="'Срок до: '+${#dates.format(el.deadline, 'dd-MMMM-yyyy')}"/>
+        <p th:if="${status != null}" th:text="'Статус: ' + ${status.status}"/>
+        <p th:unless="${status != null}">Статус не найден</p>
+        <a th:href="'/tasks/' + ${el.task_id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
+        <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">
+            <button class="btn btn-danger" type="submit">Удалить</button>
+        </form>
+
+    </div>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>
