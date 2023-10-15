@@ -12,33 +12,49 @@ public class Tasks {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long task_id;
     @Column
-    private Long task_type_id;
+    @ManyToOne
+    @JoinColumn(name="task_type_id")
+    private TaskType task_type_id;
     @Column
-    private Long status_id;
+    @ManyToOne
+    @JoinColumn(name="status_id")
+    private Status status_id;
     @Column
     private String short_description;
     @Column
     private String full_description;
     @Column
-    private Long linked_task_id;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Tasks linked_task_id;
     @Column
-    private Long linked_task_type_id;
+    @ManyToOne
+    @JoinColumn(name = "linked_task_type_id")
+    private LinkedTaskType linked_task_type_id;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
     @Column
-    private Long project_id;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project_id;
     @Column
-    private Long executor_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users executor_id;
     @Column
-    private Long author_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users author_id;
     @Column
-    private Long priority_id;
+    @ManyToOne
+    @JoinColumn(name = "priority_id")
+    private Priority priority_id;
 
     public Tasks() {
     }
 
-    public Tasks(Long task_type_id, Long status_id, String short_description, String full_description, Long linked_task_id, Long linked_task_type_id, Date deadline, Long project_id, Long executor_id, Long author_id, Long priority_id) {
+    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Tasks linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id) {
         this.task_type_id = task_type_id;
         this.status_id = status_id;
         this.short_description = short_description;
@@ -60,19 +76,19 @@ public class Tasks {
         this.task_id = task_id;
     }
 
-    public Long getTask_type_id() {
+    public TaskType getTask_type_id() {
         return task_type_id;
     }
 
-    public void setTask_type_id(Long task_type_id) {
+    public void setTask_type_id(TaskType task_type_id) {
         this.task_type_id = task_type_id;
     }
 
-    public Long getStatus_id() {
+    public Status getStatus_id() {
         return status_id;
     }
 
-    public void setStatus_id(Long status_id) {
+    public void setStatus_id(Status status_id) {
         this.status_id = status_id;
     }
 
@@ -92,19 +108,19 @@ public class Tasks {
         this.full_description = full_description;
     }
 
-    public Long getLinked_task_id() {
+    public Tasks getLinked_task_id() {
         return linked_task_id;
     }
 
-    public void setLinked_task_id(Long linked_task_id) {
+    public void setLinked_task_id(Tasks linked_task_id) {
         this.linked_task_id = linked_task_id;
     }
 
-    public Long getLinked_task_type_id() {
+    public LinkedTaskType getLinked_task_type_id() {
         return linked_task_type_id;
     }
 
-    public void setLinked_task_type_id(Long linked_task_type_id) {
+    public void setLinked_task_type_id(LinkedTaskType linked_task_type_id) {
         this.linked_task_type_id = linked_task_type_id;
     }
 
@@ -116,35 +132,35 @@ public class Tasks {
         this.deadline = deadline;
     }
 
-    public Long getProject_id() {
+    public Project getProject_id() {
         return project_id;
     }
 
-    public void setProject_id(Long project_id) {
+    public void setProject_id(Project project_id) {
         this.project_id = project_id;
     }
 
-    public Long getExecutor_id() {
+    public Users getExecutor_id() {
         return executor_id;
     }
 
-    public void setExecutor_id(Long executor_id) {
+    public void setExecutor_id(Users executor_id) {
         this.executor_id = executor_id;
     }
 
-    public Long getAuthor_id() {
+    public Users getAuthor_id() {
         return author_id;
     }
 
-    public void setAuthor_id(Long author_id) {
+    public void setAuthor_id(Users author_id) {
         this.author_id = author_id;
     }
 
-    public Long getPriority_id() {
+    public Priority getPriority_id() {
         return priority_id;
     }
 
-    public void setPriority_id(Long priority_id) {
+    public void setPriority_id(Priority priority_id) {
         this.priority_id = priority_id;
     }
 }

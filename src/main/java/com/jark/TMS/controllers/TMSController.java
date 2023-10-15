@@ -17,20 +17,23 @@ import java.util.Optional;
 
 @Controller
 public class TMSController {
-    @Autowired
-    private TasksRepository tasksRepository;
-    @Autowired
-    private StatusRepository statusRepository;
-    @Autowired
-    private TaskTypeRepository taskTypeRepository;
-    @Autowired
-    private LinkedTaskTypeRepository linkedTaskTypeRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    private UsersRepository usersRepository;
-    @Autowired
-    private PriorityRepository priorityRepository;
+    private final TasksRepository tasksRepository;
+    private final StatusRepository statusRepository;
+    private final TaskTypeRepository taskTypeRepository;
+    private final LinkedTaskTypeRepository linkedTaskTypeRepository;
+    private final ProjectRepository projectRepository;
+    private final UsersRepository usersRepository;
+    private final PriorityRepository priorityRepository;
+
+    public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository, LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository, UsersRepository usersRepository, PriorityRepository priorityRepository) {
+        this.tasksRepository = tasksRepository;
+        this.statusRepository = statusRepository;
+        this.taskTypeRepository = taskTypeRepository;
+        this.linkedTaskTypeRepository = linkedTaskTypeRepository;
+        this.projectRepository = projectRepository;
+        this.usersRepository = usersRepository;
+        this.priorityRepository = priorityRepository;
+    }
 
 
     @GetMapping("/tasks")
@@ -60,11 +63,11 @@ public class TMSController {
     }
 
     @PostMapping("/tasks/add")
-    public String taskPostAdd(@RequestParam(required=false) Long task_type_id, @RequestParam(required=false) Long status_id, @RequestParam String short_description,
-                              @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
-                              @RequestParam(required=false) Long linked_task_type_id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
-                              @RequestParam(required=false) Long project_id, @RequestParam(required=false) Long executor_id,
-                              @RequestParam(required=false) Long author_id, @RequestParam(required=false) Long priority_id, Model model){
+    public String taskPostAdd(@RequestParam(required=false) TaskType task_type_id, @RequestParam(required=false) Status status_id, @RequestParam String short_description,
+                              @RequestParam String full_description, @RequestParam(required=false) Tasks linked_task_id,
+                              @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
+                              @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
+                              @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model){
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
                 linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id);
         tasksRepository.save(task);
@@ -85,8 +88,8 @@ public class TMSController {
         ArrayList <Tasks> res = new ArrayList<>();
         tasks.ifPresent(res::add);
         model.addAttribute("tasks", res);
-        Optional<Status> status = statusRepository.findById(tasks.get().getStatus_id());
-        model.addAttribute("status", status.orElse(null));
+        //Optional<Status> status = statusRepository.findById(tasks.get().getStatus_id());
+        //model.addAttribute("status", status.orElse(null));
         return "tasks-details";
     }
 /*
