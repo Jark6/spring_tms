@@ -9,52 +9,46 @@ import java.util.Date;
 @Table(name="TASKS")
 public class Tasks {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long task_id;
-    @Column
     @ManyToOne
-    @JoinColumn(name="task_type_id")
+    @JoinColumn(name="task_type_id", nullable = true)
     private TaskType task_type_id;
-    @Column
     @ManyToOne
-    @JoinColumn(name="status_id")
+    @JoinColumn(name="status_id", nullable = true)
     private Status status_id;
     @Column
     private String short_description;
     @Column
     private String full_description;
     @Column
+    @JoinColumn(name = "linked_task_id", nullable = true)
+    private Long linked_task_id;
     @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Tasks linked_task_id;
-    @Column
-    @ManyToOne
-    @JoinColumn(name = "linked_task_type_id")
+    @JoinColumn(name = "linked_task_type_id", nullable = true)
     private LinkedTaskType linked_task_type_id;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
-    @Column
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", nullable = true)
     private Project project_id;
-    @Column
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @MapsId
+    @JoinColumn(name = "executor_id", referencedColumnName = "user_id", nullable = true)
     private Users executor_id;
-    @Column
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @MapsId
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id", nullable = true)
     private Users author_id;
-    @Column
     @ManyToOne
-    @JoinColumn(name = "priority_id")
+    @JoinColumn(name = "priority_id", nullable = true)
     private Priority priority_id;
 
     public Tasks() {
     }
 
-    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Tasks linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id) {
+    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id) {
         this.task_type_id = task_type_id;
         this.status_id = status_id;
         this.short_description = short_description;
@@ -108,11 +102,11 @@ public class Tasks {
         this.full_description = full_description;
     }
 
-    public Tasks getLinked_task_id() {
+    public Long getLinked_task_id() {
         return linked_task_id;
     }
 
-    public void setLinked_task_id(Tasks linked_task_id) {
+    public void setLinked_task_id(Long linked_task_id) {
         this.linked_task_id = linked_task_id;
     }
 

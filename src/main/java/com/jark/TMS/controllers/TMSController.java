@@ -25,7 +25,9 @@ public class TMSController {
     private final UsersRepository usersRepository;
     private final PriorityRepository priorityRepository;
 
-    public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository, LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository, UsersRepository usersRepository, PriorityRepository priorityRepository) {
+    public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
+                         LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
+                         UsersRepository usersRepository, PriorityRepository priorityRepository) {
         this.tasksRepository = tasksRepository;
         this.statusRepository = statusRepository;
         this.taskTypeRepository = taskTypeRepository;
@@ -40,31 +42,44 @@ public class TMSController {
     public String tasksMain(Model model){
         Iterable<Tasks> tasks = tasksRepository.findAll();
         model.addAttribute("tasks", tasks);
+        int count = 0;
+             for (Tasks task : tasks) {
+                 if(task!=null){
+                     System.out.println(task.getTask_id());
+                     System.out.println(task.getShort_description());
+                     System.out.println(task.getFull_description());
+                    count++;
+                 }
+                 else{
+                     System.out.println("task is null");
+                 }
+             }
+        System.out.println(count);
         return "tasks-main";
     }
 
     @GetMapping("/tasks/add")
     public String taskAdd(Model model){
-        Iterable<Status> statuses = statusRepository.findAll();
-        model.addAttribute("statuses", statuses);
-        Iterable<TaskType> taskTypes = taskTypeRepository.findAll();
-        model.addAttribute("taskTypes", taskTypes);
-        Iterable<Tasks> tasks = tasksRepository.findAll();
-        model.addAttribute("linkedTasks", tasks);
-        Iterable<LinkedTaskType> linkedTaskTypes = linkedTaskTypeRepository.findAll();
-        model.addAttribute("linkedTaskTypes", linkedTaskTypes);
-        Iterable<Project> projects = projectRepository.findAll();
-        model.addAttribute("projects", projects);
-        Iterable<Users> users = usersRepository.findAll();
-        model.addAttribute("users", users);
-        Iterable<Priority> priorities = priorityRepository.findAll();
-        model.addAttribute("priorities", priorities);
+        //Iterable<Status> statuses = statusRepository.findAll();
+        model.addAttribute("statuses", statusRepository.findAll());
+        //Iterable<TaskType> taskTypes = taskTypeRepository.findAll();
+        model.addAttribute("taskTypes", taskTypeRepository.findAll());
+        //Iterable<Tasks> tasks = tasksRepository.findAll();
+        model.addAttribute("linkedTasks", tasksRepository.findAll());
+        //Iterable<LinkedTaskType> linkedTaskTypes = linkedTaskTypeRepository.findAll();
+        model.addAttribute("linkedTaskTypes", linkedTaskTypeRepository.findAll());
+        //Iterable<Project> projects = projectRepository.findAll();
+        model.addAttribute("projects", projectRepository.findAll());
+        //Iterable<Users> users = usersRepository.findAll();
+        model.addAttribute("users", usersRepository.findAll());
+        //Iterable<Priority> priorities = priorityRepository.findAll();
+        model.addAttribute("priorities", priorityRepository.findAll());
         return "tasks-add";
     }
 
     @PostMapping("/tasks/add")
     public String taskPostAdd(@RequestParam(required=false) TaskType task_type_id, @RequestParam(required=false) Status status_id, @RequestParam String short_description,
-                              @RequestParam String full_description, @RequestParam(required=false) Tasks linked_task_id,
+                              @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model){

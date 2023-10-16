@@ -13,48 +13,48 @@
         <label for="SelectTaskType1" class="form-label">Тип задачи</label><br>
         <select class="form-control" id="SelectTaskType1" aria-label="Default select example" name="task_type_id">
             <option selected value="null" disabled>Выберите тип задачи</option>
-            <option name="task_type_id" th:each="el:${taskTypes}" th:value="${el.task_type_id}" th:text="${el.task_type}"></option>
+            <option name="task_type_id" th:each="el:${taskTypes}" th:value="${el?.task_type_id}" th:text="${el?.task_type}"></option>
         </select><br>
         <label for="SelectStatus1" class="form-label">Статус задачи</label><br>
-        <select class="form-control" id="SelectStatus1" aria-label="Default select example" name="status_id" <!--th:field="*{statuses}"-->>
+        <select class="form-control" id="SelectStatus1" aria-label="Default select example" name="status_id" >
             <option selected value="null" disabled>Выберите статус задачи</option>
-            <option th:each="el:${statuses}" th:value="${el.status_id}" th:text="${el.status}"></option>
+            <option th:each="el:${statuses}" th:value="${el?.status_id}" th:text="${el?.status}"></option>
         </select><br>
         <label for="Name1" class="form-label">Название задачи</label><br>
         <input id="Name1" type="text" name="short_description" placeholder="введите краткое описание задачи" class="form-control"><br>
         <label for="Description1" class="form-label">Описание задачи</label><br>
         <textarea id="Description1" name="full_description" placeholder="введите полный текст задачи" class="form-control"></textarea><br>
         <label for="SelectTask1" class="form-label">Связь с задачей</label><br>
-        <select class="form-control" id="SelectTask1" aria-label="Default select example" name="linked_task_id" <!--th:field="*{linkedTasks}"-->>
+        <select class="form-control" id="SelectTask1" aria-label="Default select example" name="linked_task_id" >
             <option selected value="null">Выберите задачу</option>
-            <option th:each="el:${linkedTasks}" th:value="${el.linked_task_id}" th:text="${el.short_description}"></option>
+            <option th:each="el:${linkedTasks}" th:value="${el?.linked_task_id}" th:text="${el?.short_description}"></option>
         </select><br>
         <label for="SelectLinkedTaskType1" class="form-label">Тип связи</label><br>
-        <select class="form-control" id="SelectLinkedTaskType1" aria-label="Default select example" name="linked_task_type_id" <!--th:field="*{linkedTaskTypes}"-->>
+        <select class="form-control" id="SelectLinkedTaskType1" aria-label="Default select example" name="linked_task_type_id" >
             <option selected value="null">Выберите тип связи</option>
-            <option th:each="el:${linkedTaskTypes}" th:value="${el.linked_task_type_id}" th:text="${el.linked_task_type}"></option>
+            <option th:each="el:${linkedTaskTypes}" th:value="${el?.linked_task_type_id}" th:text="${el?.linked_task_type}"></option>
         </select><br>
         <label for="Date1" class="form-label">Предполагаемый срок выполнения задачи</label><br>
         <input id="Date1" type="date" name="deadline" placeholder="выберите дату" class="form-control" pattern="yyyy-MM-dd"><br>
         <label for="SelectProject1" class="form-label">Проект</label><br>
-        <select class="form-control" id="SelectProject1" aria-label="Default select example" name="project_id" <!--th:field="*{projects}"-->>
+        <select class="form-control" id="SelectProject1" aria-label="Default select example" name="project_id">
             <option selected value="null" disabled>Выберите проект</option>
-            <option th:each="el:${projects}" th:value="${el.project_id}" th:text="${el.project_name}"></option>
+            <option th:each="el:${projects}" th:value="${el?.project_id}" th:text="${el?.project_name}"></option>
         </select><br>
         <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
-        <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" <!--th:field="*{users}"-->>
+        <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
             <option selected value="null" disabled>Выберите исполнителя</option>
-            <option th:each="el:${users}" th:value="${el.user_id}" th:text="${el.first_name}+' '+${el.second_name}+'('+${el.login}+')'"></option>
+            <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
         </select><br>
         <label for="SelectAuthor1" class="form-label">Автор</label><br>
-        <select class="form-control" id="SelectAuthor1" aria-label="Default select example" name="author_id" <!--th:field="*{users}"-->>
+        <select class="form-control" id="SelectAuthor1" aria-label="Default select example" name="author_id" >
             <option selected value="null" disabled>Выберите Автора</option>
-            <option th:each="el:${users}" th:value="${el.user_id}" th:text="${el.first_name}+' '+${el.second_name}+'('+${el.login}+')'"></option>
+            <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
         </select><br>
         <label for="SelectPriority1" class="form-label">Приоритет</label><br>
-        <select class="form-control" id="SelectPriority1" aria-label="Default select example" name="priority_id" <!--th:field="*{priorities}-->">
+        <select class="form-control" id="SelectPriority1" aria-label="Default select example" name="priority_id" >
             <option selected value="null" disabled>Выберите приоритет задачи</option>
-            <option th:each="el:${priorities}" th:value="${el.priority_id}" th:text="${el.priority}"></option>
+            <option th:each="el:${priorities}" th:value="${el?.priority_id}" th:text="${el?.priority}"></option>
         </select><br>
         <button type="submit" class="btn btn-success">Добавить задачу</button>
     </form>

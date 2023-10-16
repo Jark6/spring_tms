@@ -13,8 +13,22 @@
         <h4 th:text="'Тема: '+${el.short_description}"/>
         <p th:text="'Описание: '+${el.full_description}"/>
         <p th:text="'Срок до: '+${#dates.format(el.deadline, 'dd-MMMM-yyyy')}"/>
-        <p th:if="${status != null}" th:text="'Статус: ' + ${status.status}"/>
-        <p th:unless="${status != null}">Статус не найден</p>
+        <p th:if="${el.status_id != null}" th:text="'Статус: ' + ${el.status_id.status}"/>
+        <p th:unless="${el.status_id != null}">Статус не найден</p>
+        <p th:if="${el.project_id != null}" th:text="'Проект: ' + ${el.project_id.project_name}"/>
+        <p th:unless="${el.project_id != null}">Проект не найден</p>
+        <p th:if="${el.task_type_id != null}" th:text="'Тип задачи: ' + ${el.task_type_id.task_type}"/>
+        <p th:unless="${el.task_type_id!= null}">Нет типа задачи</p>
+        <p th:if="${el.linked_task_id != null}" th:text="'Связанная задача: ' + ${el.linked_task_id.short_description}"/>
+        <p th:unless="${el.linked_task_id != null}">Нет связанных задач</p>
+        <p th:if="${el.linked_task_type_id != null}" th:text="'Тип связи с задачей: ' + ${el.linked_task_type_id.linked_task_type}"/>
+        <p th:unless="${el.linked_task_type_id != null}"></p>
+        <p th:if="${el.author_id != null}" th:text="'Автор: ' + ${el.author_id.first_name}+' '+ ${el.author_id.second_name}+' '+ ${el.author_id.family_name}+' ('+ ${el.author_id.login}+')'"/>
+        <p th:unless="${el.author_id != null}">Нет автора</p>
+        <p th:if="${el.executor_id != null}" th:text="'Исполнитель: ' + ${el.executor_id.first_name}+' '+ ${el.executor_id.second_name}+' '+ ${el.executor_id.family_name}+' ('+ ${el.executor_id.login}+')'"/>
+        <p th:unless="${el.executor_id != null}">Нет исполнителя</p>
+        <p th:if="${el.priority_id != null}" th:text="'Приоритет: ' + ${el.priority_id.priority}"/>
+        <p th:unless="${el.priority_id != null}">Приоритет не установлен</p>
         <a th:href="'/tasks/' + ${el.task_id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
         <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">
             <button class="btn btn-danger" type="submit">Удалить</button>
