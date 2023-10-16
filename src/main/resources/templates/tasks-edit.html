@@ -1,69 +1,66 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="EN">
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
 <head>
-    <title>Добавление задачи</title>
+    <title>Редактирование задачи</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5 mb-5">
-    <h1>Создание задачи</h1>
-    <form action="/tasks/add" method="post">
+    <h1>Редактирование задачи</h1>
+    <div th:each="el:${task}">
+        <form method="post">
         <label for="SelectTaskType1" class="form-label">Тип задачи</label><br>
         <select class="form-control" id="SelectTaskType1" aria-label="Default select example" name="task_type_id">
-            <option selected value="" disabled>Выберите тип задачи</option>
+            <option selected th:value="${el.task_type_id}" disabled>Выберите тип задачи</option>
             <option name="task_type_id" th:each="el:${taskTypes}" th:value="${el?.task_type_id}" th:text="${el?.task_type}"></option>
         </select><br>
         <label for="SelectStatus1" class="form-label">Статус задачи</label><br>
         <select class="form-control" id="SelectStatus1" aria-label="Default select example" name="status_id" >
-            <option selected value="" disabled>Выберите статус задачи</option>
+            <option selected th:value="${el.status_id}" disabled>Выберите статус задачи</option>
             <option th:each="el:${statuses}" th:value="${el?.status_id}" th:text="${el?.status}"></option>
         </select><br>
         <label for="Name1" class="form-label">Название задачи</label><br>
-        <input id="Name1" type="text" name="short_description" placeholder="введите краткое описание задачи" class="form-control" required><br>
+        <input id="Name1" type="text" name="short_description" placeholder="введите краткое описание задачи" class="form-control" th:value="${el.short_description}" required><br>
         <label for="Description1" class="form-label">Описание задачи</label><br>
-        <textarea id="Description1" name="full_description" placeholder="введите полный текст задачи" class="form-control" required></textarea><br>
+        <textarea id="Description1" name="full_description" placeholder="введите полный текст задачи" class="form-control" th:text="${el.full_description}" required></textarea><br>
         <label for="SelectTask1" class="form-label">Связь с задачей</label><br>
         <select class="form-control" id="SelectTask1" aria-label="Default select example" name="linked_task_id" >
-            <option selected value="">Выберите задачу</option>
+            <option selected th:value="${el.linked_task_id}">Выберите задачу</option>
             <option th:each="el:${linkedTasks}" th:value="${el?.linked_task_id}" th:text="${el?.short_description}"></option>
         </select><br>
         <label for="SelectLinkedTaskType1" class="form-label">Тип связи</label><br>
         <select class="form-control" id="SelectLinkedTaskType1" aria-label="Default select example" name="linked_task_type_id" >
-            <option selected value="">Выберите тип связи</option>
+            <option selected th:value="${el.linked_task_type_id}">Выберите тип связи</option>
             <option th:each="el:${linkedTaskTypes}" th:value="${el?.linked_task_type_id}" th:text="${el?.linked_task_type}"></option>
         </select><br>
         <label for="Date1" class="form-label">Предполагаемый срок выполнения задачи</label><br>
-        <input id="Date1" type="date" name="deadline"  placeholder="выберите дату" class="form-control" pattern="yyyy-MM-dd" required><br>
+        <input id="Date1" type="date" name="deadline"  placeholder="выберите дату" class="form-control" pattern="yyyy-MM-dd" th:value="${#dates.format(el.deadline, 'yyyy-MM-dd')}" required><br>
         <label for="SelectProject1" class="form-label">Проект</label><br>
         <select class="form-control" id="SelectProject1" aria-label="Default select example" name="project_id">
-            <option selected value="" disabled>Выберите проект</option>
+            <option selected th:value="${el.project_id}" disabled>Выберите проект</option>
             <option th:each="el:${projects}" th:value="${el?.project_id}" th:text="${el?.project_name}"></option>
         </select><br>
         <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
         <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
-            <option selected value="" disabled>Выберите исполнителя</option>
+            <option selected th:value="${el.executor_id}" disabled>Выберите исполнителя</option>
             <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
         </select><br>
         <label for="SelectAuthor1" class="form-label">Автор</label><br>
         <select class="form-control" id="SelectAuthor1" aria-label="Default select example" name="author_id" >
-            <option selected value="" disabled>Выберите Автора</option>
+            <option selected th:value="${el.author_id}" disabled>Выберите Автора</option>
             <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
         </select><br>
         <label for="SelectPriority1" class="form-label">Приоритет</label><br>
         <select class="form-control" id="SelectPriority1" aria-label="Default select example" name="priority_id" >
-            <option selected value="" disabled>Выберите приоритет задачи</option>
+            <option selected th:value="${el.priority_id}" disabled>Выберите приоритет задачи</option>
             <option th:each="el:${priorities}" th:value="${el?.priority_id}" th:text="${el?.priority}"></option>
         </select><br>
-        <button type="submit" class="btn btn-success">Добавить задачу</button>
-    </form>
-    <!--<div th:each="el : ${posts}" class="alert alert-info mt-2">
-        <h3 th:text="${el.title}"/>
-        <p th:text="${el.anons}"/>
-        <a th:href="'/blog/' + ${el.id}">Детальнее</a>
-    </div>-->
-</div>
+                <button type="submit" class="btn btn-success">Обновить задачу</button>
+        </form>
+    </div>
+    </div>
 <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>

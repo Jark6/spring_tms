@@ -9,37 +9,35 @@ import java.util.Date;
 @Table(name="TASKS")
 public class Tasks {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long task_id;
     @ManyToOne
-    @JoinColumn(name="task_type_id", nullable = true)
+    @JoinColumn(name="task_type_id")
     private TaskType task_type_id;
     @ManyToOne
-    @JoinColumn(name="status_id", nullable = true)
+    @JoinColumn(name="status_id")
     private Status status_id;
     @Column
     private String short_description;
     @Column
     private String full_description;
     @Column
-    @JoinColumn(name = "linked_task_id", nullable = true)
+    @JoinColumn(name = "linked_task_id", referencedColumnName = "task_id")
     private Long linked_task_id;
     @ManyToOne
-    @JoinColumn(name = "linked_task_type_id", nullable = true)
+    @JoinColumn(name = "linked_task_type_id")
     private LinkedTaskType linked_task_type_id;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
     @ManyToOne
-    @JoinColumn(name = "project_id", nullable = true)
+    @JoinColumn(name = "project_id")
     private Project project_id;
     @ManyToOne
-    @MapsId
-    @JoinColumn(name = "executor_id", referencedColumnName = "user_id", nullable = true)
+    @JoinColumn(name = "executor_id", referencedColumnName = "user_id")
     private Users executor_id;
     @ManyToOne
-    @MapsId
-    @JoinColumn(name = "author_id", referencedColumnName = "user_id", nullable = true)
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
     private Users author_id;
     @ManyToOne
     @JoinColumn(name = "priority_id", nullable = true)

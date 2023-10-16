@@ -2,6 +2,7 @@ package com.jark.TMS.controllers;
 
 import com.jark.TMS.models.*;
 import com.jark.TMS.repo.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -80,7 +81,7 @@ public class TMSController {
     @PostMapping("/tasks/add")
     public String taskPostAdd(@RequestParam(required=false) TaskType task_type_id, @RequestParam(required=false) Status status_id, @RequestParam String short_description,
                               @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
-                              @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
+                              @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model){
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
@@ -107,33 +108,48 @@ public class TMSController {
         //model.addAttribute("status", status.orElse(null));
         return "tasks-details";
     }
-/*
-    @GetMapping("/tasks/{id}/edit")
-    public String blogEdit(@PathVariable(value = "id") long id, Model model){
+
+    @GetMapping("/tasks/{task_id}/edit")
+    public String taskEdit(@PathVariable(value = "task_id") long id, Model model){
         if(!tasksRepository.existsById(id)){
-            return "redirect:/blog";
+            return "redirect:/tasks";
         }
         Optional <Tasks> tasks = tasksRepository.findById(id);
         ArrayList<Tasks> res = new ArrayList<>();
         tasks.ifPresent(res::add);
-        model.addAttribute("post", res);
-        return "blog-edit";
+        model.addAttribute("task", res);
+        return "tasks-edit";
     }
 
-    @PostMapping("/blog/{id}/edit")
-    public String blogPostUpdate(@PathVariable(value = "id") long id, @RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model){
-        Post post = tasksRepository.findById(id).orElseThrow();
-        post.setTitle(title);
-        post.setAnons(anons);
-        post.setFull_text(full_text);
+    @PostMapping("/tasks/{task_id}/edit")
+    public String taskPostUpdate(@PathVariable(value = "task_id") Long id, @RequestParam(required=false) TaskType task_type_id,
+                                 @RequestParam(required=false) Status status_id, @RequestParam String short_description,
+                                 @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
+                                 @RequestParam(required=false) LinkedTaskType linked_task_type_id,
+                                 @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
+                                 @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
+                                 @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model)
+    {
+        Tasks post = tasksRepository.findById(id).orElseThrow();
+        post.setTask_type_id(task_type_id);
+        post.setStatus_id(status_id);
+        post.setShort_description(short_description);
+        post.setFull_description(full_description);
+        post.setLinked_task_id(linked_task_id);
+        post.setLinked_task_type_id(linked_task_type_id);
+        post.setDeadline(deadline);
+        post.setProject_id(project_id);
+        post.setExecutor_id(executor_id);
+        post.setAuthor_id(author_id);
+        post.setPriority_id(priority_id);
         tasksRepository.save(post);
-        return "redirect:/blog";
+        return "redirect:/tasks";
     }
 
-    @PostMapping("/blog/{id}/remove")
-    public String blogPostDelete(@PathVariable(value = "id") long id, Model model){
-        Post post = tasksRepository.findById(id).orElseThrow();
-        tasksRepository.delete(post);
-        return "redirect:/blog";
-    }*/
+   @PostMapping("/tasks/{task_id}/remove")
+    public String taskPostDelete(@PathVariable(value = "task_id") long id, Model model){
+        Tasks task = tasksRepository.findById(id).orElseThrow();
+        tasksRepository.delete(task);
+        return "redirect:/tasks";
+    }
 }
