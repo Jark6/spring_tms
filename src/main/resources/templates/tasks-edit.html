@@ -31,7 +31,7 @@
         <select class="form-control" id="SelectTask1" aria-label="Default select example" name="linked_task_id" >
             <option selected="selected" value="" disabled="disabled">Выберите задачу</option>
             <option th:each="linked:${tasks}" th:value="${linked.task_id}" th:text="${linked.short_description}"
-            th:selected="${linked.task_id == task.getTask_id()}"></option>
+            th:selected="${linked.task_id == task.getLinked_task_id()}"></option>
         </select><br>
         <label for="SelectLinkedTaskType1" class="form-label">Тип связи</label><br>
         <select class="form-control" id="SelectLinkedTaskType1" aria-label="Default select example" name="linked_task_type_id" >
@@ -68,6 +68,7 @@
                     th:selected="${priority.priority_id == (task.priority_id != null ? task.priority_id.getPriority_id() : null)}"></option>
         </select><br>
                 <button type="submit" class="btn btn-success">Обновить задачу</button>
+                <a th:href="'/tasks/'+${task.getTask_id()}" class="btn btn-secondary">Отмена</a>
         </form>
     </div>
     </div>

@@ -57,12 +57,8 @@
             <option th:each="el:${priorities}" th:value="${el?.priority_id}" th:text="${el?.priority}"></option>
         </select><br>
         <button type="submit" class="btn btn-success">Добавить задачу</button>
+        <a th:href="'/tasks'" class="btn btn-secondary">Отмена</a>
     </form>
-    <!--<div th:each="el : ${posts}" class="alert alert-info mt-2">
-        <h3 th:text="${el.title}"/>
-        <p th:text="${el.anons}"/>
-        <a th:href="'/blog/' + ${el.id}">Детальнее</a>
-    </div>-->
 </div>
 <div th:insert="blocks/footer :: footer"></div>
 </body>

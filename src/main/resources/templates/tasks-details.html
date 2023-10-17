@@ -29,11 +29,16 @@
         <p th:unless="${el.executor_id != null}">Нет исполнителя</p>
         <p th:if="${el.priority_id != null}" th:text="'Приоритет: ' + ${el.priority_id.priority}"/>
         <p th:unless="${el.priority_id != null}">Приоритет не установлен</p>
-        <a th:href="'/tasks/' + ${el.task_id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
-        <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">
-            <button class="btn btn-danger" type="submit">Удалить</button>
-        </form>
+        <div class="container">
+            <div class="row justify-content-around">
+                <a th:href="'/tasks/' + ${el.task_id} + '/edit'" class="btn btn-outline-primary">Редактировать</a>
+                <a th:href="'/tasks'" class="btn btn-outline-secondary">Отмена</a>
+                <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">
+                    <button class="btn btn-outline-danger" type="submit">Удалить</button>
+                </form>
+            </div>
 
+        </div>
     </div>
 </div>
 <div th:insert="blocks/footer :: footer"></div>
