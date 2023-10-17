@@ -84,6 +84,7 @@ public class TMSController {
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model){
+        System.out.println(linked_task_id);
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
                 linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id);
         tasksRepository.save(task);
@@ -114,10 +115,18 @@ public class TMSController {
         if(!tasksRepository.existsById(id)){
             return "redirect:/tasks";
         }
+        model.addAttribute("tasks", tasksRepository.findAll());
+        model.addAttribute("taskTypes", taskTypeRepository.findAll());
+        model.addAttribute("statuses", statusRepository.findAll());
+        model.addAttribute("linkedType", linkedTaskTypeRepository.findAll());
+        model.addAttribute("projects", projectRepository.findAll());
+        model.addAttribute("users", usersRepository.findAll());
+        model.addAttribute("priorities", priorityRepository.findAll());
         Optional <Tasks> tasks = tasksRepository.findById(id);
-        ArrayList<Tasks> res = new ArrayList<>();
+        tasks.ifPresent(t -> model.addAttribute("task", t));
+/*        ArrayList<Tasks> res = new ArrayList<>();
         tasks.ifPresent(res::add);
-        model.addAttribute("task", res);
+        model.addAttribute("task", res);*/
         return "tasks-edit";
     }
 

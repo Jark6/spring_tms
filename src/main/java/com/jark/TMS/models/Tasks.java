@@ -21,8 +21,8 @@ public class Tasks {
     private String short_description;
     @Column
     private String full_description;
-    @Column
-    @JoinColumn(name = "linked_task_id", referencedColumnName = "task_id")
+    @Column(nullable = true)
+    @JoinColumn(name = "task_id")
     private Long linked_task_id;
     @ManyToOne
     @JoinColumn(name = "linked_task_type_id")

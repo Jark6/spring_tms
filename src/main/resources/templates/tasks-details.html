@@ -19,8 +19,8 @@
         <p th:unless="${el.project_id != null}">Проект не найден</p>
         <p th:if="${el.task_type_id != null}" th:text="'Тип задачи: ' + ${el.task_type_id.task_type}"/>
         <p th:unless="${el.task_type_id!= null}">Нет типа задачи</p>
-        <p th:if="${el.linked_task_id != null}" th:text="'Связанная задача: ' + ${el.linked_task_id.short_description}"/>
-        <p th:unless="${el.linked_task_id != null}">Нет связанных задач</p>
+        <!--<p th:if="${el.linked_task_id != null}" th:text="'Связанная задача: ' + ${el.linked_task_id.short_description}"/>
+        <p th:unless="${el.linked_task_id != null}">Нет связанных задач</p> -->
         <p th:if="${el.linked_task_type_id != null}" th:text="'Тип связи с задачей: ' + ${el.linked_task_type_id.linked_task_type}"/>
         <p th:unless="${el.linked_task_type_id != null}"></p>
         <p th:if="${el.author_id != null}" th:text="'Автор: ' + ${el.author_id.first_name}+' '+ ${el.author_id.second_name}+' '+ ${el.author_id.family_name}+' ('+ ${el.author_id.login}+')'"/>

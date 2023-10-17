@@ -13,13 +13,15 @@
         <form method="post">
         <label for="SelectTaskType1" class="form-label">Тип задачи</label><br>
         <select class="form-control" id="SelectTaskType1" aria-label="Default select example" name="task_type_id">
-            <option selected th:value="${el.task_type_id}" disabled>Выберите тип задачи</option>
-            <option name="task_type_id" th:each="el:${taskTypes}" th:value="${el?.task_type_id}" th:text="${el?.task_type}"></option>
+            <option selected="selected" value="" disabled="disabled">Выберите тип задачи</option>
+            <option th:each="type : ${taskTypes}" th:value="${type.task_type_id}"
+                    th:text="${type.task_type}" th:selected="${type.task_type_id == (task.task_type_id != null ? task.task_type_id.getTask_type_id() : null)}"></option>
         </select><br>
         <label for="SelectStatus1" class="form-label">Статус задачи</label><br>
         <select class="form-control" id="SelectStatus1" aria-label="Default select example" name="status_id" >
-            <option selected th:value="${el.status_id}" disabled>Выберите статус задачи</option>
-            <option th:each="el:${statuses}" th:value="${el?.status_id}" th:text="${el?.status}"></option>
+            <option selected="selected" value="" disabled="disabled">Выберите статус</option>
+            <option th:each="status : ${statuses}" th:value="${status.status_id}" th:text="${status.status}"
+                    th:selected="${status.status_id == (task.status_id != null ? task.status_id.getStatus_id() : null)}"></option>
         </select><br>
         <label for="Name1" class="form-label">Название задачи</label><br>
         <input id="Name1" type="text" name="short_description" placeholder="введите краткое описание задачи" class="form-control" th:value="${el.short_description}" required><br>
@@ -27,35 +29,43 @@
         <textarea id="Description1" name="full_description" placeholder="введите полный текст задачи" class="form-control" th:text="${el.full_description}" required></textarea><br>
         <label for="SelectTask1" class="form-label">Связь с задачей</label><br>
         <select class="form-control" id="SelectTask1" aria-label="Default select example" name="linked_task_id" >
-            <option selected th:value="${el.linked_task_id}">Выберите задачу</option>
-            <option th:each="el:${linkedTasks}" th:value="${el?.linked_task_id}" th:text="${el?.short_description}"></option>
+            <option selected="selected" value="" disabled="disabled">Выберите задачу</option>
+            <option th:each="linked:${tasks}" th:value="${linked.task_id}" th:text="${linked.short_description}"
+            th:selected="${linked.task_id == task.getTask_id()}"></option>
         </select><br>
         <label for="SelectLinkedTaskType1" class="form-label">Тип связи</label><br>
         <select class="form-control" id="SelectLinkedTaskType1" aria-label="Default select example" name="linked_task_type_id" >
-            <option selected th:value="${el.linked_task_type_id}">Выберите тип связи</option>
-            <option th:each="el:${linkedTaskTypes}" th:value="${el?.linked_task_type_id}" th:text="${el?.linked_task_type}"></option>
+            <option selected value="" disabled="disabled">Выберите тип связи</option>
+            <option th:each="lType:${linkedType}" th:value="${lType.linked_task_type_id}" th:text="${lType.linked_task_type}"
+            th:selected="${lType.linked_task_type_id == (task.linked_task_type_id != null ? task.linked_task_type_id.getLinked_task_type_id() : null)}"></option>
         </select><br>
+            <!--<p><span th:each="lType:${linkedType}" th:text="${lType.linked_task_type_id}+'\n'"></span></p>
+            <p><span th:text="${task.linked_task_type_id.getLinked_task_type_id()}"></span></p>-->
         <label for="Date1" class="form-label">Предполагаемый срок выполнения задачи</label><br>
         <input id="Date1" type="date" name="deadline"  placeholder="выберите дату" class="form-control" pattern="yyyy-MM-dd" th:value="${#dates.format(el.deadline, 'yyyy-MM-dd')}" required><br>
         <label for="SelectProject1" class="form-label">Проект</label><br>
         <select class="form-control" id="SelectProject1" aria-label="Default select example" name="project_id">
-            <option selected th:value="${el.project_id}" disabled>Выберите проект</option>
-            <option th:each="el:${projects}" th:value="${el?.project_id}" th:text="${el?.project_name}"></option>
+            <option selected value="" disabled="disabled">Выберите проект</option>
+            <option th:each="project:${projects}" th:value="${project.project_id}" th:text="${project.project_name}"
+            th:selected="${project.project_id == (task.project_id != null ? task.project_id.getProject_id() : null)}"></option>
         </select><br>
         <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
         <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
-            <option selected th:value="${el.executor_id}" disabled>Выберите исполнителя</option>
-            <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
+            <option selected value="" disabled="disabled">Выберите исполнителя</option>
+            <option th:each="user:${users}" th:value="${user?.user_id}" th:text="${user?.first_name}+' '+${user?.second_name}+'('+${user?.login}+')'"
+                    th:selected="${user.user_id == (task.executor_id != null ? task.executor_id.getUser_id() : null)}"></option>
         </select><br>
         <label for="SelectAuthor1" class="form-label">Автор</label><br>
         <select class="form-control" id="SelectAuthor1" aria-label="Default select example" name="author_id" >
-            <option selected th:value="${el.author_id}" disabled>Выберите Автора</option>
-            <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
+            <option selected value="" disabled="disabled">Выберите Автора</option>
+            <option th:each="user:${users}" th:value="${user?.user_id}" th:text="${user?.first_name}+' '+${user?.second_name}+'('+${user?.login}+')'"
+                    th:selected="${user.user_id == (task.author_id != null ? task.author_id.getUser_id() : null)}"></option>
         </select><br>
         <label for="SelectPriority1" class="form-label">Приоритет</label><br>
         <select class="form-control" id="SelectPriority1" aria-label="Default select example" name="priority_id" >
-            <option selected th:value="${el.priority_id}" disabled>Выберите приоритет задачи</option>
-            <option th:each="el:${priorities}" th:value="${el?.priority_id}" th:text="${el?.priority}"></option>
+            <option selected value="" disabled="disabled">Выберите приоритет задачи</option>
+            <option th:each="priority:${priorities}" th:value="${priority?.priority_id}" th:text="${priority?.priority}"
+                    th:selected="${priority.priority_id == (task.priority_id != null ? task.priority_id.getPriority_id() : null)}"></option>
         </select><br>
                 <button type="submit" class="btn btn-success">Обновить задачу</button>
         </form>
