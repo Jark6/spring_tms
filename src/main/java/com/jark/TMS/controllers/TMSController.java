@@ -3,7 +3,6 @@ package com.jark.TMS.controllers;
 import com.jark.TMS.models.*;
 import com.jark.TMS.repo.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +25,7 @@ public class TMSController {
     private final ProjectRepository projectRepository;
     private final UsersRepository usersRepository;
     private final PriorityRepository priorityRepository;
+    private RedirectAttributes redirectAttributes;
 
     public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
                          LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
@@ -43,37 +44,17 @@ public class TMSController {
     public String tasksMain(Model model){
         Iterable<Tasks> tasks = tasksRepository.findAll();
         model.addAttribute("tasks", tasks);
-        int count = 0;
-             for (Tasks task : tasks) {
-                 if(task!=null){
-                     System.out.println(task.getTask_id());
-                     System.out.println(task.getShort_description());
-                     System.out.println(task.getFull_description());
-                    count++;
-                 }
-                 else{
-                     System.out.println("task is null");
-                 }
-             }
-        System.out.println(count);
         return "tasks-main";
     }
 
     @GetMapping("/tasks/add")
     public String taskAdd(Model model){
-        //Iterable<Status> statuses = statusRepository.findAll();
         model.addAttribute("statuses", statusRepository.findAll());
-        //Iterable<TaskType> taskTypes = taskTypeRepository.findAll();
         model.addAttribute("taskTypes", taskTypeRepository.findAll());
-        //Iterable<Tasks> tasks = tasksRepository.findAll();
         model.addAttribute("linkedTasks", tasksRepository.findAll());
-        //Iterable<LinkedTaskType> linkedTaskTypes = linkedTaskTypeRepository.findAll();
         model.addAttribute("linkedTaskTypes", linkedTaskTypeRepository.findAll());
-        //Iterable<Project> projects = projectRepository.findAll();
         model.addAttribute("projects", projectRepository.findAll());
-        //Iterable<Users> users = usersRepository.findAll();
         model.addAttribute("users", usersRepository.findAll());
-        //Iterable<Priority> priorities = priorityRepository.findAll();
         model.addAttribute("priorities", priorityRepository.findAll());
         return "tasks-add";
     }
@@ -83,11 +64,11 @@ public class TMSController {
                               @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
-                              @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model){
-        System.out.println(linked_task_id);
+                              @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes, Model model){
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
                 linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id);
         tasksRepository.save(task);
+        redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
         return "redirect:/tasks";
     }
 
@@ -97,16 +78,9 @@ public class TMSController {
             return "redirect:/tasks";
         }
         Optional<Tasks> tasks = tasksRepository.findById(id);
-/*        tasks.ifPresent(task -> {
-            model.addAttribute("task", task);
-            Status status = statusRepository.findById(task.getStatus_id()).orElse(null);
-            model.addAttribute("status", status);
-        });*/
         ArrayList <Tasks> res = new ArrayList<>();
         tasks.ifPresent(res::add);
         model.addAttribute("tasks", res);
-        //Optional<Status> status = statusRepository.findById(tasks.get().getStatus_id());
-        //model.addAttribute("status", status.orElse(null));
         return "tasks-details";
     }
 
@@ -124,9 +98,6 @@ public class TMSController {
         model.addAttribute("priorities", priorityRepository.findAll());
         Optional <Tasks> tasks = tasksRepository.findById(id);
         tasks.ifPresent(t -> model.addAttribute("task", t));
-/*        ArrayList<Tasks> res = new ArrayList<>();
-        tasks.ifPresent(res::add);
-        model.addAttribute("task", res);*/
         return "tasks-edit";
     }
 
@@ -137,7 +108,7 @@ public class TMSController {
                                  @RequestParam(required=false) LinkedTaskType linked_task_type_id,
                                  @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                                  @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
-                                 @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, Model model)
+                                 @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes,Model model)
     {
         Tasks post = tasksRepository.findById(id).orElseThrow();
         post.setTask_type_id(task_type_id);
@@ -152,13 +123,15 @@ public class TMSController {
         post.setAuthor_id(author_id);
         post.setPriority_id(priority_id);
         tasksRepository.save(post);
+        redirectAttributes.addFlashAttribute("successMessage", "Задача успешно изменена!");
         return "redirect:/tasks";
     }
 
    @PostMapping("/tasks/{task_id}/remove")
-    public String taskPostDelete(@PathVariable(value = "task_id") long id, Model model){
+    public String taskPostDelete(@PathVariable(value = "task_id") long id, RedirectAttributes redirectAttributes, Model model){
         Tasks task = tasksRepository.findById(id).orElseThrow();
         tasksRepository.delete(task);
+       redirectAttributes.addFlashAttribute("successMessage", "Задача успешно удалена!");
         return "redirect:/tasks";
     }
 }
