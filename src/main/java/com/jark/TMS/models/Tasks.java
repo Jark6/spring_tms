@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name="TASKS")
 public class Tasks {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long task_id;
     @ManyToOne
     @JoinColumn(name="task_type_id")

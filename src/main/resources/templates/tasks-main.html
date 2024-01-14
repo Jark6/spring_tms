@@ -10,29 +10,28 @@
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5">
     <h1>Список задач</h1>
-    <div th:each="el : ${tasks}" class="alert alert-secondary mt-2">
+    <div th:each="el : ${tasks}" class="alert alert-secondary mt-2" th:sort="${el.task_id}">
         <h3 th:text="'T-' + ${el?.task_id}"/>
         <p th:text="${el?.short_description}"/>
         <a th:href="'/tasks/' + ${el?.task_id}" class="btn btn-outline-info">Подробнее</a>
     </div>
 </div>
 <!-- Подключение библиотеки toastr из CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script th:inline="javascript">
-    window.onload = function () {
+    $(document).ready(function() {
+        var successMessage = /*[[@{${successMessage}}]]*/ ''; // Retrieve successMessage from Thymeleaf
+        console.log(successMessage);
 
-        const msg = "${successMessage}";
-        console.log(msg);
-        if (msg === "Задача успешно добавлена!") {
-            toastr["success"]("Задача успешно добавлена!")
-
-        } else if (msg === "Задача успешно изменена!") {
-            toastr["success"]("Задача успешно изменена!")
-
-        } else if (msg === "Задача успешно удалена!") {
-            toastr["error"]("Задача успешно удалена!")
-
+        if (successMessage === "Задача успешно добавлена!") {
+            toastr.success("Задача успешно добавлена!");
+        } else if (successMessage === "Задача успешно изменена!") {
+            toastr.success("Задача успешно изменена!");
+        } else if (successMessage === "Задача успешно удалена!") {
+            toastr.error("Задача успешно удалена!");
         }
+
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -48,8 +47,8 @@
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
-        }
-    }
+        };
+    });
 </script>
 <div th:insert="blocks/footer :: footer"></div>
 </body>

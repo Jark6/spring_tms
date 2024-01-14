@@ -9,7 +9,7 @@
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5 mb-5">
     <h1>Создание задачи</h1>
-    <form action="/tasks/add" method="post">
+    <form th:action="@{/tasks/add}" method="post">
         <label for="SelectTaskType1" class="form-label">Тип задачи</label><br>
         <select class="form-control" id="SelectTaskType1" aria-label="Default select example" name="task_type_id">
             <option selected value="" disabled>Выберите тип задачи</option>

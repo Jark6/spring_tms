@@ -1,12 +1,26 @@
-<div th:fragment="header">
+<div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal">TMS</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="/">Главная</a>
             <a class="p-2 text-dark" href="/about">Про нас</a>
-            <a class="p-2 text-dark" href="/tasks">Список Задач</a>
-            <a class="p-2 btn btn-primary" href="/tasks/add"><strong class="">+</strong> Добавить задачу</a>
+            <a class="p-2 text-dark" th:href="@{/tasks}" sec:authorize="isAuthenticated()">Список Задач</a>
+            <a class="p-2 text-dark" th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">Панель администратора</a>
+            <a class="p-2 btn btn-primary"  th:href="@{/tasks/add}" sec:authorize="isAuthenticated()"><strong class="">+</strong> Добавить задачу</a>
         </nav>
-        <a class="btn btn-outline-primary" href="#">Sign up</a>
+        <!-- <a class="btn btn-outline-primary" href="/login">Sign up</a>
+        Показать кнопку Sign up для неавторизованных пользователей -->
+        <a th:if="${not #authorization.expression('isAuthenticated()')}" class="p-2 btn btn-outline-primary" href="/login">Войти</a>
+        <!-- Показать имя пользователя и кнопку log out для авторизованных пользователей -->
+        <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex align-items-center">
+            <span th:text="${#authentication.name}" class="mr-2"></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                </svg></button>
+            </form>
+        </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
 <div class="container mt-5 mb-5">
     <h1>Редактирование задачи</h1>
     <div th:each="el:${task}">
-        <form method="post">
+        <form th:action="@{'/tasks/' + ${task.getTask_id()} + '/edit'}" method="post" th:object="${task}">
         <label for="SelectTaskType1" class="form-label">Тип задачи</label><br>
         <select class="form-control" id="SelectTaskType1" aria-label="Default select example" name="task_type_id">
             <option selected="selected" value="" disabled="disabled">Выберите тип задачи</option>
@@ -68,7 +68,7 @@
                     th:selected="${priority.priority_id == (task.priority_id != null ? task.priority_id.getPriority_id() : null)}"></option>
         </select><br>
                 <button type="submit" class="btn btn-success">Обновить задачу</button>
-                <a th:href="'/tasks/'+${task.getTask_id()}" class="btn btn-secondary">Отмена</a>
+                <a th:href="@{'/tasks/' + ${task.getTask_id()}}" class="btn btn-secondary">Отмена</a>
         </form>
     </div>
     </div>
