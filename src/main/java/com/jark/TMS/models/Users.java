@@ -78,8 +78,10 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.passwordHash = passwordEncoder.encode(password);
+        if (password != null) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            this.passwordHash = passwordEncoder.encode(password);
+        }
     }
     public String getPasswordHash() {
         return passwordHash;

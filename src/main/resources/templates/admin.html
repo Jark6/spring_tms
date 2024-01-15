@@ -7,63 +7,96 @@
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
-<main role="main">
+<main role="main" class="col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
     <h1>Welcome to Admin Dashboard</h1>
-    <h2>User List</h2>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-users-tab" data-toggle="tab" data-target="#nav-users" type="button" role="tab" aria-controls="nav-users" aria-selected="true">Пользователи</button>
+            <button class="nav-link" id="nav-task-type-tab" data-toggle="tab" data-target="#nav-task-type" type="button" role="tab" aria-controls="nav-task-type" aria-selected="false">Виды задач</button>
+            <button class="nav-link" id="nav-status-tab" data-toggle="tab" data-target="#nav-status" type="button" role="tab" aria-controls="nav-status" aria-selected="false">Статусы</button>
+            <button class="nav-link" id="nav-project-tab" data-toggle="tab" data-target="#nav-project" type="button" role="tab" aria-controls="nav-project" aria-selected="false">Проекты</button>
+            <button class="nav-link" id="nav-linked-task-tab" data-toggle="tab" data-target="#nav-linked-task" type="button" role="tab" aria-controls="nav-linked-task" aria-selected="false">Связи с задачами</button>
+            <button class="nav-link" id="nav-priority-tab" data-toggle="tab" data-target="#nav-priority" type="button" role="tab" aria-controls="nav-priority" aria-selected="false">Приоритеты</button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+            <h2>Список пользователей</h2>
 
-    <!-- Display success messages -->
-    <div th:if="${successMessage}" style="color: green;">
-        <p th:text="${successMessage}"></p>
+            <!-- Display success messages -->
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- User Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Login</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through users and display them in the table -->
+                <tr  th:each="user : ${users}" scope="row">
+                    <td th:text="${user.user_id}"></td>
+                    <td th:text="${user.first_name}"></td>
+                    <td th:text="${user.family_name}"></td>
+                    <td th:text="${user.login}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td>
+                        <!-- Delete user link -->
+                        <a th:href="@{/admin/deleteUser/{id}(id=${user.user_id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Form for adding a new user -->
+            <h2>Добавление пользователя</h2>
+            <div>
+                <form th:action="@{/admin/addUser}" th:object="${newUser}" method="post">
+                    <div class="form-group">
+                        <label for="firstName">First Name: </label>
+                        <input type="text" id="firstName" class="form-control" placeholder="Имя" th:field="*{first_name}" required/><br/>
+
+                        <label for="lastName">Last Name: </label>
+                        <input type="text" id="lastName" class="form-control" placeholder="Фамилия" th:field="*{family_name}" required/><br/>
+
+                        <label for="login">Login: </label>
+                        <input type="text" id="login" class="form-control" placeholder="Login" th:field="*{login}" required/><br/>
+
+                        <label for="password">Password: </label>
+                        <input type="password" id="password" class="form-control" placeholder="Пароль"th:field="*{passwordHash}" required/><br/>
+
+                        <label for="role">Role: </label>
+                        <input type="text" id="role" class="form-control" placeholder="Роль" th:field="*{role}" required/><br/>
+
+                        <button type="submit" class="btn btn-primary">Добавить пользователя</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-task-type" role="tabpanel" aria-labelledby="nav-task-type-tab">
+            <p>ssss</p>
+        </div>
+        <div class="tab-pane fade" id="nav-status" role="tabpanel" aria-labelledby="nav-status-tab">...</div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery loaded:", $);
 
-    <!-- User Table -->
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Login</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Loop through users and display them in the table -->
-        <tr th:each="user : ${users}">
-            <td th:text="${user.user_id}"></td>
-            <td th:text="${user.first_name}"></td>
-            <td th:text="${user.family_name}"></td>
-            <td th:text="${user.login}"></td>
-            <td th:text="${user.role}"></td>
-            <td>
-                <!-- Delete user link -->
-                <a th:href="@{/admin/deleteUser/{id}(id=${user.user_id})}">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <!-- Form for adding a new user -->
-    <h2>Add New User</h2>
-    <form th:action="@{/admin/addUser}" th:object="${newUser}" method="post">
-        <label for="firstName">First Name: </label>
-        <input type="text" id="firstName" th:field="*{first_name}" required/><br/>
-
-        <label for="lastName">Last Name: </label>
-        <input type="text" id="lastName" th:field="*{family_name}" required/><br/>
-
-        <label for="login">Login: </label>
-        <input type="text" id="login" th:field="*{login}" required/><br/>
-
-        <label for="password">Password: </label>
-        <input type="password" id="password" th:field="*{password}" required/><br/>
-
-        <label for="role">Role: </label>
-        <input type="text" id="role" th:field="*{role}" required/><br/>
-
-        <button type="submit">Add User</button>
-    </form>
+        $('#nav-tab button').on('click', function (event) {
+            event.preventDefault()
+            $(this).tab('show')
+        })
+        });
+    </script>
 </main>
 <div th:insert="blocks/footer :: footer"></div>
 </body>

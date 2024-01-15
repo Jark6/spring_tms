@@ -20,17 +20,20 @@ import org.slf4j.LoggerFactory;
 @EnableWebSecurity
 public class WebSecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
-   // @Autowired
-    // private UserDetailsService userDetailsService;
+/*    private UserDetailsService userDetailsService;*/
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                //.csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        //.antMatchers("/public/**").permitAll()
                         .requestMatchers("/about", "/").permitAll()
-                        .requestMatchers("/tasks/**").hasRole("USER")
-                        .requestMatchers("/tasks/**","/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/tasks/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -46,30 +49,25 @@ public class WebSecurityConfig {
 
 
     }
-/*    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }*/
-   // @Autowired
-    //private PasswordEncoder passwordEncoder;
+
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails user = User.builder()
-                        .username("u")
+                        .username("user")
                         .passwordEncoder(passwordEncoder::encode)
-                        .password("p")
+                        .password("u")
                         .roles("USER")
                         .build();
         UserDetails admin = User.builder()
-                        .username("a")
+                        .username("admin")
                         .password(passwordEncoder.encode("a"))
                         .roles("ADMIN")
                         .build();
         return new InMemoryUserDetailsManager(user, admin);
     }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  /*  @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }*/
+
 }
