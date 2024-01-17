@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,11 +27,12 @@ public class TMSController {
     private final ProjectRepository projectRepository;
     private final UsersRepository usersRepository;
     private final PriorityRepository priorityRepository;
+    private final CommentsRepository commentsRepository;
     private RedirectAttributes redirectAttributes;
 
     public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
                          LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
-                         UsersRepository usersRepository, PriorityRepository priorityRepository) {
+                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository) {
         this.tasksRepository = tasksRepository;
         this.statusRepository = statusRepository;
         this.taskTypeRepository = taskTypeRepository;
@@ -37,6 +40,7 @@ public class TMSController {
         this.projectRepository = projectRepository;
         this.usersRepository = usersRepository;
         this.priorityRepository = priorityRepository;
+        this.commentsRepository = commentsRepository;
     }
 
 
@@ -77,11 +81,42 @@ public class TMSController {
         if(!tasksRepository.existsById(id)){
             return "redirect:/tasks";
         }
-        Optional<Tasks> tasks = tasksRepository.findById(id);
-        ArrayList <Tasks> res = new ArrayList<>();
+        /*ArrayList <Tasks> res = new ArrayList<>();
         tasks.ifPresent(res::add);
-        model.addAttribute("tasks", res);
+        model.addAttribute("tasks", res);*/
+        Optional<Tasks> taskOptional = tasksRepository.findById(id);
+        taskOptional.ifPresent(task -> {
+            List<Comments> comments = commentsRepository.findByTask(task);
+
+            model.addAttribute("tasks", task);
+            model.addAttribute("comments", comments);
+        });
         return "tasks-details";
+    }
+
+    @PostMapping("/tasks/{task_id}/addComment")
+    public String addComment(@PathVariable(value = "task_id") long taskId,
+                             @RequestParam String content,
+                             Principal principal) {
+        Optional<Tasks> taskOptional = tasksRepository.findById(taskId);
+        if (taskOptional.isPresent() && principal != null) {
+            Users user = usersRepository.findByLogin(principal.getName());
+            if (user != null) {
+            Tasks task = taskOptional.get();
+
+            Comments comment = new Comments();
+            comment.setContent(content);
+            comment.setUser(user);
+            comment.setTask(task);
+            comment.setTimestamp(LocalDateTime.now());
+
+            commentsRepository.save(comment);}
+
+        } else {
+            // Обработка случая, когда пользователь не найден
+            System.out.println("ошибка");
+        }
+        return "redirect:/tasks/" + taskId;
     }
 
     @GetMapping("/tasks/{task_id}/edit")

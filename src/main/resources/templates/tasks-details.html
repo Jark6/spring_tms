@@ -29,6 +29,20 @@
         <p th:unless="${el.executor_id != null}">Нет исполнителя</p>
         <p th:if="${el.priority_id != null}" th:text="'Приоритет: ' + ${el.priority_id.priority}"/>
         <p th:unless="${el.priority_id != null}">Приоритет не установлен</p>
+        <div>
+            <h3>Комментарии:</h3>
+            <div th:if="${el.comments != null}" th:each="comment : ${el.comments}">
+                <p th:text="${comment.content}"></p>
+                <p th:text="${comment.user.login}"></p>
+                <p th:text="${#temporals.format(comment.timestamp, 'dd-MMMM-yyyy HH:mm')}"></p>
+            </div>
+        </div>
+
+        <!-- Форма для добавления комментария -->
+        <form th:action="'/tasks/' + ${el.task_id} + '/addComment'" method="post">
+             <textarea name="content" rows="4" cols="50" required></textarea>
+            <button type="submit">Добавить комментарий</button>
+        </form>
         <div class="container">
             <div class="row justify-content-around">
                 <a th:href="'/tasks/' + ${el.task_id} + '/edit'" class="btn btn-outline-primary">Редактировать</a>

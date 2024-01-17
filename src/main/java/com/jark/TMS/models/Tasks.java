@@ -3,7 +3,9 @@ package com.jark.TMS.models;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="TASKS")
@@ -43,6 +45,9 @@ public class Tasks {
     @JoinColumn(name = "priority_id", nullable = true)
     private Priority priority_id;
 
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Comments> comments = new ArrayList<>();
+
     public Tasks() {
     }
 
@@ -58,6 +63,7 @@ public class Tasks {
         this.executor_id = executor_id;
         this.author_id = author_id;
         this.priority_id = priority_id;
+        this.comments = comments;
     }
 
     public Long getTask_id() {
@@ -154,5 +160,13 @@ public class Tasks {
 
     public void setPriority_id(Priority priority_id) {
         this.priority_id = priority_id;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }

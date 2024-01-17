@@ -3,6 +3,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="USERS")
 public class Users {
@@ -20,7 +22,8 @@ public class Users {
     @Column
     private String passwordHash;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comments> comments;
 
     @Column
     private String role;
@@ -92,5 +95,13 @@ public class Users {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }
