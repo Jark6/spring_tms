@@ -6,7 +6,7 @@ import jakarta.persistence.*;
     @Table(name="TASK_TYPE")
     public class TaskType {
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private Long task_type_id;
         @Column
         private String task_type;

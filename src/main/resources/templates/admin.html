@@ -48,6 +48,7 @@
                     <td th:text="${user.family_name}"></td>
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.role}"></td>
+                    <td th:text="${user.passwordHash}"></td>
                     <td>
                         <!-- Delete user link -->
                         <a th:href="@{/admin/deleteUser/{id}(id=${user.user_id})}" class="btn btn-danger">Delete</a>
@@ -82,21 +83,231 @@
             </div>
         </div>
         <div class="tab-pane fade" id="nav-task-type" role="tabpanel" aria-labelledby="nav-task-type-tab">
-            <p>ssss</p>
-        </div>
-        <div class="tab-pane fade" id="nav-status" role="tabpanel" aria-labelledby="nav-status-tab">...</div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            console.log("jQuery loaded:", $);
+            <h2>Список типов задач</h2>
 
-        $('#nav-tab button').on('click', function (event) {
-            event.preventDefault()
-            $(this).tab('show')
-        })
-        });
-    </script>
+            <!-- Display success messages -->
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- TaskType Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Task type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through task types and display them in the table -->
+                <tr  th:each="type : ${taskTypes}" scope="row">
+                    <td th:text="${type.task_type_id}"></td>
+                    <td th:text="${type.task_type}"></td>
+                    <td>
+                        <!-- Delete user link -->
+                       <a th:href="@{/admin/deleteTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Form for adding a new task type -->
+            <h2>Добавление типа задач</h2>
+            <div>
+                <form th:action="@{/admin/addTaskType}" th:object="${newTaskType}" method="post">
+                    <div class="form-group">
+                        <label for="taskTypeName">Наименование типа задачи: </label>
+                        <input type="text" id="taskTypeName" class="form-control" placeholder="Тип задачи" th:field="*{task_type}" required/><br/>
+
+                        <button type="submit" class="btn btn-primary">Добавить тип задачи</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-status" role="tabpanel" aria-labelledby="nav-status-tab">
+            <h2>Список стаутсов</h2>
+
+            <!-- Display success messages -->
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- TaskType Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through status and display them in the table -->
+                <tr  th:each="status : ${statuses}" scope="row">
+                    <td th:text="${status.status_id}"></td>
+                    <td th:text="${status.status}"></td>
+                    <td>
+                        <!-- Delete user link -->
+                        <a th:href="@{/admin/deleteStatusId/{id}(id=${status.status_id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Form for adding a new task type -->
+            <h2>Добавление статуса</h2>
+            <div>
+                <form th:action="@{/admin/addStatus}" th:object="${newStatus}" method="post">
+                    <div class="form-group">
+                        <label for="statusName">Название статуса: </label>
+                        <input type="text" id="statusName" class="form-control" placeholder="Наименование статуса" th:field="*{status}" required/><br/>
+
+                        <button type="submit" class="btn btn-primary">Добавить тип задачи</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-project" role="tabpanel" aria-labelledby="nav-project-tab">
+            <h2>Список проектов</h2>
+
+            <!-- Display success messages -->
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- TaskType Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Project</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through status and display them in the table -->
+                <tr  th:each="project : ${projects}" scope="row">
+                    <td th:text="${project.project_id}"></td>
+                    <td th:text="${project.project_name}"></td>
+                    <td th:text="${project.project_description}"></td>
+                    <td>
+                        <!-- Delete user link -->
+                        <a th:href="@{/admin/deleteProjectId/{id}(id=${project.project_id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Form for adding a new task type -->
+            <h2>Добавление проекта</h2>
+            <div>
+                <form th:action="@{/admin/addProject}" th:object="${newProject}" method="post">
+                    <div class="form-group">
+                        <label for="projectName">Название проекта: </label>
+                        <input type="text" id="projectName" class="form-control" placeholder="Название проекта" th:field="*{project_name}" required/><br/>
+
+                        <label for="projectDescription">Описание проекта: </label>
+                        <textarea id="projectDescription" class="form-control" placeholder="Описание проекта" th:field="*{project_description}" required></textarea><br/>
+
+                        <button type="submit" class="btn btn-primary">Добавить проект</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-linked-task" role="tabpanel" aria-labelledby="nav-linked-task-tab">
+            <h2>Список связей между задачами</h2>
+
+            <!-- Display success messages -->
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- TaskType Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Linked Task type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through status and display them in the table -->
+                <tr  th:each="linkedType : ${linkedTaskTypes}" scope="row">
+                    <td th:text="${linkedType.linked_task_type_id}"></td>
+                    <td th:text="${linkedType.linked_task_type}"></td>
+                    <td>
+                        <!-- Delete user link -->
+                        <a th:href="@{/admin/deleteLinkedTaskType/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Form for adding a new task type -->
+            <h2>Добавление типа связи с задачей</h2>
+            <div>
+                <form th:action="@{/admin/addLinkedTaskType}" th:object="${newLinkedTaskType}" method="post">
+                    <div class="form-group">
+                        <label for="linkedTaskTypeName">Название типа связи с задачей: </label>
+                        <input type="text" id="linkedTaskTypeName" class="form-control" placeholder="Наименование типа связи" th:field="*{linked_task_type}" required/><br/>
+
+                        <button type="submit" class="btn btn-primary">Добавить тип связи с задачей</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-priority" role="tabpanel" aria-labelledby="nav-priority-tab">
+            <h2>Список приоритетов</h2>
+
+            <!-- Display success messages -->
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- TaskType Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Priority</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through status and display them in the table -->
+                <tr  th:each="priority : ${priorities}" scope="row">
+                    <td th:text="${priority.priority_id}"></td>
+                    <td th:text="${priority.priority}"></td>
+                    <td>
+                        <!-- Delete user link -->
+                        <a th:href="@{/admin/deletePriority/{id}(id=${priority.priority_id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Form for adding a new task type -->
+            <h2>Добавление приоритета</h2>
+            <div>
+                <form th:action="@{/admin/addPriority}" th:object="${newPriority}" method="post">
+                    <div class="form-group">
+                        <label for="priorityName">Название типа связи с задачей: </label>
+                        <input type="text" id="priorityName" class="form-control" placeholder="Название приоритета" th:field="*{priority}" required/><br/>
+
+                        <button type="submit" class="btn btn-primary">Добавить приоритет</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--        <script>
+            $(document).ready(function() {
+                console.log("jQuery loaded:", $);
+
+            $('#nav-tab button').on('click', function (event) {
+                event.preventDefault()
+                $(this).tab('show')
+            })
+            });
+        </script>-->
 </main>
 <div th:insert="blocks/footer :: footer"></div>
 </body>

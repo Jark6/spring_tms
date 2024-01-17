@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name="PRIORITY")
 public class Priority {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long priority_id;
     @Column
     private String priority;
