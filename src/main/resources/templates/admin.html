@@ -104,8 +104,9 @@
                     <td th:text="${type.task_type_id}"></td>
                     <td th:text="${type.task_type}"></td>
                     <td>
-                        <!-- Delete user link -->
-                       <a th:href="@{/admin/deleteTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-danger">Delete</a>
+                        <!-- Delete/Edit user link -->
+                        <a th:href="@{/admin/editTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-primary">Изменить</a>
+                        <a th:href="@{/admin/deleteTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
                 </tbody>

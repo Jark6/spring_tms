@@ -155,4 +155,26 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("successMessage", "Приоритет успешно удален");
         return "redirect:/admin";
     }
+
+    @GetMapping("/editTaskTypeId/{taskTypeId}")
+    public String editTaskType(@PathVariable Long taskTypeId, Model model) {
+        // Получите информацию о типе задачи по taskTypeId
+        TaskType taskType = taskTypeRepository.findById(taskTypeId)
+                .orElseThrow(() -> new RuntimeException("Тип задачи не найден"));
+
+        // Передайте информацию о типе задачи в модель
+        model.addAttribute("editTaskType", taskType);
+
+        return "task-type-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editTaskType")
+    public String saveEditedTaskType(@ModelAttribute("editTaskType") TaskType editedTaskType) {
+        // Сохраните отредактированный тип задачи
+        taskTypeRepository.save(editedTaskType);
+
+        // Перенаправьте на страницу с таблицей типов задач
+        return "redirect:/admin";
+    }
+
 }
