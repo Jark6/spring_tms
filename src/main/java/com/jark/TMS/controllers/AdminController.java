@@ -169,11 +169,95 @@ public class AdminController {
     }
 
     @PostMapping("/editTaskType")
-    public String saveEditedTaskType(@ModelAttribute("editTaskType") TaskType editedTaskType) {
+    public String saveEditedTaskType(@ModelAttribute("editTaskType") TaskType editedTaskType, RedirectAttributes redirectAttributes) {
         // Сохраните отредактированный тип задачи
         taskTypeRepository.save(editedTaskType);
-
+        redirectAttributes.addFlashAttribute("successMessage", "Тип задачи успешно изменен");
         // Перенаправьте на страницу с таблицей типов задач
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/editStatusId/{StatusId}")
+    public String editStatus(@PathVariable Long StatusId, Model model) {
+        // Получите информацию о статусе по StatusId
+        Status status = statusRepository.findById(StatusId)
+                .orElseThrow(() -> new RuntimeException("Статус не найден"));
+
+        // Передайте информацию о статусе в модель
+        model.addAttribute("editStatus", status);
+
+        return "status-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editStatus")
+    public String saveEditedStatus(@ModelAttribute("editStatus") Status editedStatus, RedirectAttributes redirectAttributes) {
+        // Сохраните отредактированный статус
+        statusRepository.save(editedStatus);
+        redirectAttributes.addFlashAttribute("successMessage", "Статус успешно изменен");
+        // Перенаправьте на страницу с таблицей статусов
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/editProjectId/{ProjectId}")
+    public String editProject(@PathVariable Long ProjectId, Model model) {
+        // Получите информацию о проекте по ProjectId
+        Project project = projectRepository.findById(ProjectId)
+                .orElseThrow(() -> new RuntimeException("Проект не найден"));
+
+        // Передайте информацию о проекте в модель
+        model.addAttribute("editProject", project);
+
+        return "project-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editProject")
+    public String saveEditedProject(@ModelAttribute("editProject") Project editedProject, RedirectAttributes redirectAttributes) {
+        // Сохраните отредактированный проект
+        projectRepository.save(editedProject);
+        redirectAttributes.addFlashAttribute("successMessage", "Проект успешно изменен");
+        // Перенаправьте на страницу с таблицей проектоа
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/editLinkedTaskTypeId/{LinkedTaskTypeId}")
+    public String editLinkedTaskType(@PathVariable Long LinkedTaskTypeId, Model model) {
+        // Получите информацию о типе связи задачи по LinkedTaskTypeId
+        LinkedTaskType linkedTaskType = linkedTaskTypeRepository.findById(LinkedTaskTypeId)
+                .orElseThrow(() -> new RuntimeException("Тип связи с задачей не найден"));
+
+        // Передайте информацию о типе связи с задачей в модель
+        model.addAttribute("editLinkedTaskType", linkedTaskType);
+
+        return "linked-task-type-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editLinkedTaskType")
+    public String saveEditedLinkedTaskType(@ModelAttribute("editLinkedTaskType") LinkedTaskType editedLinkedTaskType, RedirectAttributes redirectAttributes) {
+        // Сохраните отредактированный тип связи с задачей
+        linkedTaskTypeRepository.save(editedLinkedTaskType);
+        redirectAttributes.addFlashAttribute("successMessage", "Тип связи с задачей успешно изменен");
+        // Перенаправьте на страницу с таблицей типов задач
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/editPriorityId/{PriorityId}")
+    public String editPriority(@PathVariable Long PriorityId, Model model) {
+        // Получите информацию о проекте по PriorityId
+        Priority priority = priorityRepository.findById(PriorityId)
+                .orElseThrow(() -> new RuntimeException("Приоритет не найден"));
+
+        // Передайте информацию о приоритете в модель
+        model.addAttribute("editPriority", priority);
+
+        return "priority-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editPriority")
+    public String saveEditedPriority(@ModelAttribute("editPriority") Priority editedPriority, RedirectAttributes redirectAttributes) {
+        // Сохраните отредактированный приоритет
+        priorityRepository.save(editedPriority);
+        redirectAttributes.addFlashAttribute("successMessage", "Приоритет успешно изменен");
+        // Перенаправьте на страницу с таблицей проектоа
         return "redirect:/admin";
     }
 

@@ -147,8 +147,9 @@
                     <td th:text="${status.status_id}"></td>
                     <td th:text="${status.status}"></td>
                     <td>
-                        <!-- Delete user link -->
-                        <a th:href="@{/admin/deleteStatusId/{id}(id=${status.status_id})}" class="btn btn-danger">Delete</a>
+                        <!-- Delete/edit status -->
+                        <a th:href="@{/admin/editStatusId/{id}(id=${status.status_id})}" class="btn btn-primary">Изменить</a>
+                        <a th:href="@{/admin/deleteStatusId/{id}(id=${status.status_id})}" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -175,7 +176,7 @@
                 <p th:text="${successMessage}"></p>
             </div>
 
-            <!-- TaskType Table -->
+            <!-- Project Table -->
             <table class="table">
                 <thead>
                 <tr>
@@ -184,14 +185,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Loop through status and display them in the table -->
+                <!-- Loop through projects and display them in the table -->
                 <tr  th:each="project : ${projects}" scope="row">
                     <td th:text="${project.project_id}"></td>
                     <td th:text="${project.project_name}"></td>
                     <td th:text="${project.project_description}"></td>
                     <td>
                         <!-- Delete user link -->
-                        <a th:href="@{/admin/deleteProjectId/{id}(id=${project.project_id})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/admin/editProjectId/{id}(id=${project.project_id})}" class="btn btn-primary">Изменить</a>
+                        <a th:href="@{/admin/deleteProjectId/{id}(id=${project.project_id})}" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -221,7 +223,7 @@
                 <p th:text="${successMessage}"></p>
             </div>
 
-            <!-- TaskType Table -->
+            <!-- LinkedTaskType Table -->
             <table class="table">
                 <thead>
                 <tr>
@@ -230,19 +232,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Loop through status and display them in the table -->
+                <!-- Loop through linkedTaskTypes and display them in the table -->
                 <tr  th:each="linkedType : ${linkedTaskTypes}" scope="row">
                     <td th:text="${linkedType.linked_task_type_id}"></td>
                     <td th:text="${linkedType.linked_task_type}"></td>
                     <td>
                         <!-- Delete user link -->
-                        <a th:href="@{/admin/deleteLinkedTaskType/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/admin/editLinkedTaskTypeId/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-primary">Изменить</a>
+                        <a th:href="@{/admin/deleteLinkedTaskType/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <!-- Form for adding a new task type -->
+            <!-- Form for adding a new linked task type -->
             <h2>Добавление типа связи с задачей</h2>
             <div>
                 <form th:action="@{/admin/addLinkedTaskType}" th:object="${newLinkedTaskType}" method="post">
@@ -263,7 +266,7 @@
                 <p th:text="${successMessage}"></p>
             </div>
 
-            <!-- TaskType Table -->
+            <!-- Priority Table -->
             <table class="table">
                 <thead>
                 <tr>
@@ -272,19 +275,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Loop through status and display them in the table -->
+                <!-- Loop through Priority and display them in the table -->
                 <tr  th:each="priority : ${priorities}" scope="row">
                     <td th:text="${priority.priority_id}"></td>
                     <td th:text="${priority.priority}"></td>
                     <td>
-                        <!-- Delete user link -->
-                        <a th:href="@{/admin/deletePriority/{id}(id=${priority.priority_id})}" class="btn btn-danger">Delete</a>
+                        <!-- Delete/edit user link -->
+                        <a th:href="@{/admin/editPriorityId/{id}(id=${priority.priority_id})}" class="btn btn-primary">Изменить</a>
+                        <a th:href="@{/admin/deletePriority/{id}(id=${priority.priority_id})}" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <!-- Form for adding a new task type -->
+            <!-- Form for adding a new Priority -->
             <h2>Добавление приоритета</h2>
             <div>
                 <form th:action="@{/admin/addPriority}" th:object="${newPriority}" method="post">

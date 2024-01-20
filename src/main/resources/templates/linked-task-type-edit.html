@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+<head>
+    <title>Редактирование типа связи с задачей</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+    <div class="container mt-5 mb-5">
+        <h2>Редактирование типа  связи с задачей</h2>
+        <form th:action="@{/admin/editLinkedTaskType}" th:object="${editLinkedTaskType}" method="post">
+            <input type="hidden" th:field="*{linked_task_type_id}"/>
+            <div class="form-group">
+                <label for="editLinkedTaskTypeName">Название типа связи с задачей: </label>
+                <input type="text" id="editLinkedTaskTypeName" class="form-control" th:field="*{linked_task_type}" required/><br/>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+        </form>
+
+    </div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>
