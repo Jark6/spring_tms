@@ -139,7 +139,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/deleteLinkedTaskType/{LinkedTaskTypeId}")
+    @GetMapping("/deleteLinkedTaskTypeId/{LinkedTaskTypeId}")
     public String deleteLinkedTaskType(@PathVariable Long LinkedTaskTypeId, RedirectAttributes redirectAttributes) {
         // Удаление типа связи
         linkedTaskTypeRepository.deleteById(LinkedTaskTypeId);
@@ -147,7 +147,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/deletePriority/{PriorityId}")
+    @GetMapping("/deletePriorityId/{PriorityId}")
     public String deletePriority(@PathVariable Long PriorityId, RedirectAttributes redirectAttributes) {
         // Удаление приоритета
         priorityRepository.deleteById(PriorityId);

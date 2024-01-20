@@ -106,7 +106,8 @@
                     <td>
                         <!-- Delete/Edit user link -->
                         <a th:href="@{/admin/editTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-primary">Изменить</a>
-                        <a th:href="@{/admin/deleteTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-danger">Удалить</a>
+<!--                        <a th:href="@{/admin/deleteTaskTypeId/{id}(id=${type.task_type_id})}" class="btn btn-danger">Удалить</a>-->
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" data-href="/admin/deleteTaskTypeId/" data-designator="тип задачи" th:data-id="${type.task_type_id}" th:data-name="${type.task_type}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -149,7 +150,8 @@
                     <td>
                         <!-- Delete/edit status -->
                         <a th:href="@{/admin/editStatusId/{id}(id=${status.status_id})}" class="btn btn-primary">Изменить</a>
-                        <a th:href="@{/admin/deleteStatusId/{id}(id=${status.status_id})}" class="btn btn-danger">Удалить</a>
+<!--                        <a th:href="@{/admin/deleteStatusId/{id}(id=${status.status_id})}" class="btn btn-danger">Удалить</a>-->
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal"  data-operation="delete" data-href="/admin/deleteStatusId/" data-designator="статус" th:data-id="${status.status_id}" th:data-name="${status.status}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -163,7 +165,7 @@
                         <label for="statusName">Название статуса: </label>
                         <input type="text" id="statusName" class="form-control" placeholder="Наименование статуса" th:field="*{status}" required/><br/>
 
-                        <button type="submit" class="btn btn-primary">Добавить тип задачи</button>
+                        <button type="submit" class="btn btn-primary">Добавить статус</button>
                     </div>
                 </form>
             </div>
@@ -193,7 +195,8 @@
                     <td>
                         <!-- Delete user link -->
                         <a th:href="@{/admin/editProjectId/{id}(id=${project.project_id})}" class="btn btn-primary">Изменить</a>
-                        <a th:href="@{/admin/deleteProjectId/{id}(id=${project.project_id})}" class="btn btn-danger">Удалить</a>
+<!--                        <a th:href="@{/admin/deleteProjectId/{id}(id=${project.project_id})}" class="btn btn-danger">Удалить</a>-->
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" data-href="/admin/deleteProjectId/" data-designator="проект" th:data-id="${project.project_id}" th:data-name="${project.project_name}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -239,7 +242,8 @@
                     <td>
                         <!-- Delete user link -->
                         <a th:href="@{/admin/editLinkedTaskTypeId/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-primary">Изменить</a>
-                        <a th:href="@{/admin/deleteLinkedTaskType/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-danger">Удалить</a>
+<!--                        <a th:href="@{/admin/deleteLinkedTaskType/{id}(id=${linkedType.linked_task_type_id})}" class="btn btn-danger">Удалить</a>-->
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" data-href="/admin/deleteLinkedTaskTypeId/" data-designator="тип связи" th:data-id="${linkedType.linked_task_type_id}" th:data-name="${linkedType.linked_task_type}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -282,7 +286,8 @@
                     <td>
                         <!-- Delete/edit user link -->
                         <a th:href="@{/admin/editPriorityId/{id}(id=${priority.priority_id})}" class="btn btn-primary">Изменить</a>
-                        <a th:href="@{/admin/deletePriority/{id}(id=${priority.priority_id})}" class="btn btn-danger">Удалить</a>
+<!--                        <a th:href="@{/admin/deletePriority/{id}(id=${priority.priority_id})}" class="btn btn-danger">Удалить</a>-->
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" data-href="/admin/deletePriorityId/" data-designator="приоритет" th:data-id="${priority.priority_id}" th:data-name="${priority.priority}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -297,6 +302,7 @@
                         <input type="text" id="priorityName" class="form-control" placeholder="Название приоритета" th:field="*{priority}" required/><br/>
 
                         <button type="submit" class="btn btn-primary">Добавить приоритет</button>
+<!--                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal" data-operation="add">Добавить приоритет</a>-->
                     </div>
                 </form>
             </div>
@@ -313,7 +319,42 @@
             })
             });
         </script>-->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Подтверждение операции</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmationMessage">Вы уверены, что хотите выполнить данную операцию?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <a href="#" id="confirmOperation" class="btn btn-primary">Подтвердить</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <div th:insert="blocks/footer :: footer"></div>
+<script>
+    $('#confirmationModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var operation = button.data('operation'); // Extract info from data-* attributes
+
+        var modal = $(this);
+        var confirmOperationButton = modal.find('#confirmOperation');
+            var designator = button.data('designator')
+            var id = button.data('id');
+            var name = button.data('name');
+            var href = button.data('href');
+            modal.find('#confirmationMessage').text('Вы уверены, что хотите удалить ' + designator + ' "' + name + '"?');
+            confirmOperationButton.attr('href', href + id);
+           // Добавьте условия для других операций, если необходимо
+    });
+</script>
 </body>
 </html>
