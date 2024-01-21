@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+<head>
+    <title>Gantt chart</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Moment.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- Moment.js Adapter for Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.14.0/dist/chartjs-adapter-moment.min.js"></script>
+    <!-- Datalabels CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5 mb-5">
+    <canvas id="ganttChart" width="800" height="400"></canvas>
+</div>
+
+<script>
+    // Sample Data (Replace with your actual tasks and timeline)
+    var tasks = [
+        { label: 'Task 1', start: '2022-01-01', end: '2022-01-10' },
+        { label: 'Task 2', start: '2022-01-05', end: '2022-01-15' },
+        // Add more tasks as needed
+    ];
+
+    // Function to convert date string to Date object
+    function parseDate(dateString) {
+        var parts = dateString.split('-');
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    // Prepare data for Gantt Chart
+    var ganttData = tasks.map(function (task) {
+        return {
+            label: task.label,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            data: [{
+                x: parseDate(task.start),
+                y: task.label,
+                xMax: parseDate(task.end),
+            }]
+        };
+    });
+
+    // Create Gantt Chart
+    var ctx = document.getElementById('ganttChart').getContext('2d');
+    var ganttChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            datasets: ganttData,
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Timeline',
+                    },
+                    time: {
+                        parser: 'YYYY-MM-DD',
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM YYYY'
+                        }
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Tasks',
+                    },
+                },
+            },
+        },
+    });
+</script>
+
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

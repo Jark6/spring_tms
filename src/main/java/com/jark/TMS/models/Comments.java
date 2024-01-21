@@ -9,7 +9,7 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String content;
 
     @ManyToOne
@@ -19,7 +19,7 @@ public class Comments {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
-
+    @Column
     private LocalDateTime timestamp;
 
     // Геттеры, сеттеры и другие методы

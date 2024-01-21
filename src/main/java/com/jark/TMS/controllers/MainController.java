@@ -18,4 +18,9 @@ public class MainController {
         model.addAttribute("title", "Страница про нас");
         return "about";
     }
+    @GetMapping("/gannt")
+    public String gannt(Model model) {
+        model.addAttribute("title", "Диаграмма Ганнта");
+        return "gannt-chart";
+    }
 }

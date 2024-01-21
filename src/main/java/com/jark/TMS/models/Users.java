@@ -3,6 +3,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,16 +28,22 @@ public class Users {
 
     @Column
     private String role;
+    @Column
+    private LocalDateTime timestamp_create;
+    @Column
+    private LocalDateTime timestamp_edit;
     public Users(){
     }
 
-    public Users(String first_name, String second_name, String family_name, String login, String passwordHash, String role) {
+    public Users(String first_name, String second_name, String family_name, String login, String passwordHash, String role, LocalDateTime timestamp_create, LocalDateTime timestamp_edit) {
         this.first_name = first_name;
         this.second_name = second_name;
         this.family_name = family_name;
         this.login = login;
         this.passwordHash=passwordHash;
         this.role=role;
+        this.timestamp_create = timestamp_create;
+        this.timestamp_edit = timestamp_edit;
     }
 
     public Long getUser_id() {
@@ -92,16 +99,29 @@ public class Users {
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }
-
     public List<Comments> getComments() {
         return comments;
     }
-
     public void setComments(List<Comments> comments) {
         this.comments = comments;
+    }
+
+    public LocalDateTime getTimestamp_create() {
+        return timestamp_create;
+    }
+
+    public void setTimestamp_create(LocalDateTime timestamp_create) {
+        this.timestamp_create = timestamp_create;
+    }
+
+    public LocalDateTime getTimestamp_edit() {
+        return timestamp_edit;
+    }
+
+    public void setTimestamp_edit(LocalDateTime timestamp_edit) {
+        this.timestamp_edit = timestamp_edit;
     }
 }

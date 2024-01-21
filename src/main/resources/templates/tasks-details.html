@@ -12,7 +12,7 @@
     <div th:each="el : ${tasks}" class="alert alert-secondary mt-2">
         <h1 th:text="'T-'+${el.task_id}"/>
         <h4 th:text="'Тема: '+${el.short_description}"/>
-        <p th:text="'Описание: '+${el.full_description}"/>
+        <p class="text-justify text-wrap" th:utext="'Описание: '+${el.full_description}"></p>
         <p th:text="'Срок до: '+${#dates.format(el.deadline, 'dd-MMMM-yyyy')}"/>
         <p th:if="${el.status_id != null}" th:text="'Статус: ' + ${el.status_id.status}"/>
         <p th:unless="${el.status_id != null}">Статус не найден</p>
@@ -35,9 +35,10 @@
             <div class="row justify-content-around">
                 <a th:href="'/tasks/' + ${el.task_id} + '/edit'" class="btn btn-outline-primary">Редактировать</a>
                 <a th:href="'/tasks'" class="btn btn-outline-secondary">Отмена</a>
-                <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">
-                    <button class="btn btn-outline-danger" type="submit">Удалить</button>
-                </form>
+<!--                <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">-->
+<!--                    <button class="btn btn-outline-danger" type="submit">Удалить</button>-->
+<!--                </form>-->
+                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" th:data-id="${el.task_id}" th:data-name="${el.short_description}">Удалить</button>
             </div>
         </div>
         <div>
@@ -65,9 +66,53 @@
             </div>
         </div>
     </div>
+    <!-- Модальное окно подтверждения удаления -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Подтверждение удаления</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmationMessage">Вы уверены, что хотите удалить задачу?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <form id="confirmOperationForm" action="" method="post">
+                        <input type="hidden" name="_method" value="POST"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<!--                        <input type="hidden" name="_csrf" value="${_csrf.token}" />-->
+                        <button type="submit" class="btn btn-danger">Подтвердить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#confirmationModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var operation = button.data('operation');
+            var name = button.data('name');
+            console.log('Operation:', operation);
+            console.log('Name:', name);
+            var modal = $(this);
+            var confirmOperationForm = modal.find('#confirmOperationForm');
+            if (operation === 'delete') {
+                var id = button.data('id');
+                modal.find('#confirmationMessage').text('Вы уверены, что хотите удалить задачу ' + name + '?');
+                confirmOperationForm.attr('action', '/tasks/' + id + '/remove');
+                console.log('id:', id);
+            }
+        });
+    });
+</script>
 <script th:inline="javascript">
     $(document).ready(function () {
         $('#commentForm').submit(function () {
