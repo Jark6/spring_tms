@@ -25,10 +25,10 @@ public class RegistrationController {
         return "registration";
     }
     @PostMapping
-    public String addUser(@ModelAttribute Users user, @RequestParam String confirmPassword, RedirectAttributes redirectAttributes){
+    public String addUser(@ModelAttribute Users newUser, @RequestParam String confirmPassword, RedirectAttributes redirectAttributes){
         try {
-            user.setTimestamp_create(LocalDateTime.now());
-            usersService.saveUser(user, confirmPassword);
+            newUser.setTimestamp_create(LocalDateTime.now());
+            usersService.saveUser(newUser, confirmPassword);
             redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно создан");
             return "redirect:/login";
         } catch (RuntimeException e){

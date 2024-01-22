@@ -20,12 +20,20 @@ import org.slf4j.LoggerFactory;
 @EnableWebSecurity
 public class WebSecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
-/*    private UserDetailsService userDetailsService;*/
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    @Autowired
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+    //@Autowired
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -49,8 +57,8 @@ public class WebSecurityConfig {
 
 
     }
-
-    @Bean
+//4 debug
+   /* @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails user = User.builder()
                         .username("user")
@@ -64,10 +72,7 @@ public class WebSecurityConfig {
                         .roles("ADMIN")
                         .build();
         return new InMemoryUserDetailsManager(user, admin);
-    }
-  /*  @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }*/
+
 
 }

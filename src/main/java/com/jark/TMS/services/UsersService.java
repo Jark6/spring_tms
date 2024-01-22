@@ -30,6 +30,28 @@ public class UsersService {
         // Если хэши совпадают, сохраняем пользователя
         return usersRepository.save(user);
     }
+    public Users saveUser(Users user) {
+        // Проверка наличия пользователя с таким логином
+        Users userFromDB = usersRepository.findByLogin(user.getLogin());
+        if (userFromDB != null) {
+            throw new RuntimeException("Пользователь с таким логином уже существует");
+        }
+        // Если все ок, сохраняем пользователя
+        return usersRepository.save(user);
+    }
+    public void resetPassword(Long userId) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        // Генерация нового пароля, вы можете использовать свой способ генерации
+        String newPassword = user.getLogin();
+
+        // Хэширование и установка нового пароля
+        user.setPasswordHash(newPassword);
+
+        // Сохранение пользователя
+        usersRepository.save(user);
+    }
 
     public Users findByLogin(String login) {
         return usersRepository.findByLogin(login);

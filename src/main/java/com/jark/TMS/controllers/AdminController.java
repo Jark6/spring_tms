@@ -7,6 +7,7 @@ import com.jark.TMS.repo.StatusRepository;
 import com.jark.TMS.repo.ProjectRepository;
 import com.jark.TMS.repo.LinkedTaskTypeRepository;
 import com.jark.TMS.repo.PriorityRepository;
+import com.jark.TMS.services.UsersService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +29,17 @@ public class AdminController {
     private final LinkedTaskTypeRepository linkedTaskTypeRepository;
     private final PriorityRepository priorityRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private final UsersService usersService;
 
-    public AdminController(UsersRepository usersRepository, TaskTypeRepository taskTypeRepository, StatusRepository statusRepository, ProjectRepository projectRepository, LinkedTaskTypeRepository linkedTaskTypeRepository, PriorityRepository priorityRepository) {
+    public AdminController(UsersRepository usersRepository, TaskTypeRepository taskTypeRepository, StatusRepository statusRepository, ProjectRepository projectRepository, LinkedTaskTypeRepository linkedTaskTypeRepository, PriorityRepository priorityRepository, UsersService usersService) {
         this.usersRepository = usersRepository;
         this.taskTypeRepository = taskTypeRepository;
         this.statusRepository = statusRepository;
         this.projectRepository = projectRepository;
         this.linkedTaskTypeRepository = linkedTaskTypeRepository;
         this.priorityRepository = priorityRepository;
+
+        this.usersService = usersService;
     }
     @GetMapping
     public String adminDashboard(Model model) {
@@ -63,10 +67,15 @@ public class AdminController {
     @PostMapping("/addUser")
     public String addUser(@ModelAttribute("newUser") Users newUser, RedirectAttributes redirectAttributes) {
         // Добавление нового пользователя
-        newUser.setPasswordHash(passwordEncoder.encode(newUser.getPasswordHash())); // Пример
-        usersRepository.save(newUser);
-        redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно добавлен");
-        return "redirect:/admin";
+        try {
+            newUser.setTimestamp_create(LocalDateTime.now());
+            usersService.saveUser(newUser);
+            redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно создан");
+            return "redirect:/admin";
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin";
+        }
     }
 
     @PostMapping("/addTaskType")
@@ -152,7 +161,6 @@ public class AdminController {
     public String deletePriority(@PathVariable Long PriorityId, RedirectAttributes redirectAttributes) {
         // Удаление приоритета
         priorityRepository.deleteById(PriorityId);
-        System.out.println(PriorityId);
         redirectAttributes.addFlashAttribute("successMessage", "Приоритет успешно удален");
         return "redirect:/admin";
     }
@@ -171,10 +179,6 @@ public class AdminController {
     @PostMapping("/editUserId")
     public String saveEditedUser(@ModelAttribute("editUserId") Users editedUser, RedirectAttributes redirectAttributes) {
         // Сохраните отредактированного пользователя
-        //нужно разобраться почему сбрасывает пароль
-     /*   editedUser.setPasswordHash(editedUser.getPasswordHash());
-        editedUser.setTimestamp_create(editedUser.getTimestamp_create());
-        editedUser.setTimestamp_edit(LocalDateTime.now());*/
         Users originalUser = usersRepository.findById(editedUser.getUser_id())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         originalUser.setFirst_name(editedUser.getFirst_name());
@@ -186,6 +190,17 @@ public class AdminController {
         usersRepository.save(originalUser);
         redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно изменен");
         // Перенаправьте на страницу с таблицей типов задач
+        return "redirect:/admin";
+    }
+    @PostMapping("/resetPassword/{UserId}")
+    public String resetPassword(@PathVariable  Long UserId, RedirectAttributes redirectAttributes) {
+        // Получите информацию о пользователе
+        Users user = usersRepository.findById(UserId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+        user.setPasswordHash(user.getLogin());
+        user.setTimestamp_edit(LocalDateTime.now());
+        usersRepository.save(user);
+        redirectAttributes.addFlashAttribute("successMessage", "Пароль сброшен");
         return "redirect:/admin";
     }
 
