@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -25,6 +27,7 @@ public class RegistrationController {
     @PostMapping
     public String addUser(@ModelAttribute Users user, @RequestParam String confirmPassword, RedirectAttributes redirectAttributes){
         try {
+            user.setTimestamp_create(LocalDateTime.now());
             usersService.saveUser(user, confirmPassword);
             redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно создан");
             return "redirect:/login";

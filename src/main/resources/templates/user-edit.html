@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+<head>
+    <title>Редактирование проекта</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+    <div class="container mt-5 mb-5">
+        <h2>Редактирование пользователей</h2>
+        <form th:action="@{/admin/editUserId}" th:object="${editUserId}" method="post">
+            <input type="hidden" th:field="*{user_id}"/>
+            <div class="form-group">
+                <label for="editUserFirstName">Имя пользователя: </label>
+                <input type="text" id="editUserFirstName" class="form-control" th:field="*{first_name}" required/><br/>
+                <label for="editUserSecondName">Фамилия пользователя: </label>
+                <input type="text" id="editUserSecondName" class="form-control" th:field="*{second_name}" required/><br/>
+                <label for="editUserFamilyName">Отчество пользователя: </label>
+                <input type="text" id="editUserFamilyName" class="form-control" th:field="*{family_name}" required/><br/>
+                <label for="editLogin">Login пользователя: </label>
+                <input type="text" id="editLogin" class="form-control" th:field="*{login}" required/><br/>
+                <label for="editRole">Роль пользователя: </label>
+                <input type="text" id="editRole" class="form-control" th:field="*{role}" required/><br/>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+        </form>
+
+    </div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

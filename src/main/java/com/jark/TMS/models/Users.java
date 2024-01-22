@@ -22,6 +22,8 @@ public class Users {
     private String login;
     @Column
     private String passwordHash;
+    @Transient
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comments> comments;
@@ -35,12 +37,13 @@ public class Users {
     public Users(){
     }
 
-    public Users(String first_name, String second_name, String family_name, String login, String passwordHash, String role, LocalDateTime timestamp_create, LocalDateTime timestamp_edit) {
+    public Users(String first_name, String second_name, String family_name, String login, String passwordHash, String password, String role, LocalDateTime timestamp_create, LocalDateTime timestamp_edit) {
         this.first_name = first_name;
         this.second_name = second_name;
         this.family_name = family_name;
         this.login = login;
         this.passwordHash=passwordHash;
+        this.password = password;
         this.role=role;
         this.timestamp_create = timestamp_create;
         this.timestamp_edit = timestamp_edit;

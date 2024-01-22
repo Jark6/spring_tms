@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -153,6 +154,38 @@ public class AdminController {
         priorityRepository.deleteById(PriorityId);
         System.out.println(PriorityId);
         redirectAttributes.addFlashAttribute("successMessage", "Приоритет успешно удален");
+        return "redirect:/admin";
+    }
+    @GetMapping("/editUserId/{UserId}")
+    public String editUser(@PathVariable Long UserId, Model model) {
+        // Получите информацию о пользователе
+        Users user = usersRepository.findById(UserId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        // Передайте информацию о пользователе в модель
+        model.addAttribute("editUserId", user);
+
+        return "user-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editUserId")
+    public String saveEditedUser(@ModelAttribute("editUserId") Users editedUser, RedirectAttributes redirectAttributes) {
+        // Сохраните отредактированного пользователя
+        //нужно разобраться почему сбрасывает пароль
+     /*   editedUser.setPasswordHash(editedUser.getPasswordHash());
+        editedUser.setTimestamp_create(editedUser.getTimestamp_create());
+        editedUser.setTimestamp_edit(LocalDateTime.now());*/
+        Users originalUser = usersRepository.findById(editedUser.getUser_id())
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+        originalUser.setFirst_name(editedUser.getFirst_name());
+        originalUser.setSecond_name(editedUser.getSecond_name());
+        originalUser.setFamily_name(editedUser.getFamily_name());
+        originalUser.setLogin(editedUser.getLogin());
+        originalUser.setRole(editedUser.getRole());
+        originalUser.setTimestamp_edit(LocalDateTime.now());
+        usersRepository.save(originalUser);
+        redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно изменен");
+        // Перенаправьте на страницу с таблицей типов задач
         return "redirect:/admin";
     }
 
