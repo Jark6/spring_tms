@@ -87,7 +87,7 @@ public class Users {
         this.login = login;
     }
 
-    public void setPassword(String password) {
+    public void setPasswordHash(String password) {
         if (password != null) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             this.passwordHash = passwordEncoder.encode(password);

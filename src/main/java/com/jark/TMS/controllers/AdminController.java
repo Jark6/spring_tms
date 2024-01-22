@@ -62,7 +62,7 @@ public class AdminController {
     @PostMapping("/addUser")
     public String addUser(@ModelAttribute("newUser") Users newUser, RedirectAttributes redirectAttributes) {
         // Добавление нового пользователя
-        newUser.setPassword(passwordEncoder.encode(newUser.getPasswordHash())); // Пример
+        newUser.setPasswordHash(passwordEncoder.encode(newUser.getPasswordHash())); // Пример
         usersRepository.save(newUser);
         redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно добавлен");
         return "redirect:/admin";
