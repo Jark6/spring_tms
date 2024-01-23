@@ -9,26 +9,44 @@
 <body>
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5">
-    <h1>Список задач</h1>
-    <div th:each="el : ${tasks}" class="alert alert-secondary mt-2" th:sort="${el.task_id}">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-10">
-                    <h3 th:text="'T-' + ${el?.task_id}"/>
-                    <p th:text="${el?.short_description}"/>
-                    <a th:href="'/tasks/' + ${el?.task_id}" class="btn btn-outline-info">Подробнее</a>
-                </div>
-                <div class="col">
-                    <div id="taskTimestamp" class="d-flex justify-content-between align-items-left">
-                        <small class="muted" th:if="${el.timestamp_edit != null and el.timestamp_create != null}" th:utext="'Последнее изменение: <br/>'+${#temporals.format(el.timestamp_edit, 'dd-MMM-yyyy HH:mm:ss')}"></small>
-                        <small class="muted" th:if="${el.timestamp_create != null and el.timestamp_edit == null}" th:utext="'Задача создана: <br/>'+${#temporals.format(el.timestamp_create, 'dd-MMM-yyyy HH:mm:ss')}"></small>
-                        <small class="muted" th:if="${el.timestamp_create == null and el.timestamp_edit == null}"></small>
-                </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    <h1>Таблица задач</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Название</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Тип задачи</th>
+            <th scope="col">Срок исполнения</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Проект</th>
+            <th scope="col">Связанная задача</th>
+            <th scope="col">Тип связи</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Исполнитель</th>
+            <th scope="col">Создана</th>
+            <th scope="col">Изменена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through tasks and display them in the table -->
+        <tr  th:each="task : ${tasks}" scope="row" > <!--th:sort="${task.task_id}-->
+            <td th:text="${task.task_id}"></td>
+            <td th:utext="${task.short_description}"></td>
+            <td th:utext="${task.full_description}"></td>
+            <td th:text="${task.task_type_id.task_type}"></td>
+            <td th:text="${#dates.format(task.deadline, 'dd-MM-yyyy')}"></td>
+            <td th:text="${task.status_id.status}"></td>
+            <td th:text="${task.project_id.project_name}"></td>
+            <td th:text="'T-'+${task.linked_task_id}"></td>
+            <td th:text="${task.linked_task_type_id.linked_task_type}"></td>
+            <td th:text="${task.author_id.second_name}"></td>
+            <td th:text="${task.executor_id.second_name}"></td>
+            <td th:text="${#temporals.format(task.timestamp_create, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#temporals.format(task.timestamp_edit, 'dd-MM-yyyy')}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <!-- Подключение библиотеки toastr из CDN -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

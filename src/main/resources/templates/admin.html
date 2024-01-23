@@ -38,6 +38,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
+                    <th scope="col">Family Name</th>
                     <th scope="col">Login</th>
                     <th scope="col">Role</th>
                     <th scope="col">Password</th>
@@ -50,6 +51,7 @@
                 <tr  th:each="user : ${users}" scope="row">
                     <td th:text="${user.user_id}"></td>
                     <td th:text="${user.first_name}"></td>
+                    <td th:text="${user.second_name}"></td>
                     <td th:text="${user.family_name}"></td>
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.role}"></td>
@@ -78,7 +80,10 @@
                         <input type="text" id="firstName" class="form-control" placeholder="Имя" th:field="*{first_name}" required/><br/>
 
                         <label for="lastName">Last Name: </label>
-                        <input type="text" id="lastName" class="form-control" placeholder="Фамилия" th:field="*{family_name}" required/><br/>
+                        <input type="text" id="lastName" class="form-control" placeholder="Фамилия" th:field="*{second_name}" required/><br/>
+
+                        <label for="familyName">Family Name: </label>
+                        <input type="text" id="familyName" class="form-control" placeholder="Отчество" th:field="*{family_name}" required/><br/>
 
                         <label for="login">Login: </label>
                         <input type="text" id="login" class="form-control" placeholder="Login" th:field="*{login}" required/><br/>

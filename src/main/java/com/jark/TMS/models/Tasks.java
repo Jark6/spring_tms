@@ -3,6 +3,7 @@ package com.jark.TMS.models;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @Table(name="TASKS")
 public class Tasks {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long task_id;
     @ManyToOne
     @JoinColumn(name="task_type_id")
@@ -47,11 +48,14 @@ public class Tasks {
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<Comments> comments = new ArrayList<>();
+    @Column
+    private LocalDateTime timestamp_create;
+    @Column
+    private LocalDateTime timestamp_edit;
 
     public Tasks() {
     }
-
-    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id) {
+/*    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id) {
         this.task_type_id = task_type_id;
         this.status_id = status_id;
         this.short_description = short_description;
@@ -63,6 +67,22 @@ public class Tasks {
         this.executor_id = executor_id;
         this.author_id = author_id;
         this.priority_id = priority_id;
+        this.comments = comments;
+    }*/
+    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id, LocalDateTime timestampCreate, LocalDateTime timestampEdit) {
+        this.task_type_id = task_type_id;
+        this.status_id = status_id;
+        this.short_description = short_description;
+        this.full_description = full_description;
+        this.linked_task_id = linked_task_id;
+        this.linked_task_type_id = linked_task_type_id;
+        this.deadline = deadline;
+        this.project_id = project_id;
+        this.executor_id = executor_id;
+        this.author_id = author_id;
+        this.priority_id = priority_id;
+        timestamp_create = timestampCreate;
+        timestamp_edit = timestampEdit;
         this.comments = comments;
     }
 
@@ -168,5 +188,21 @@ public class Tasks {
 
     public void setComments(List<Comments> comments) {
         this.comments = comments;
+    }
+
+    public LocalDateTime getTimestamp_create() {
+        return timestamp_create;
+    }
+
+    public void setTimestamp_create(LocalDateTime timestamp_create) {
+        this.timestamp_create = timestamp_create;
+    }
+
+    public LocalDateTime getTimestamp_edit() {
+        return timestamp_edit;
+    }
+
+    public void setTimestamp_edit(LocalDateTime timestamp_edit) {
+        this.timestamp_edit = timestamp_edit;
     }
 }

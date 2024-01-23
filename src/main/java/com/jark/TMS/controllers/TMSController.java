@@ -50,6 +50,12 @@ public class TMSController {
         model.addAttribute("tasks", tasks);
         return "tasks-main";
     }
+    @GetMapping("/tasks/table")
+    public String tasksTable(Model model){
+        Iterable<Tasks> tasks = tasksRepository.findAll();
+        model.addAttribute("tasks", tasks);
+        return "tasks-table";
+    }
 
     @GetMapping("/tasks/add")
     public String taskAdd(Model model){
@@ -69,12 +75,14 @@ public class TMSController {
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes, Model model){
+        LocalDateTime timestampCreate = LocalDateTime.now();
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
-                linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id);
+                linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id, timestampCreate, null);
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
         return "redirect:/tasks";
     }
+
 
     @GetMapping("/tasks/{task_id}")
     public String taskDetails(@PathVariable(value = "task_id") long id, Model model){
@@ -109,8 +117,10 @@ public class TMSController {
             comment.setUser(user);
             comment.setTask(task);
             comment.setTimestamp(LocalDateTime.now());
-
-            commentsRepository.save(comment);}
+            commentsRepository.save(comment);
+            task.setTimestamp_edit(LocalDateTime.now());
+            tasksRepository.save(task);
+            }
 
         } else {
             // Обработка случая, когда пользователь не найден
@@ -157,6 +167,7 @@ public class TMSController {
         post.setExecutor_id(executor_id);
         post.setAuthor_id(author_id);
         post.setPriority_id(priority_id);
+        post.setTimestamp_edit(LocalDateTime.now());
         tasksRepository.save(post);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно изменена!");
         return "redirect:/tasks";
