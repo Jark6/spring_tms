@@ -10,6 +10,7 @@
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5">
     <h1>Таблица задач</h1>
+    <div class="table table-hover table-striped table-responsive-sm table-sm">
     <table class="table">
         <thead>
         <tr>
@@ -31,22 +32,23 @@
         <tbody>
         <!-- Loop through tasks and display them in the table -->
         <tr  th:each="task : ${tasks}" scope="row" > <!--th:sort="${task.task_id}-->
-            <td th:text="${task.task_id}"></td>
-            <td th:utext="${task.short_description}"></td>
+            <td style="white-space: nowrap" th:text="'T-'+${task.task_id}"></td>
+            <td  th:utext="${task.short_description}"></td>
             <td th:utext="${task.full_description}"></td>
-            <td th:text="${task.task_type_id.task_type}"></td>
+            <td th:text="${task.task_type_id != null} ? ${task.task_type_id.task_type} : ''"></td>
             <td th:text="${#dates.format(task.deadline, 'dd-MM-yyyy')}"></td>
-            <td th:text="${task.status_id.status}"></td>
-            <td th:text="${task.project_id.project_name}"></td>
-            <td th:text="'T-'+${task.linked_task_id}"></td>
-            <td th:text="${task.linked_task_type_id.linked_task_type}"></td>
-            <td th:text="${task.author_id.second_name}"></td>
-            <td th:text="${task.executor_id.second_name}"></td>
-            <td th:text="${#temporals.format(task.timestamp_create, 'dd-MM-yyyy')}"></td>
-            <td th:text="${#temporals.format(task.timestamp_edit, 'dd-MM-yyyy')}"></td>
+            <td th:text="${task.status_id != null} ? ${task.status_id.status} : ''"></td>
+            <td th:text="${task.project_id != null} ? ${task.project_id.project_name} : ''"></td>
+            <td th:text="${task.linked_task_id != null} ? 'T-'+${task.linked_task_id} : ''"></td>
+            <td th:text="${task.linked_task_type_id != null} ? ${task.linked_task_type_id.linked_task_type} : ''"></td>
+            <td th:text="${task.author_id != null} ? ${task.author_id.second_name} : ''"></td>
+            <td th:text="${task.executor_id != null} ? ${task.executor_id.second_name} : ''"></td>
+            <td th:text="${#temporals.format(task.timestamp_create, 'dd-MM-yyyy')}" style="white-space: nowrap" ></td>
+            <td th:text="${#temporals.format(task.timestamp_edit, 'dd-MM-yyyy')}" style="white-space: nowrap" ></td>
         </tr>
         </tbody>
     </table>
+    </div>
 </div>
 <!-- Подключение библиотеки toastr из CDN -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

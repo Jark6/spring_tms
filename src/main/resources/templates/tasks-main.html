@@ -20,7 +20,7 @@
                 </div>
                 <div class="col">
                     <div id="taskTimestamp" class="d-flex justify-content-between align-items-left">
-                        <small class="muted" th:if="${el.timestamp_edit != null and el.timestamp_create != null}" th:utext="'Последнее изменение: <br/>'+${#temporals.format(el.timestamp_edit, 'dd-MMM-yyyy HH:mm:ss')}"></small>
+                        <small class="muted" th:if="${el.timestamp_edit != null}" th:utext="'Последнее изменение: <br/>'+${#temporals.format(el.timestamp_edit, 'dd-MMM-yyyy HH:mm:ss')}"></small>
                         <small class="muted" th:if="${el.timestamp_create != null and el.timestamp_edit == null}" th:utext="'Задача создана: <br/>'+${#temporals.format(el.timestamp_create, 'dd-MMM-yyyy HH:mm:ss')}"></small>
                         <small class="muted" th:if="${el.timestamp_create == null and el.timestamp_edit == null}"></small>
                 </div>

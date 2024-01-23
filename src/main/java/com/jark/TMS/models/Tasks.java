@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name="TASKS")
 public class Tasks {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long task_id;
     @ManyToOne
     @JoinColumn(name="task_type_id")
@@ -46,7 +46,7 @@ public class Tasks {
     @JoinColumn(name = "priority_id", nullable = true)
     private Priority priority_id;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comments> comments = new ArrayList<>();
     @Column
     private LocalDateTime timestamp_create;
@@ -55,20 +55,6 @@ public class Tasks {
 
     public Tasks() {
     }
-/*    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id) {
-        this.task_type_id = task_type_id;
-        this.status_id = status_id;
-        this.short_description = short_description;
-        this.full_description = full_description;
-        this.linked_task_id = linked_task_id;
-        this.linked_task_type_id = linked_task_type_id;
-        this.deadline = deadline;
-        this.project_id = project_id;
-        this.executor_id = executor_id;
-        this.author_id = author_id;
-        this.priority_id = priority_id;
-        this.comments = comments;
-    }*/
     public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id, LocalDateTime timestampCreate, LocalDateTime timestampEdit) {
         this.task_type_id = task_type_id;
         this.status_id = status_id;
@@ -81,8 +67,8 @@ public class Tasks {
         this.executor_id = executor_id;
         this.author_id = author_id;
         this.priority_id = priority_id;
-        timestamp_create = timestampCreate;
-        timestamp_edit = timestampEdit;
+        this.timestamp_create = timestampCreate;
+        this.timestamp_edit = timestampEdit;
         this.comments = comments;
     }
 

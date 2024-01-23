@@ -25,7 +25,7 @@ public class Users {
     @Transient
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comments> comments;
 
     @Column
