@@ -4,20 +4,15 @@
     <title>Gantt chart</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Moment.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <!-- Moment.js Adapter for Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.14.0/dist/chartjs-adapter-moment.min.js"></script>
-    <!-- Datalabels CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5 mb-5">
     <canvas id="ganttChart" width="800" height="400"></canvas>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
     // Sample Data (Replace with your actual tasks and timeline)
     var tasks = [
@@ -49,8 +44,8 @@
 
     // Create Gantt Chart
     var ctx = document.getElementById('ganttChart').getContext('2d');
-    var ganttChart = new Chart(ctx, {
-        type: 'horizontalBar',
+    const ganttChart = new Chart(ctx, {
+        type: 'bar',
         data: {
             datasets: ganttData,
         },

@@ -5,6 +5,7 @@
             <a class="p-2 text-dark" href="/">Главная</a>
             <a class="p-2 text-dark" href="/about">Про нас</a>
             <a class="p-2 text-dark" th:href="@{/tasks}" sec:authorize="isAuthenticated()">Список Задач</a>
+            <a class="p-2 text-dark" th:href="@{/reports}" sec:authorize="isAuthenticated()">Отчеты</a>
             <a class="p-2 text-dark" th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">Панель администратора</a>
             <a class="p-2 btn btn-primary"  th:href="@{/tasks/add}" sec:authorize="isAuthenticated()"><strong class="">+</strong> Добавить задачу</a>
         </nav>
