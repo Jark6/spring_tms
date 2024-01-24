@@ -168,16 +168,16 @@ public class TMSController {
         Map<String, String> changedFields = new HashMap<>();
 
         // Сравниваем новые значения с существующими значениями
-        compareAndAddChange(changedFields, "Тип задачи", existingTask.getTask_type_id(), task_type_id);
-        compareAndAddChange(changedFields, "Статус", existingTask.getStatus_id(), status_id);
-        compareAndAddChange(changedFields, "Краткое описание", existingTask.getShort_description(), short_description);
-        compareAndAddChange(changedFields, "Полное описание", existingTask.getFull_description(), full_description);
-        compareAndAddChange(changedFields, "Связанная задача", existingTask.getLinked_task_id(), linked_task_id);
-        compareAndAddChange(changedFields, "Тип связи", existingTask.getLinked_task_type_id(), linked_task_type_id);
-        compareAndAddChange(changedFields, "Срок выполнения", existingTask.getDeadline(), deadline);
-        compareAndAddChange(changedFields, "Проект", existingTask.getProject_id(), project_id);
-        compareAndAddChange(changedFields, "Автор", existingTask.getAuthor_id(), author_id);
-        compareAndAddChange(changedFields, "Исполнитель", existingTask.getExecutor_id(), executor_id);
+        compareAndAddChange(changedFields, "Тип задачи", existingTask.getTask_type_id(), existingTask.getTask_type_id().getTask_type(), task_type_id);
+        compareAndAddChange(changedFields, "Статус", existingTask.getStatus_id(), existingTask.getStatus_id().getStatus(), status_id);
+        compareAndAddChange(changedFields, "Краткое описание", existingTask.getShort_description(), existingTask.getShort_description(), short_description);
+        compareAndAddChange(changedFields, "Полное описание", existingTask.getFull_description(), existingTask.getFull_description(), full_description);
+        compareAndAddChange(changedFields, "Связанная задача", existingTask.getLinked_task_id(),existingTask.getLinked_task_id(), linked_task_id);
+        compareAndAddChange(changedFields, "Тип связи", existingTask.getLinked_task_type_id(), existingTask.getLinked_task_type_id().getLinked_task_type(), linked_task_type_id);
+        compareAndAddChange(changedFields, "Срок выполнения", existingTask.getDeadline(), existingTask.getDeadline(), deadline);
+        compareAndAddChange(changedFields, "Проект", existingTask.getProject_id(),existingTask.getProject_id().getProject_name(), project_id);
+        compareAndAddChange(changedFields, "Автор", existingTask.getAuthor_id(), existingTask.getAuthor_id().getFullName(), author_id);
+        compareAndAddChange(changedFields, "Исполнитель", existingTask.getExecutor_id(), existingTask.getExecutor_id().getFullName(), executor_id);
 
         // Обновляем задачу
         existingTask.setTask_type_id(task_type_id);
@@ -220,9 +220,9 @@ public class TMSController {
     }
 
     // Метод для сравнения значений и добавления измененных полей в Map
-    private <T> void compareAndAddChange(Map<String, String> changedFields, String fieldName, T oldValue, T newValue) {
+    private <T> void compareAndAddChange(Map<String, String> changedFields, String fieldName, T oldValue, T oldConvertedValue, T newValue) {
         if (oldValue == null && newValue != null || (oldValue != null && !oldValue.equals(newValue))) {
-            changedFields.put(fieldName, oldValue != null ? oldValue.toString() : "null");
+            changedFields.put(fieldName, oldValue != null ? oldConvertedValue.toString() : "null");
         }
     }
 

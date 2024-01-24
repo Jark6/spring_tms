@@ -127,4 +127,9 @@ public class Users {
     public void setTimestamp_edit(LocalDateTime timestamp_edit) {
         this.timestamp_edit = timestamp_edit;
     }
+
+    public StringBuilder getFullName(){
+        StringBuilder fullName = new StringBuilder().append(getSecond_name()).append(" ").append(getFirst_name());
+        return fullName;
+    }
 }
