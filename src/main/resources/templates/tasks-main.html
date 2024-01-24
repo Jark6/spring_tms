@@ -9,7 +9,22 @@
 <body>
 <header th:insert="blocks/header :: header"></header>
 <div class="container mt-5">
-    <h1>Список задач</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Список задач</h1>
+            </div>
+            <div class="col-md-4 d-flex justify-content-end">
+                <div class="d-flex flex-column justify-content-end align-items-center">
+                    <label for="taskPanel" class="form-label mb-0"><small>Режим отображения задач</small></label><br>
+                    <div id="taskPanel" class="btn-group-sm ml-2" role="group" aria-label="taskPanel">
+                        <a class="btn btn-secondary" href="/tasks">Список</a>
+                        <a class="btn btn-secondary" href="/tasks/table">Таблица</a>
+                    </div></br>
+                </div>
+            </div>
+        </div>
+    </div>
     <div th:each="el : ${tasks}" class="alert alert-secondary mt-2" th:sort="${el.task_id}">
         <div class="container-fluid">
             <div class="row">
