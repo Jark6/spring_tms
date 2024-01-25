@@ -1,5 +1,8 @@
 package com.jark.TMS.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name="TASKS")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "task_id")
 public class Tasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +30,7 @@ public class Tasks {
     private String full_description;
     @Column(nullable = true)
     @JoinColumn(name = "task_id")
+    @JsonIgnore
     private Long linked_task_id;
     @ManyToOne
     @JoinColumn(name = "linked_task_type_id")
@@ -47,6 +52,7 @@ public class Tasks {
     private Priority priority_id;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<Comments> comments = new ArrayList<>();
     @Column
     private LocalDateTime timestamp_create;

@@ -1,4 +1,5 @@
 package com.jark.TMS.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jakarta.persistence.*;
@@ -26,6 +27,7 @@ public class Users {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<Comments> comments;
 
     @Column

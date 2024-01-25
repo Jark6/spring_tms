@@ -33,6 +33,12 @@ public class MainController {
         return "reports-executor";
     }
 
+    @GetMapping("/reports/author")
+    public String reportsAuthor(Model model) {
+        model.addAttribute("title", "Отчеты по авторам");
+        return "reports-author";
+    }
+
     @GetMapping("/gannt")
     public String gannt(Model model) {
         model.addAttribute("title", "Диаграмма Ганнта");

@@ -47,7 +47,7 @@
         <select class="form-control" id="SelectProject1" aria-label="Default select example" name="project_id">
             <option selected value="" disabled="disabled">Выберите проект</option>
             <option th:each="project:${projects}" th:value="${project.project_id}" th:text="${project.project_name}"
-            th:selected="${project.project_id == (task.project_id != null ? task.project_id.getProject_id() : null)}"></option>
+            th:selected="${project.project_id == (task.project_id != null ? task.project_id.getProject_id() : '')}"></option>
         </select><br>
         <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
         <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
