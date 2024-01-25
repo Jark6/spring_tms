@@ -4,6 +4,7 @@ import com.jark.TMS.models.*;
 import com.jark.TMS.repo.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -259,8 +260,8 @@ public class TMSController {
                 return "";
         }
     }
-
-   @PostMapping("/tasks/{task_id}/remove")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/tasks/{task_id}/remove")
     public String taskPostDelete(@PathVariable(value = "task_id") long id, RedirectAttributes redirectAttributes, Model model){
         Tasks task = tasksRepository.findById(id).orElseThrow();
         tasksRepository.delete(task);

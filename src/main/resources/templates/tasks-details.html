@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
 <head>
     <title>Задачи подробнее</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -38,7 +38,9 @@
 <!--                <form th:action="'/tasks/' + ${el.task_id} + '/remove'" method="post">-->
 <!--                    <button class="btn btn-outline-danger" type="submit">Удалить</button>-->
 <!--                </form>-->
-                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" th:data-id="${el.task_id}" th:data-name="${el.short_description}">Удалить</button>
+                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmationModal"
+                        data-operation="delete" th:data-id="${el.task_id}" th:data-name="${el.short_description}"
+                        sec:authorize="hasRole('ADMIN')">Удалить</button>
             </div>
         </div>
         <div>
