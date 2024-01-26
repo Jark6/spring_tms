@@ -179,6 +179,8 @@ public class TMSController {
         compareAndAddChange(changedFields, "Тип связи", existingTask.getLinked_task_type_id(),
                 existingTask.getLinked_task_type_id() !=null ? existingTask.getLinked_task_type_id().getLinked_task_type() : "", linked_task_type_id);
         compareAndAddChange(changedFields, "Срок выполнения", existingTask.getDeadline(), existingTask.getDeadline(), deadline);
+        compareAndAddChange(changedFields, "Приоритет", existingTask.getPriority_id(),
+                existingTask.getPriority_id() != null ? existingTask.getPriority_id().getPriority() : "", priority_id);
         compareAndAddChange(changedFields, "Проект", existingTask.getProject_id(),
                 existingTask.getProject_id() != null ? existingTask.getProject_id().getProject_name() : "", project_id);
         compareAndAddChange(changedFields, "Автор", existingTask.getAuthor_id(),
@@ -194,6 +196,7 @@ public class TMSController {
         existingTask.setLinked_task_id(linked_task_id);
         existingTask.setLinked_task_type_id(linked_task_type_id);
         existingTask.setDeadline(deadline);
+        existingTask.setPriority_id(priority_id);
         existingTask.setProject_id(project_id);
         existingTask.setAuthor_id(author_id);
         existingTask.setExecutor_id(executor_id);
@@ -250,6 +253,8 @@ public class TMSController {
                 return task.getLinked_task_type_id() != null ? task.getLinked_task_type_id().getLinked_task_type() : "";
             case "Срок выполнения":
                 return task.getDeadline().toString();
+            case "Приоритет":
+                return task.getPriority_id() != null ? task.getPriority_id().getPriority() : "";
             case "Проект":
                 return task.getProject_id() != null ? task.getProject_id().getProject_name() : "";
             case "Автор":

@@ -1,0 +1,284 @@
+2024-01-26T18:30:40.329+05:00  INFO 6112 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 6112 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:30:40.329+05:00  INFO 6112 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:30:40.588+05:00  INFO 6112 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:30:40.603+05:00  INFO 6112 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:30:40.721+05:00  INFO 6112 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:30:40.722+05:00  INFO 6112 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:30:40.722+05:00  INFO 6112 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:30:40.741+05:00  INFO 6112 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:30:40.742+05:00  INFO 6112 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 411 ms
+2024-01-26T18:30:40.823+05:00  INFO 6112 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:30:40.830+05:00  INFO 6112 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:30:40.831+05:00  INFO 6112 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:30:40.831+05:00  INFO 6112 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-01-26T18:30:40.847+05:00  INFO 6112 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@195dd343
+2024-01-26T18:30:40.848+05:00  INFO 6112 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-01-26T18:30:40.865+05:00  INFO 6112 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:30:40.920+05:00  INFO 6112 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:30:40.954+05:00  INFO 6112 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:30:41.057+05:00  WARN 6112 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:30:41.174+05:00  INFO 6112 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:30:41.182+05:00  INFO 6112 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:30:41.182+05:00 ERROR 6112 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:30:41.189+05:00  INFO 6112 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4ba920b8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6a37e73d, org.springframework.security.web.context.SecurityContextHolderFilter@1fd3d6cc, org.springframework.security.web.header.HeaderWriterFilter@27da631, org.springframework.security.web.csrf.CsrfFilter@56594c85, org.springframework.security.web.authentication.logout.LogoutFilter@5d841ba3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@34201cd5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3729cd7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3343b732, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@14b95648, org.springframework.security.web.access.ExceptionTranslationFilter@111422a1, org.springframework.security.web.access.intercept.AuthorizationFilter@4357a4ef]
+2024-01-26T18:30:41.263+05:00  INFO 6112 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:30:41.279+05:00  INFO 6112 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:30:41.288+05:00  INFO 6112 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 0.995 seconds (process running for 261.068)
+2024-01-26T18:30:41.293+05:00  INFO 6112 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   LogFileWebEndpointAutoConfiguration#logFileWebEndpoint matched:
+      - Log File found logging.file.name logs/tms.log (LogFileWebEndpointAutoConfiguration.LogFileCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.boot.actuate.logging.LogFileWebEndpoint; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2024-01-26T18:30:52.044+05:00  INFO 6112 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:30:52.045+05:00  INFO 6112 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-01-26T18:30:52.050+05:00  INFO 6112 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2024-01-26T18:30:54.475+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 13432 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:30:54.477+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:30:54.520+05:00  INFO 13432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-26T18:30:54.520+05:00  INFO 13432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-26T18:30:55.378+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:30:55.432+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:30:55.895+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:30:55.902+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:30:55.903+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:30:55.949+05:00  INFO 13432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:30:55.949+05:00  INFO 13432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1428 ms
+2024-01-26T18:30:56.157+05:00  INFO 13432 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:30:56.205+05:00  INFO 13432 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
+2024-01-26T18:30:56.207+05:00  INFO 13432 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2024-01-26T18:30:56.324+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:30:56.438+05:00  INFO 13432 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:30:56.451+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-26T18:30:56.698+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7fa4567
+2024-01-26T18:30:56.699+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-26T18:30:56.972+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:30:57.581+05:00  INFO 13432 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:30:57.658+05:00  INFO 13432 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:30:57.973+05:00  WARN 13432 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:30:58.252+05:00  INFO 13432 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:30:58.272+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:30:58.272+05:00 ERROR 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:30:58.288+05:00  INFO 13432 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5445a9b4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@68dee2f3, org.springframework.security.web.context.SecurityContextHolderFilter@52f819eb, org.springframework.security.web.header.HeaderWriterFilter@507eaba3, org.springframework.security.web.csrf.CsrfFilter@d1b8e6a, org.springframework.security.web.authentication.logout.LogoutFilter@24cc9ded, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@123de9a9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@38dc4469, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@56d27ed3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@15d32ee0, org.springframework.security.web.access.ExceptionTranslationFilter@4956cd69, org.springframework.security.web.access.intercept.AuthorizationFilter@d563e39]
+2024-01-26T18:30:58.519+05:00  INFO 13432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:30:58.573+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:30:58.587+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 4.433 seconds (process running for 5.401)
+2024-01-26T18:30:59.098+05:00  INFO 13432 --- [RMI TCP Connection(3)-192.168.104.26] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-26T18:30:59.099+05:00  INFO 13432 --- [RMI TCP Connection(3)-192.168.104.26] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-26T18:30:59.100+05:00  INFO 13432 --- [RMI TCP Connection(3)-192.168.104.26] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-26T18:31:05.099+05:00  INFO 13432 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-26T18:31:05.106+05:00  INFO 13432 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-26T18:31:05.107+05:00  INFO 13432 --- [Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-01-26T18:31:05.115+05:00  INFO 13432 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:31:05.117+05:00  INFO 13432 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-01-26T18:31:05.123+05:00  INFO 13432 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-01-26T18:31:05.196+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 13432 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:31:05.197+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:31:05.502+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:31:05.521+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:31:05.609+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:31:05.610+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:31:05.610+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:31:05.629+05:00  INFO 13432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:31:05.630+05:00  INFO 13432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 432 ms
+2024-01-26T18:31:05.682+05:00  INFO 13432 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:31:05.688+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:31:05.688+05:00  INFO 13432 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:31:05.689+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-01-26T18:31:05.699+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@bab9e
+2024-01-26T18:31:05.699+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-01-26T18:31:05.720+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:31:05.797+05:00  INFO 13432 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:31:05.832+05:00  INFO 13432 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:31:05.930+05:00  WARN 13432 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:31:06.022+05:00  INFO 13432 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:31:06.028+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:31:06.028+05:00 ERROR 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:31:06.033+05:00  INFO 13432 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1dc604db, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3e800ab8, org.springframework.security.web.context.SecurityContextHolderFilter@55f6c0b5, org.springframework.security.web.header.HeaderWriterFilter@2c82be2, org.springframework.security.web.csrf.CsrfFilter@2faaf08e, org.springframework.security.web.authentication.logout.LogoutFilter@2a4ab933, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@623aba8e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2da07405, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@a8e965d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@717deda6, org.springframework.security.web.access.ExceptionTranslationFilter@6c796e12, org.springframework.security.web.access.intercept.AuthorizationFilter@7a26b29c]
+2024-01-26T18:31:06.092+05:00  INFO 13432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:31:06.104+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:31:06.113+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 0.94 seconds (process running for 12.927)
+2024-01-26T18:31:06.115+05:00  INFO 13432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-26T18:31:07.856+05:00  INFO 13432 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-26T18:31:07.856+05:00  INFO 13432 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-26T18:31:07.857+05:00  INFO 13432 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-26T18:31:07.907+05:00  INFO 13432 --- [http-nio-8080-exec-1] c.jark.TMS.controllers.MainController    : Visited about page
+2024-01-26T18:31:08.120+05:00  WARN 13432 --- [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][about] Deprecated unwrapped fragment expression "blocks/header :: header" found in template about, line 9, col 9. Please use the complete syntax of fragment expressions instead ("~{blocks/header :: header}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2024-01-26T18:31:08.156+05:00  WARN 13432 --- [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][about] Deprecated unwrapped fragment expression "blocks/footer :: footer" found in template about, line 44, col 6. Please use the complete syntax of fragment expressions instead ("~{blocks/footer :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2024-01-26T18:31:08.901+05:00  INFO 13432 --- [http-nio-8080-exec-2] c.jark.TMS.controllers.MainController    : Visited home page
+2024-01-26T18:31:08.902+05:00  WARN 13432 --- [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][home] Deprecated unwrapped fragment expression "blocks/header :: header" found in template home, line 9, col 9. Please use the complete syntax of fragment expressions instead ("~{blocks/header :: header}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2024-01-26T18:31:08.906+05:00  WARN 13432 --- [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][home] Deprecated unwrapped fragment expression "blocks/footer :: footer" found in template home, line 22, col 6. Please use the complete syntax of fragment expressions instead ("~{blocks/footer :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2024-01-26T18:31:17.849+05:00  INFO 13432 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-26T18:31:17.854+05:00  INFO 13432 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-26T18:31:17.855+05:00  INFO 13432 --- [Thread-7] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-01-26T18:31:17.860+05:00  INFO 13432 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:31:17.860+05:00  INFO 13432 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-01-26T18:31:17.865+05:00  INFO 13432 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-01-26T18:31:17.939+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 13432 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:31:17.939+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:31:18.292+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:31:18.367+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:31:18.471+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:31:18.472+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:31:18.472+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:31:18.491+05:00  INFO 13432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:31:18.491+05:00  INFO 13432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 550 ms
+2024-01-26T18:31:18.562+05:00  INFO 13432 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:31:18.569+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:31:18.571+05:00  INFO 13432 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:31:18.572+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-01-26T18:31:18.584+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3b3140f7
+2024-01-26T18:31:18.584+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-01-26T18:31:18.600+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:31:18.673+05:00  INFO 13432 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:31:18.714+05:00  INFO 13432 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:31:18.848+05:00  WARN 13432 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:31:18.980+05:00  INFO 13432 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:31:18.986+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:31:18.986+05:00 ERROR 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:31:18.992+05:00  INFO 13432 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@69833ef9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@ae75e69, org.springframework.security.web.context.SecurityContextHolderFilter@5d610552, org.springframework.security.web.header.HeaderWriterFilter@7798f86, org.springframework.security.web.csrf.CsrfFilter@6d563e9f, org.springframework.security.web.authentication.logout.LogoutFilter@3465b423, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@705e587d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@19f7aa7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2ab5d9b4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@d5b2ea2, org.springframework.security.web.access.ExceptionTranslationFilter@2152292, org.springframework.security.web.access.intercept.AuthorizationFilter@4a29b24d]
+2024-01-26T18:31:19.062+05:00  INFO 13432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:31:19.081+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:31:19.091+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 1.176 seconds (process running for 25.906)
+2024-01-26T18:31:19.094+05:00  INFO 13432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-26T18:35:11.640+05:00  INFO 13432 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (1 addition, 1 deletion, 0 modifications)
+2024-01-26T18:35:11.645+05:00  INFO 13432 --- [Thread-11] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-26T18:35:11.650+05:00  INFO 13432 --- [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:35:11.651+05:00  INFO 13432 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2024-01-26T18:35:11.655+05:00  INFO 13432 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2024-01-26T18:35:11.715+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 13432 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:35:11.715+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:35:11.945+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:35:11.961+05:00  INFO 13432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:35:12.036+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:35:12.037+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:35:12.037+05:00  INFO 13432 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:35:12.054+05:00  INFO 13432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:35:12.054+05:00  INFO 13432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 337 ms
+2024-01-26T18:35:12.101+05:00  INFO 13432 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:35:12.106+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:35:12.106+05:00  INFO 13432 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:35:12.107+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-01-26T18:35:12.115+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@21230908
+2024-01-26T18:35:12.115+05:00  INFO 13432 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-01-26T18:35:12.130+05:00  INFO 13432 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:35:12.191+05:00  INFO 13432 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:35:12.226+05:00  INFO 13432 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:35:12.309+05:00  WARN 13432 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:35:12.415+05:00  INFO 13432 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:35:12.423+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:35:12.423+05:00 ERROR 13432 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:35:12.429+05:00  INFO 13432 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@43d27600, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@34aefaae, org.springframework.security.web.context.SecurityContextHolderFilter@ba5dcf6, org.springframework.security.web.header.HeaderWriterFilter@55eb93b6, org.springframework.security.web.csrf.CsrfFilter@7f6dac3e, org.springframework.security.web.authentication.logout.LogoutFilter@6b433936, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@16cf046d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@193b8de0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@47db5306, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@71d890a6, org.springframework.security.web.access.ExceptionTranslationFilter@41a3e3b2, org.springframework.security.web.access.intercept.AuthorizationFilter@2f4d4fc2]
+2024-01-26T18:35:12.487+05:00  INFO 13432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:35:12.499+05:00  INFO 13432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:35:12.508+05:00  INFO 13432 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 0.81 seconds (process running for 259.322)
+2024-01-26T18:35:12.510+05:00  INFO 13432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-26T18:38:07.672+05:00  INFO 13432 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-26T18:38:07.677+05:00  INFO 13432 --- [Thread-15] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-26T18:38:07.683+05:00  INFO 13432 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:38:07.683+05:00  INFO 13432 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-01-26T18:38:07.686+05:00  INFO 13432 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2024-01-26T18:42:04.780+05:00  INFO 7360 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 7360 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:42:04.782+05:00  INFO 7360 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:42:04.816+05:00  INFO 7360 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-26T18:42:04.817+05:00  INFO 7360 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-26T18:42:05.706+05:00  INFO 7360 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:42:05.762+05:00  INFO 7360 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:42:06.255+05:00  INFO 7360 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:42:06.262+05:00  INFO 7360 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:42:06.262+05:00  INFO 7360 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:42:06.310+05:00  INFO 7360 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:42:06.311+05:00  INFO 7360 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1494 ms
+2024-01-26T18:42:06.533+05:00  INFO 7360 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:42:06.577+05:00  INFO 7360 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
+2024-01-26T18:42:06.579+05:00  INFO 7360 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2024-01-26T18:42:06.699+05:00  INFO 7360 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:42:06.814+05:00  INFO 7360 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:42:06.828+05:00  INFO 7360 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-26T18:42:07.072+05:00  INFO 7360 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6608b18
+2024-01-26T18:42:07.073+05:00  INFO 7360 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-26T18:42:07.341+05:00  INFO 7360 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:42:07.957+05:00  INFO 7360 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:42:08.032+05:00  INFO 7360 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:42:08.350+05:00  WARN 7360 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:42:08.638+05:00  INFO 7360 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:42:08.658+05:00  INFO 7360 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:42:08.658+05:00 ERROR 7360 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:42:08.674+05:00  INFO 7360 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1dc8bab9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@116023ce, org.springframework.security.web.context.SecurityContextHolderFilter@cf78c28, org.springframework.security.web.header.HeaderWriterFilter@38dc4469, org.springframework.security.web.csrf.CsrfFilter@1b299fb1, org.springframework.security.web.authentication.logout.LogoutFilter@1166475d, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7bef17b3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5e2eb0f8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@31a3a35c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1231ecde, org.springframework.security.web.access.ExceptionTranslationFilter@52f819eb, org.springframework.security.web.access.intercept.AuthorizationFilter@15d32ee0]
+2024-01-26T18:42:08.893+05:00  INFO 7360 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:42:08.949+05:00  INFO 7360 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:42:08.962+05:00  INFO 7360 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 4.501 seconds (process running for 5.061)
+2024-01-26T18:42:09.137+05:00  INFO 7360 --- [RMI TCP Connection(2)-192.168.104.26] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-26T18:42:09.138+05:00  INFO 7360 --- [RMI TCP Connection(2)-192.168.104.26] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-26T18:42:09.139+05:00  INFO 7360 --- [RMI TCP Connection(2)-192.168.104.26] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-26T18:42:47.309+05:00  INFO 7360 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-26T18:42:47.316+05:00  INFO 7360 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-26T18:42:47.317+05:00  INFO 7360 --- [Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-01-26T18:42:47.324+05:00  INFO 7360 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:42:47.327+05:00  INFO 7360 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-01-26T18:42:47.332+05:00  INFO 7360 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-01-26T18:44:07.839+05:00  INFO 3436 --- [restartedMain] com.jark.TMS.TMSApplication              : Starting TMSApplication using Java 20.0.2 with PID 3436 (C:\Users\y.kozlov\IdeaProjects\spring_tms\target\classes started by y.kozlov in C:\Users\y.kozlov\IdeaProjects\spring_tms)
+2024-01-26T18:44:07.840+05:00  INFO 3436 --- [restartedMain] com.jark.TMS.TMSApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-26T18:44:07.875+05:00  INFO 3436 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-26T18:44:07.875+05:00  INFO 3436 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-26T18:44:08.741+05:00  INFO 3436 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-26T18:44:08.792+05:00  INFO 3436 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 8 JPA repository interfaces.
+2024-01-26T18:44:09.273+05:00  INFO 3436 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-26T18:44:09.280+05:00  INFO 3436 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-26T18:44:09.281+05:00  INFO 3436 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2024-01-26T18:44:09.330+05:00  INFO 3436 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-26T18:44:09.330+05:00  INFO 3436 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1454 ms
+2024-01-26T18:44:09.545+05:00  INFO 3436 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-26T18:44:09.595+05:00  INFO 3436 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
+2024-01-26T18:44:09.597+05:00  INFO 3436 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2024-01-26T18:44:09.719+05:00  INFO 3436 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:44:09.835+05:00  INFO 3436 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-26T18:44:09.849+05:00  INFO 3436 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-26T18:44:10.094+05:00  INFO 3436 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@530f75c
+2024-01-26T18:44:10.096+05:00  INFO 3436 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-26T18:44:10.366+05:00  INFO 3436 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-01-26T18:44:10.978+05:00  INFO 3436 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-01-26T18:44:11.052+05:00  INFO 3436 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-26T18:44:11.373+05:00  WARN 3436 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T18:44:11.661+05:00  INFO 3436 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
+2024-01-26T18:44:11.682+05:00  INFO 3436 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an informational message.
+2024-01-26T18:44:11.682+05:00 ERROR 3436 --- [restartedMain] com.jark.TMS.config.WebSecurityConfig    : This is an error message with an exception.
+2024-01-26T18:44:11.699+05:00  INFO 3436 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@68dee2f3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@15d32ee0, org.springframework.security.web.context.SecurityContextHolderFilter@777e93a4, org.springframework.security.web.header.HeaderWriterFilter@23cd8416, org.springframework.security.web.csrf.CsrfFilter@8a6cbd1, org.springframework.security.web.authentication.logout.LogoutFilter@227c992f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3d1a7910, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1db2a8d1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5e2eb0f8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7bef17b3, org.springframework.security.web.access.ExceptionTranslationFilter@a60932a, org.springframework.security.web.access.intercept.AuthorizationFilter@123de9a9]
+2024-01-26T18:44:11.913+05:00  INFO 3436 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-26T18:44:11.968+05:00  INFO 3436 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-26T18:44:11.981+05:00  INFO 3436 --- [restartedMain] com.jark.TMS.TMSApplication              : Started TMSApplication in 4.481 seconds (process running for 5.12)
+2024-01-26T18:44:12.276+05:00  INFO 3436 --- [RMI TCP Connection(2)-192.168.104.26] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-26T18:44:12.276+05:00  INFO 3436 --- [RMI TCP Connection(2)-192.168.104.26] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-26T18:44:12.277+05:00  INFO 3436 --- [RMI TCP Connection(2)-192.168.104.26] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-26T18:44:24.001+05:00  INFO 3436 --- [http-nio-8080-exec-1] c.jark.TMS.controllers.MainController    : Visited home page
+2024-01-26T18:44:24.277+05:00  WARN 3436 --- [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][home] Deprecated unwrapped fragment expression "blocks/header :: header" found in template home, line 9, col 9. Please use the complete syntax of fragment expressions instead ("~{blocks/header :: header}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2024-01-26T18:44:24.321+05:00  WARN 3436 --- [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][home] Deprecated unwrapped fragment expression "blocks/footer :: footer" found in template home, line 22, col 6. Please use the complete syntax of fragment expressions instead ("~{blocks/footer :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
