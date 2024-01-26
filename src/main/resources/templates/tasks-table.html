@@ -40,9 +40,10 @@
         <tr>
             <th scope="col" data-field="id" data-advanced-search="true" data-sortable="true" data-sorter="numeric">№</th>
             <th scope="col" data-field="name" data-sortable="true">Название</th>
-            <th scope="col" data-field="descriptiom" data-sortable="true">Описание</th>
+   <!--         <th scope="col" data-field="descriptiom" data-sortable="true">Описание</th>-->
             <th scope="col" data-field="taskType" data-sortable="true">Тип задачи</th>
             <th scope="col" data-field="deadline" data-sortable="true">Срок исполнения</th>
+            <th scope="col" data-field="deadline" data-sortable="true">Приоритет</th>
             <th scope="col" data-field="status" data-sortable="true">Статус</th>
             <th scope="col" data-field="project" data-sortable="true">Проект</th>
             <th scope="col" data-field="linkedTask" data-sortable="true">Связанная задача</th>
@@ -60,9 +61,10 @@
                 <a th:href="'/tasks/' + ${task.task_id}"><span th:utext="${'T-' + task.task_id}"></span></a>
             </td>
             <td class="table-row" th:utext="${task.short_description}"></td>
-            <td class="table-row" th:utext="${task.full_description}"></td>
+           <!-- <td class="table-row" th:utext="${task.full_description}"></td>-->
             <td class="table-row" th:text="${task.task_type_id != null} ? ${task.task_type_id.task_type} : ''"></td>
             <td class="table-row" th:text="${#dates.format(task.deadline, 'dd-MM-yyyy')}"></td>
+            <td class="table-row" th:text="${task.priority_id != null} ? ${task.priority_id.priority} : ''"></td>
             <td class="table-row" th:text="${task.status_id != null} ? ${task.status_id.status} : ''"></td>
             <td class="table-row" th:text="${task.project_id != null} ? ${task.project_id.project_name} : ''"></td>
             <td class="table-row" th:text="${task.linked_task_id != null} ? 'T-'+${task.linked_task_id} : ''"></td>
@@ -101,17 +103,21 @@
             field: 'name',
             title: 'Название',
             sortable: true
-        }, {
+        }, /*{
             field: 'description',
             title: 'Описание',
             sortable: true
-        }, {
+        },*/ {
             field: 'taskType',
             title: 'Тип задачи',
             sortable: true
         }, {
             field: 'deadline',
             title: 'Срок исполнения',
+            sortable: true
+        }, {
+            field: 'priority',
+            title: 'Приоритет',
             sortable: true
         }, {
             field: 'status',

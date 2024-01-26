@@ -39,6 +39,12 @@ public class MainController {
         return "reports-author";
     }
 
+    @GetMapping("/reports/tasks")
+    public String reportsTasks(Model model) {
+        model.addAttribute("title", "Отчеты по задачам");
+        return "reports-tasks";
+    }
+
     @GetMapping("/gannt")
     public String gannt(Model model) {
         model.addAttribute("title", "Диаграмма Ганнта");

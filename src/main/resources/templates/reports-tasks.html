@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <h1>Отчет по иcполнителям</h1>
+                <h1>Отчет по задачам</h1>
             </div>
         </div>
     </div>
@@ -27,13 +27,16 @@
             </div></br>
         </div>
     </div>
-    <div class="container align-items-center justify-content-center">
-    <div style="width: 500px;">
-        <canvas id="pieChartExecutors"></canvas>
+    <div class="container d-flex align-items-center justify-content-center">
+    <div style="width: 400px;">
+        <canvas id="pieChartStatus"></canvas>
     </div>
-    <div style="width: 500px;">
-        <canvas id="barChartExecutors"></canvas>
+    <div style="width: 400px;">
+        <canvas id="pieChartTaskType"></canvas>
     </div>
+        <div style="width: 400px;">
+            <canvas id="pieChartPriority"></canvas>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -54,22 +57,34 @@
     fetch('/api')
         .then(response => response.json())
         .then(tasksData => {
-            // Создаем объект для отслеживания количества задач для каждого исполнителя
-            const tasksCountByExecutor = {};
-            // Подсчитываем количество задач для каждого исполнителя
+            // Создаем объект для отслеживания количества задач для статуса
+            const tasksCountByStatus = {};
+            // Создаем объект для отслеживания количества задач для типа задачи
+            const tasksCountByTaskType = {};
+            // Создаем объект для отслеживания количества задач для приоритета
+            const tasksCountByPriority = {};
+            // Подсчитываем количество задач для каждого статуса
             tasksData.forEach(task => {
-                const executorName = task.executor_id ? task.executor_id.first_name + ' ' + task.executor_id.second_name : 'Исполнитель отсутсвует';
-                tasksCountByExecutor[executorName] = (tasksCountByExecutor[executorName] || 0) + 1;
+                const statusName = task.status_id ? task.status_id.status  : 'Статус отсутсвует';
+                tasksCountByStatus[statusName] = (tasksCountByStatus[statusName] || 0) + 1;
+                const typeName = task.task_type_id ? task.task_type_id.task_type  : 'Тип задачи отсутсвует';
+                tasksCountByTaskType[typeName] = (tasksCountByTaskType[typeName] || 0) + 1;
+                const priorityName = task.priority_id ? task.priority_id.priority  : 'Срочность отсутсвует';
+                tasksCountByPriority[priorityName] = (tasksCountByPriority[priorityName] || 0) + 1;
             });
 
             // Преобразование данных в формат, ожидаемый Chart.js
-            const labels = Object.keys(tasksCountByExecutor);
-            const data = Object.values(tasksCountByExecutor);
+            const labels = Object.keys(tasksCountByStatus);
+            const data = Object.values(tasksCountByStatus);
+            const labels1 = Object.keys(tasksCountByTaskType);
+            const data1 = Object.values(tasksCountByTaskType);
+            const labels2 = Object.keys(tasksCountByPriority);
+            const data2 = Object.values(tasksCountByPriority);
             // Генерация случайных цветов для backgroundColor
             const backgroundColor = Array.from({ length: tasksData.length }, () => getRandomColor());
 
             // Создание круговой диаграммы
-            const ptx = document.getElementById('pieChartExecutors');
+            const ptx = document.getElementById('pieChartStatus');
             new Chart(ptx, {
                 type: 'pie',
                 data: {
@@ -83,14 +98,29 @@
                     }]
                 },
             });
-            const btx = document.getElementById('barChartExecutors');
+            const btx = document.getElementById('pieChartTaskType');
             new Chart(btx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
-                    labels: labels,
+                    labels: labels1,
                     datasets: [{
                         label: 'Задачи',
-                        data: data,
+                        data: data1,
+                        backgroundColor: backgroundColor,
+                        hoverOffset: 4,
+                        borderWidth: 1
+                    }]
+                },
+            });
+
+            const ctx = document.getElementById('pieChartPriority');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels2,
+                    datasets: [{
+                        label: 'Задачи',
+                        data: data2,
                         backgroundColor: backgroundColor,
                         hoverOffset: 4,
                         borderWidth: 1

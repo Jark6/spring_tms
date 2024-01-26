@@ -22,6 +22,7 @@
             <div id="taskPanel" class="btn-group-sm ml-2" role="group" aria-label="taskPanel">
                 <a class="btn btn-secondary" href="/reports/executor">Отчет по исполнителям</a>
                 <a class="btn btn-secondary" href="/reports/author">Отчет по авторам</a>
+                <a class="btn btn-secondary" href="/reports/tasks">Отчет по задачам</a>
                 <a class="btn btn-secondary" href="/gannt">Gannt Chart</a>
             </div></br>
         </div>
@@ -40,6 +41,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    // Функция для назначения произвольного цвета
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -49,7 +51,7 @@
         return color;
     }
 
-    fetch('/reports/executor/api')
+    fetch('/api')
         .then(response => response.json())
         .then(tasksData => {
             // Создаем объект для отслеживания количества задач для каждого исполнителя

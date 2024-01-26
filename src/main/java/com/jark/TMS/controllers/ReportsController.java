@@ -16,7 +16,7 @@ public class ReportsController {
         this.tasksRepository = tasksRepository;
     }
 
-    @GetMapping(value ="/reports/executor/api", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="/api", produces = MediaType.APPLICATION_JSON_VALUE)
     //@ResponseBody
     public ResponseEntity<Iterable<Tasks>> reportsExecutor() {
         Iterable<Tasks> tasks = tasksRepository.findAll();
