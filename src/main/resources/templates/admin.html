@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="blocks/header :: header"></header>
+<header th:insert="~{blocks/header :: header}"></header>
 <main role="main" class="col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
     <h1>Welcome to Admin Dashboard</h1>
     <nav>
@@ -355,7 +355,7 @@
         </div>
     </div>
 </main>
-<div th:insert="blocks/footer :: footer"></div>
+<div th:insert="~{blocks/footer :: footer}"></div>
 <script>
     $('#confirmationModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
