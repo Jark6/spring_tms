@@ -16,7 +16,7 @@ public class EmailController {
 
     @GetMapping("/sendEmail")
     public String sendEmail() {
-        emailService.sendEmail("y666n@ya.ru", "Test Subject", "Test Body");
+        emailService.sendEmail("Y666N@yandex.ru", "Test Subject", "Test Body");
         return "Email sent successfully!";
     }
 }

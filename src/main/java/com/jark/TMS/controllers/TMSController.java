@@ -2,6 +2,7 @@ package com.jark.TMS.controllers;
 
 import com.jark.TMS.models.*;
 import com.jark.TMS.repo.*;
+import com.jark.TMS.services.EmailService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ import java.util.*;
 
 @Controller
 public class TMSController {
+    private final EmailService emailService;
     private final TasksRepository tasksRepository;
     private final StatusRepository statusRepository;
     private final TaskTypeRepository taskTypeRepository;
@@ -31,7 +33,7 @@ public class TMSController {
 
     public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
                          LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
-                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository) {
+                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository, EmailService emailService) {
         this.tasksRepository = tasksRepository;
         this.statusRepository = statusRepository;
         this.taskTypeRepository = taskTypeRepository;
@@ -40,6 +42,7 @@ public class TMSController {
         this.usersRepository = usersRepository;
         this.priorityRepository = priorityRepository;
         this.commentsRepository = commentsRepository;
+        this.emailService = emailService;
     }
 
 
@@ -79,6 +82,8 @@ public class TMSController {
                 linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id, timestampCreate, null);
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
+        emailService.sendEmail(author_id.getEmail(), "создана задача", "Создана задача "+short_description+" .");
+        emailService.sendEmail(executor_id.getEmail(), "создана задача", "Создана задача "+short_description+" .");
         return "redirect:/tasks";
     }
 

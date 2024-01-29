@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name="LINKED_TASK_TYPE")
 public class LinkedTaskType {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long linked_task_type_id;
     @Column
     private String linked_task_type;

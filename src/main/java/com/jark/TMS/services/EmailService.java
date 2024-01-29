@@ -19,7 +19,10 @@ public class EmailService {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-
+try{
         javaMailSender.send(message);
+}catch (Exception e){
+    System.out.println(e);
+}
     }
 }

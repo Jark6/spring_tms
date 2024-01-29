@@ -186,6 +186,7 @@ public class AdminController {
         originalUser.setFamily_name(editedUser.getFamily_name());
         originalUser.setLogin(editedUser.getLogin());
         originalUser.setRole(editedUser.getRole());
+        originalUser.setEmail(editedUser.getEmail());
         originalUser.setTimestamp_edit(LocalDateTime.now());
         usersRepository.save(originalUser);
         redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно изменен");

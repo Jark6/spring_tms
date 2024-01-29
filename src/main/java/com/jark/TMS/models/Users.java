@@ -22,6 +22,8 @@ public class Users {
     @Column
     private String login;
     @Column
+    private String email;
+    @Column
     private String passwordHash;
     @Transient
     private String password;
@@ -39,16 +41,25 @@ public class Users {
     public Users(){
     }
 
-    public Users(String first_name, String second_name, String family_name, String login, String passwordHash, String password, String role, LocalDateTime timestamp_create, LocalDateTime timestamp_edit) {
+    public Users(String first_name, String second_name, String family_name, String login, String email, String passwordHash, String password, String role, LocalDateTime timestamp_create, LocalDateTime timestamp_edit) {
         this.first_name = first_name;
         this.second_name = second_name;
         this.family_name = family_name;
         this.login = login;
+        this.email = email;
         this.passwordHash=passwordHash;
         this.password = password;
         this.role=role;
         this.timestamp_create = timestamp_create;
         this.timestamp_edit = timestamp_edit;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getUser_id() {
