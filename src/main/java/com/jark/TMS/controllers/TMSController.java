@@ -29,7 +29,6 @@ public class TMSController {
     private final UsersRepository usersRepository;
     private final PriorityRepository priorityRepository;
     private final CommentsRepository commentsRepository;
-    private RedirectAttributes redirectAttributes;
 
     public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
                          LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
@@ -76,14 +75,15 @@ public class TMSController {
                               @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
-                              @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes, Model model){
+                              @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes){
         LocalDateTime timestampCreate = LocalDateTime.now();
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
                 linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id, timestampCreate, null);
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
-        emailService.sendEmail(author_id.getEmail(), "создана задача", "Создана задача "+short_description+" .");
-        emailService.sendEmail(executor_id.getEmail(), "создана задача", "Создана задача "+short_description+" .");
+        emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача "+short_description+" .\n");
+        if (author_id != executor_id)
+            emailService.sendEmail(executor_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача " + short_description + " .\n");
         return "redirect:/tasks";
     }
 
@@ -124,8 +124,13 @@ public class TMSController {
             commentsRepository.save(comment);
             task.setTimestamp_edit(LocalDateTime.now());
             tasksRepository.save(task);
-            }
 
+                emailService.sendEmail(task.getAuthor_id().getEmail(), "комментарий к задаче \""+task.getShort_description()+"\"",
+                        "Пользователь "+user.getSecond_name()+" "+user.getFirst_name()+" добавил комментарий:\n"+comment.getContent());
+                if (task.getAuthor_id() != task.getExecutor_id())
+                    emailService.sendEmail(task.getExecutor_id().getEmail(),  "комментарий к задаче \""+task.getShort_description()+"\"",
+                            "Пользователь "+user.getSecond_name()+" "+user.getFirst_name()+" добавил комментарий:\n"+comment.getContent());
+            }
         } else {
             // Обработка случая, когда пользователь не найден
             System.out.println("ошибка");
@@ -164,7 +169,6 @@ public class TMSController {
                                  @RequestParam(required = false) Users author_id,
                                  @RequestParam(required = false) Priority priority_id,
                                  RedirectAttributes redirectAttributes,
-                                 Model model,
                                  Principal principal) {
 
         // Находим существующую задачу в базе данных
@@ -225,6 +229,13 @@ public class TMSController {
             comment.setTimestamp(LocalDateTime.now());
             commentsRepository.save(comment);
 
+            //Отправляем e-mail пользователям
+            emailService.sendEmail(author_id.getEmail(), "изменения в задаче \""+short_description+"\"",
+                    "Пользователь "+principal.getName()+" сделал следующие изменения:\n"+comment.getContent());
+            if (author_id != executor_id)
+                emailService.sendEmail(executor_id.getEmail(),  "изменения в задаче \""+short_description+"\"",
+                        "Пользователь "+principal.getName()+" сделал следующие изменения:\n"+comment.getContent());
+
             // Обновляем метку времени последнего изменения задачи
             existingTask.setTimestamp_edit(LocalDateTime.now());
             tasksRepository.save(existingTask);
@@ -243,36 +254,27 @@ public class TMSController {
 
     // Метод для получения значения поля в виде строки
     private String getValueAsString(Tasks task, String fieldName) {
-        switch (fieldName) {
-            case "Тип задачи":
-                return task.getTask_type_id() != null ? task.getTask_type_id().getTask_type() : "";
-            case "Статус":
-                return task.getStatus_id() != null ? task.getStatus_id().getStatus() : "";
-            case "Краткое описание":
-                return task.getShort_description();
-            case "Полное описание":
-                return task.getFull_description();
-            case "Связанная задача":
-                return task.getLinked_task_id() != null ? task.getLinked_task_id().toString() : "";
-            case "Тип связи":
-                return task.getLinked_task_type_id() != null ? task.getLinked_task_type_id().getLinked_task_type() : "";
-            case "Срок выполнения":
-                return task.getDeadline().toString();
-            case "Приоритет":
-                return task.getPriority_id() != null ? task.getPriority_id().getPriority() : "";
-            case "Проект":
-                return task.getProject_id() != null ? task.getProject_id().getProject_name() : "";
-            case "Автор":
-                return task.getAuthor_id() != null ? task.getAuthor_id().getSecond_name() +" "+ task.getAuthor_id().getFirst_name() : "";
-            case "Исполнитель":
-                return task.getExecutor_id() != null ? task.getExecutor_id().getSecond_name() +" "+ task.getExecutor_id().getFirst_name() : "";
-            default:
-                return "";
-        }
+        return switch (fieldName) {
+            case "Тип задачи" -> task.getTask_type_id() != null ? task.getTask_type_id().getTask_type() : "";
+            case "Статус" -> task.getStatus_id() != null ? task.getStatus_id().getStatus() : "";
+            case "Краткое описание" -> task.getShort_description();
+            case "Полное описание" -> task.getFull_description();
+            case "Связанная задача" -> task.getLinked_task_id() != null ? task.getLinked_task_id().toString() : "";
+            case "Тип связи" ->
+                    task.getLinked_task_type_id() != null ? task.getLinked_task_type_id().getLinked_task_type() : "";
+            case "Срок выполнения" -> task.getDeadline().toString();
+            case "Приоритет" -> task.getPriority_id() != null ? task.getPriority_id().getPriority() : "";
+            case "Проект" -> task.getProject_id() != null ? task.getProject_id().getProject_name() : "";
+            case "Автор" ->
+                    task.getAuthor_id() != null ? task.getAuthor_id().getSecond_name() + " " + task.getAuthor_id().getFirst_name() : "";
+            case "Исполнитель" ->
+                    task.getExecutor_id() != null ? task.getExecutor_id().getSecond_name() + " " + task.getExecutor_id().getFirst_name() : "";
+            default -> "";
+        };
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/tasks/{task_id}/remove")
-    public String taskPostDelete(@PathVariable(value = "task_id") long id, RedirectAttributes redirectAttributes, Model model){
+    public String taskPostDelete(@PathVariable(value = "task_id") long id, RedirectAttributes redirectAttributes){
         Tasks task = tasksRepository.findById(id).orElseThrow();
         tasksRepository.delete(task);
        redirectAttributes.addFlashAttribute("successMessage", "Задача успешно удалена!");
