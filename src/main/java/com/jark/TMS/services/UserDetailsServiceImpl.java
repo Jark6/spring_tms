@@ -1,4 +1,4 @@
-package com.jark.TMS.config;
+package com.jark.TMS.services;
 
 import com.jark.TMS.models.Users;
 import com.jark.TMS.repo.UsersRepository;
