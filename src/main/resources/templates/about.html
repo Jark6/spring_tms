@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="blocks/header :: header"></header>
+<header th:insert="~{blocks/header :: header}"></header>
 <div class="container mt-5">
     <h1 th:text="${title}" class="mt-5"></h1>
     <p class="lead">Добро пожаловать на страницу "О нас" учебного проекта системы управления задачами!</p>
@@ -41,7 +41,7 @@
         Мы рады, что вы присоединились к нам в путешествии по управлению задачами. Наша команда работает над совершенствованием нашей системы, и мы всегда открыты
     </p>
 </div>
-<div th:insert="blocks/footer :: footer"></div>
+<div th:insert="~{blocks/footer :: footer}"></div>
 <!--<p th:text="'Hello, ' + ${title} + '!'" /> -->
 </body>
 </html>

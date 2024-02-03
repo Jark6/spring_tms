@@ -59,7 +59,7 @@ public class TMSController {
     }
 
     @GetMapping("/tasks/add")
-    public String taskAdd(Model model){
+    public String taskAdd(Model model, Principal principal){
         model.addAttribute("statuses", statusRepository.findAll());
         model.addAttribute("taskTypes", taskTypeRepository.findAll());
         model.addAttribute("linkedTasks", tasksRepository.findAll());
@@ -67,6 +67,7 @@ public class TMSController {
         model.addAttribute("projects", projectRepository.findAll());
         model.addAttribute("users", usersRepository.findAll());
         model.addAttribute("priorities", priorityRepository.findAll());
+        model.addAttribute("currentUserId",usersRepository.findByLogin(principal.getName()));
         return "tasks-add";
     }
 

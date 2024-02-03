@@ -7,7 +7,7 @@
 
 </head>
 <body>
-<header th:insert="blocks/header :: header"></header>
+<header th:insert="~{blocks/header :: header}"></header>
 <div class="container mt-5 mb-5">
     <canvas id="ganttChart" width="800" height="400"></canvas>
 </div>
@@ -77,6 +77,6 @@
     });
 </script>
 
-<div th:insert="blocks/footer :: footer"></div>
+<div th:insert="~{blocks/footer :: footer}"></div>
 </body>
 </html>
