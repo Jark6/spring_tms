@@ -82,8 +82,10 @@ public class TMSController {
                 linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id, timestampCreate, null);
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
-        emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача "+short_description+" .\n");
-        if (author_id != executor_id)
+        if(author_id!=null) {
+            emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача "+short_description+" .\n");
+        }
+        if (author_id != executor_id && executor_id != null)
             emailService.sendEmail(executor_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача " + short_description + " .\n");
         return "redirect:/tasks";
     }
@@ -94,9 +96,6 @@ public class TMSController {
         if(!tasksRepository.existsById(id)){
             return "redirect:/tasks";
         }
-        /*ArrayList <Tasks> res = new ArrayList<>();
-        tasks.ifPresent(res::add);
-        model.addAttribute("tasks", res);*/
         Optional<Tasks> taskOptional = tasksRepository.findById(id);
         taskOptional.ifPresent(task -> {
             List<Comments> comments = commentsRepository.findByTask(task);
@@ -125,10 +124,11 @@ public class TMSController {
             commentsRepository.save(comment);
             task.setTimestamp_edit(LocalDateTime.now());
             tasksRepository.save(task);
-
-                emailService.sendEmail(task.getAuthor_id().getEmail(), "комментарий к задаче \""+task.getShort_description()+"\"",
-                        "Пользователь "+user.getSecond_name()+" "+user.getFirst_name()+" добавил комментарий:\n"+comment.getContent());
-                if (task.getAuthor_id() != task.getExecutor_id())
+                if(task.getAuthor_id() !=null) {
+                    emailService.sendEmail(task.getAuthor_id().getEmail(), "комментарий к задаче \""+task.getShort_description()+"\"",
+                            "Пользователь "+user.getSecond_name()+" "+user.getFirst_name()+" добавил комментарий:\n"+comment.getContent());
+                }
+                if (task.getAuthor_id() != task.getExecutor_id() && task.getExecutor_id() != null)
                     emailService.sendEmail(task.getExecutor_id().getEmail(),  "комментарий к задаче \""+task.getShort_description()+"\"",
                             "Пользователь "+user.getSecond_name()+" "+user.getFirst_name()+" добавил комментарий:\n"+comment.getContent());
             }
@@ -231,9 +231,11 @@ public class TMSController {
             commentsRepository.save(comment);
 
             //Отправляем e-mail пользователям
-            emailService.sendEmail(author_id.getEmail(), "изменения в задаче \""+short_description+"\"",
-                    "Пользователь "+principal.getName()+" сделал следующие изменения:\n"+comment.getContent());
-            if (author_id != executor_id)
+            if(author_id != null) {
+                emailService.sendEmail(author_id.getEmail(), "изменения в задаче \""+short_description+"\"",
+                        "Пользователь "+principal.getName()+" сделал следующие изменения:\n"+comment.getContent());
+            }
+            if (author_id != executor_id && executor_id !=null)
                 emailService.sendEmail(executor_id.getEmail(),  "изменения в задаче \""+short_description+"\"",
                         "Пользователь "+principal.getName()+" сделал следующие изменения:\n"+comment.getContent());
 
