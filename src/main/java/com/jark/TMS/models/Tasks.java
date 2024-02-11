@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,9 @@ public class Tasks {
     @JoinColumn(name = "executor_id", referencedColumnName = "user_id")
     private Users executor_id;
     @ManyToOne
+    @JoinColumn(name="team_id")
+    private Team team_id;
+    @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "user_id")
     private Users author_id;
     @ManyToOne
@@ -59,9 +63,12 @@ public class Tasks {
     @Column
     private LocalDateTime timestamp_edit;
 
-    public Tasks() {
+    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, @NotNull(message = "Не указана дата") Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id, Long teamOrUserId, LocalDateTime timestampCreate) {
     }
-    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id, LocalDateTime timestampCreate, LocalDateTime timestampEdit) {
+    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description,
+                 Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id,
+                 Users executor_id, Users author_id, Priority priority_id, LocalDateTime timestampCreate,
+                 LocalDateTime timestampEdit) {
         this.task_type_id = task_type_id;
         this.status_id = status_id;
         this.short_description = short_description;
@@ -71,6 +78,7 @@ public class Tasks {
         this.deadline = deadline;
         this.project_id = project_id;
         this.executor_id = executor_id;
+        //this.team_id=team_id;
         this.author_id = author_id;
         this.priority_id = priority_id;
         this.timestamp_create = timestampCreate;
@@ -196,5 +204,13 @@ public class Tasks {
 
     public void setTimestamp_edit(LocalDateTime timestamp_edit) {
         this.timestamp_edit = timestamp_edit;
+    }
+
+    public Team getTeam_id() {
+        return team_id;
+    }
+
+    public void setTeam_id(Team team_id) {
+        this.team_id = team_id;
     }
 }

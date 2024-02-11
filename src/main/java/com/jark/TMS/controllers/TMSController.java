@@ -29,10 +29,12 @@ public class TMSController {
     private final UsersRepository usersRepository;
     private final PriorityRepository priorityRepository;
     private final CommentsRepository commentsRepository;
+    private final TeamRepository teamRepository;
 
     public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
                          LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
-                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository, EmailService emailService) {
+                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository,
+                         EmailService emailService, TeamRepository teamRepository) {
         this.tasksRepository = tasksRepository;
         this.statusRepository = statusRepository;
         this.taskTypeRepository = taskTypeRepository;
@@ -42,6 +44,7 @@ public class TMSController {
         this.priorityRepository = priorityRepository;
         this.commentsRepository = commentsRepository;
         this.emailService = emailService;
+        this.teamRepository = teamRepository;
     }
 
 
@@ -74,17 +77,39 @@ public class TMSController {
     public String taskPostAdd(@RequestParam(required=false) TaskType task_type_id, @RequestParam(required=false) Status status_id, @RequestParam String short_description,
                               @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
-                              @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
+                              @RequestParam(required=false) Project project_id, @RequestParam(name = "executor_id", required=false) Users executor_id,
+                              @RequestParam(name = "team_or_user_id", required = false) Long team_or_user_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes){
         LocalDateTime timestampCreate = LocalDateTime.now();
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
-                linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id, timestampCreate, null);
+                linked_task_type_id, deadline, project_id, executor_id, author_id,  priority_id, team_or_user_id,  timestampCreate);
+        // Если выбран один исполнитель
+        if (executor_id != null) {
+            Users executor = usersRepository.findById(executor_id.getUser_id()).orElseThrow();
+            task.setExecutor_id(executor);
+        }
+
+        // Если выбрана команда
+        if (team_or_user_id != null) {
+            // Проверяем, является ли выбранный идентификатор командой или пользователем
+            if (isTeam(team_or_user_id)) {
+                Team team = teamRepository.findById(team_or_user_id).orElseThrow();
+                task.setTeam_id(team);
+            } else {
+                Users user = usersRepository.findById(team_or_user_id).orElseThrow();
+                task.setExecutor_id(user);
+            }
+        }
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
         emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача "+short_description+" .\n");
         if (author_id != executor_id)
             emailService.sendEmail(executor_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача " + short_description + " .\n");
         return "redirect:/tasks";
+    }
+
+    private boolean isTeam(Long id) {
+        return false;
     }
 
 
