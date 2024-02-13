@@ -63,11 +63,11 @@ public class Tasks {
     @Column
     private LocalDateTime timestamp_edit;
 
-    public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description, Long linked_task_id, LinkedTaskType linked_task_type_id, @NotNull(message = "Не указана дата") Date deadline, Project project_id, Users executor_id, Users author_id, Priority priority_id, Long teamOrUserId, LocalDateTime timestampCreate) {
+    public Tasks() {
     }
     public Tasks(TaskType task_type_id, Status status_id, String short_description, String full_description,
                  Long linked_task_id, LinkedTaskType linked_task_type_id, Date deadline, Project project_id,
-                 Users executor_id, Users author_id, Priority priority_id, LocalDateTime timestampCreate,
+                 Users executor_id, Team team_id, Users author_id, Priority priority_id, LocalDateTime timestampCreate,
                  LocalDateTime timestampEdit) {
         this.task_type_id = task_type_id;
         this.status_id = status_id;
@@ -78,7 +78,7 @@ public class Tasks {
         this.deadline = deadline;
         this.project_id = project_id;
         this.executor_id = executor_id;
-        //this.team_id=team_id;
+        this.team_id=team_id;
         this.author_id = author_id;
         this.priority_id = priority_id;
         this.timestamp_create = timestampCreate;

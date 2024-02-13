@@ -78,11 +78,11 @@ public class TMSController {
                               @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                               @RequestParam(required=false) Project project_id, @RequestParam(name = "executor_id", required=false) Users executor_id,
-                              @RequestParam(name = "team_or_user_id", required = false) Long team_or_user_id,
+                              @RequestParam(name = "team_id", required = false) Team team_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes){
         LocalDateTime timestampCreate = LocalDateTime.now();
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
-                linked_task_type_id, deadline, project_id, executor_id, author_id,  priority_id, team_or_user_id,  timestampCreate);
+                linked_task_type_id, deadline, project_id, executor_id, team_id, author_id,  priority_id,  timestampCreate, null);
         // Если выбран один исполнитель
         if (executor_id != null) {
             Users executor = usersRepository.findById(executor_id.getUser_id()).orElseThrow();
@@ -90,13 +90,13 @@ public class TMSController {
         }
 
         // Если выбрана команда
-        if (team_or_user_id != null) {
+        if (team_id != null) {
             // Проверяем, является ли выбранный идентификатор командой или пользователем
-            if (isTeam(team_or_user_id)) {
-                Team team = teamRepository.findById(team_or_user_id).orElseThrow();
+            if (isTeam(team_id.getTeam_id())) {
+                Team team = teamRepository.findById(team_id.getTeam_id()).orElseThrow();
                 task.setTeam_id(team);
             } else {
-                Users user = usersRepository.findById(team_or_user_id).orElseThrow();
+                Users user = usersRepository.findById(team_id.getTeam_id()).orElseThrow();
                 task.setExecutor_id(user);
             }
         }
