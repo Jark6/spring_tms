@@ -29,10 +29,12 @@ public class TMSController {
     private final UsersRepository usersRepository;
     private final PriorityRepository priorityRepository;
     private final CommentsRepository commentsRepository;
+    private final TeamRepository teamRepository;
 
     public TMSController(TasksRepository tasksRepository, StatusRepository statusRepository, TaskTypeRepository taskTypeRepository,
                          LinkedTaskTypeRepository linkedTaskTypeRepository, ProjectRepository projectRepository,
-                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository, EmailService emailService) {
+                         UsersRepository usersRepository, PriorityRepository priorityRepository, CommentsRepository commentsRepository,
+                         EmailService emailService, TeamRepository teamRepository) {
         this.tasksRepository = tasksRepository;
         this.statusRepository = statusRepository;
         this.taskTypeRepository = taskTypeRepository;
@@ -42,6 +44,7 @@ public class TMSController {
         this.priorityRepository = priorityRepository;
         this.commentsRepository = commentsRepository;
         this.emailService = emailService;
+        this.teamRepository = teamRepository;
     }
 
 
@@ -68,6 +71,12 @@ public class TMSController {
         model.addAttribute("users", usersRepository.findAll());
         model.addAttribute("priorities", priorityRepository.findAll());
         model.addAttribute("currentUserId",usersRepository.findByLogin(principal.getName()));
+        model.addAttribute("teams", teamRepository.findAll());
+
+        // Получение текущего авторизованного пользователя
+        Users currentUser = usersRepository.findByLogin(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+
         return "tasks-add";
     }
 
@@ -75,21 +84,24 @@ public class TMSController {
     public String taskPostAdd(@RequestParam(required=false) TaskType task_type_id, @RequestParam(required=false) Status status_id, @RequestParam String short_description,
                               @RequestParam String full_description, @RequestParam(required=false) Long linked_task_id,
                               @RequestParam(required=false) LinkedTaskType linked_task_type_id, @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
-                              @RequestParam(required=false) Project project_id, @RequestParam(required=false) Users executor_id,
+                              @RequestParam(required=false) Project project_id, @RequestParam(name = "executor_id", required=false) Users executor_id,
+                              @RequestParam(name = "team_id", required = false) Team team_id,
                               @RequestParam(required=false) Users author_id, @RequestParam(required=false) Priority priority_id, RedirectAttributes redirectAttributes){
         LocalDateTime timestampCreate = LocalDateTime.now();
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
-                linked_task_type_id, deadline, project_id, executor_id, author_id, priority_id, timestampCreate, null);
+                linked_task_type_id, deadline, project_id, executor_id, team_id, author_id,  priority_id,  timestampCreate, null);
+
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
+
         if(author_id!=null) {
             emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача "+short_description+" .\n");
         }
         if (author_id != executor_id && executor_id != null)
             emailService.sendEmail(executor_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача " + short_description + " .\n");
+
         return "redirect:/tasks";
     }
-
 
     @GetMapping("/tasks/{task_id}")
     public String taskDetails(@PathVariable(value = "task_id") long id, Model model){
@@ -151,6 +163,7 @@ public class TMSController {
         model.addAttribute("projects", projectRepository.findAll());
         model.addAttribute("users", usersRepository.findAll());
         model.addAttribute("priorities", priorityRepository.findAll());
+        model.addAttribute("teams", teamRepository.findAll());
         Optional <Tasks> tasks = tasksRepository.findById(id);
         tasks.ifPresent(t -> model.addAttribute("task", t));
         return "tasks-edit";
@@ -166,6 +179,7 @@ public class TMSController {
                                  @RequestParam(required = false) LinkedTaskType linked_task_type_id,
                                  @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                                  @RequestParam(required = false) Project project_id,
+                                 @RequestParam(required = false) Team team_id,
                                  @RequestParam(required = false) Users executor_id,
                                  @RequestParam(required = false) Users author_id,
                                  @RequestParam(required = false) Priority priority_id,
@@ -197,6 +211,8 @@ public class TMSController {
                 existingTask.getAuthor_id() !=null ? existingTask.getAuthor_id().getFullName() : "", author_id);
         compareAndAddChange(changedFields, "Исполнитель", existingTask.getExecutor_id(),
                 existingTask.getAuthor_id() !=null ? existingTask.getExecutor_id().getFullName() : "", executor_id);
+        compareAndAddChange(changedFields, "Команда", existingTask.getTeam_id(),
+                existingTask.getTeam_id() !=null ? existingTask.getTeam_id().getTeam_name() : "", team_id);
 
         // Обновляем задачу
         existingTask.setTask_type_id(task_type_id);
@@ -210,6 +226,7 @@ public class TMSController {
         existingTask.setProject_id(project_id);
         existingTask.setAuthor_id(author_id);
         existingTask.setExecutor_id(executor_id);
+        existingTask.setTeam_id(team_id);
 
         // Сохраняем измененную задачу
         tasksRepository.save(existingTask);
@@ -272,6 +289,8 @@ public class TMSController {
                     task.getAuthor_id() != null ? task.getAuthor_id().getSecond_name() + " " + task.getAuthor_id().getFirst_name() : "";
             case "Исполнитель" ->
                     task.getExecutor_id() != null ? task.getExecutor_id().getSecond_name() + " " + task.getExecutor_id().getFirst_name() : "";
+            case "Команда" ->
+                    task.getTeam_id() != null ? task.getTeam_id().getTeam_name() : "";
             default -> "";
         };
     }

@@ -17,6 +17,7 @@
             <button class="nav-link" id="nav-project-tab" data-toggle="tab" data-target="#nav-project" type="button" role="tab" aria-controls="nav-project" aria-selected="false">Проекты</button>
             <button class="nav-link" id="nav-linked-task-tab" data-toggle="tab" data-target="#nav-linked-task" type="button" role="tab" aria-controls="nav-linked-task" aria-selected="false">Связи с задачами</button>
             <button class="nav-link" id="nav-priority-tab" data-toggle="tab" data-target="#nav-priority" type="button" role="tab" aria-controls="nav-priority" aria-selected="false">Приоритеты</button>
+            <button class="nav-link" id="nav-team-tab" data-toggle="tab" data-target="#nav-team" type="button" role="tab" aria-controls="nav-team" aria-selected="false">Команды</button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -330,18 +331,67 @@
                 </form>
             </div>
         </div>
+
+    <div class="tab-pane fade" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
+        <h2>Список команд</h2>
+
+        <!-- Display success messages -->
+        <div th:if="${successMessage}" style="color: green;">
+            <p th:text="${successMessage}"></p>
+        </div>
+
+        <!-- Team Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Team</th>
+                <th scope="col">Состав команды</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through Team and display them in the table -->
+            <tr  th:each="team : ${teams}" scope="row">
+                <td th:text="${team.team_id}"></td>
+                <td th:text="${team.team_name}"></td>
+                <td>
+                    <ul>
+                        <li th:each="member:${team.members}" th:text="${member.getFullName()}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <!-- Delete/edit user link -->
+                    <a th:href="@{/admin/editTeamId/{id}(id=${team.team_id})}" class="btn btn-primary">Изменить</a>
+                    <!--                        <a th:href="@{/admin/deletePriority/{id}(id=${priority.priority_id})}" class="btn btn-danger">Удалить</a>-->
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal" data-operation="delete" data-href="/admin/deleteTeamId/" data-designator="команда" th:data-id="${team.team_id}" th:data-name="${team.team_name}">Удалить</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Form for adding a new Priority -->
+        <h2>Добавление команды</h2>
+        <div>
+            <form th:action="@{/admin/addTeam}" th:object="${newTeam}" method="post">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="teamName">Название команды</label>
+                        <input type="text" class="form-control" id="teamName" name="teamName" required>
+                    </div>
+                    <label for="userIds">Выбрать членов команды</label>
+                    <div class="form-check" id="userIds" th:each="user : ${users}" required>
+                        <input class="form-check-input" type="checkbox" name="userIds" th:value="${user.user_id}" th:id="${user.user_id}">
+                        <label class="form-check-label" th:text="${user.getFullName()}">
+                        </label>
+                    </div><br>
+                    <button type="submit" class="btn btn-primary">Добавить команду</button>
+                    <!--                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal" data-operation="add">Добавить приоритет</a>-->
+                </div>
+            </form>
+        </div>
+    </div>
     </div>
 
-<!--        <script>
-            $(document).ready(function() {
-                console.log("jQuery loaded:", $);
-
-            $('#nav-tab button').on('click', function (event) {
-                event.preventDefault()
-                $(this).tab('show')
-            })
-            });
-        </script>-->
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
