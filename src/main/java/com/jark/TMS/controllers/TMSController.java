@@ -62,7 +62,7 @@ public class TMSController {
     }
 
     @GetMapping("/tasks/add")
-    public String taskAdd(Model model){
+    public String taskAdd(Model model, Principal principal){
         model.addAttribute("statuses", statusRepository.findAll());
         model.addAttribute("taskTypes", taskTypeRepository.findAll());
         model.addAttribute("linkedTasks", tasksRepository.findAll());
@@ -70,6 +70,12 @@ public class TMSController {
         model.addAttribute("projects", projectRepository.findAll());
         model.addAttribute("users", usersRepository.findAll());
         model.addAttribute("priorities", priorityRepository.findAll());
+        model.addAttribute("teams", teamRepository.findAll());
+
+        // Получение текущего авторизованного пользователя
+        Users currentUser = usersRepository.findByLogin(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+
         return "tasks-add";
     }
 
@@ -83,35 +89,14 @@ public class TMSController {
         LocalDateTime timestampCreate = LocalDateTime.now();
         Tasks task = new Tasks(task_type_id, status_id, short_description, full_description, linked_task_id,
                 linked_task_type_id, deadline, project_id, executor_id, team_id, author_id,  priority_id,  timestampCreate, null);
-        // Если выбран один исполнитель
-        if (executor_id != null) {
-            Users executor = usersRepository.findById(executor_id.getUser_id()).orElseThrow();
-            task.setExecutor_id(executor);
-        }
 
-        // Если выбрана команда
-        if (team_id != null) {
-            // Проверяем, является ли выбранный идентификатор командой или пользователем
-            if (isTeam(team_id.getTeam_id())) {
-                Team team = teamRepository.findById(team_id.getTeam_id()).orElseThrow();
-                task.setTeam_id(team);
-            } else {
-                Users user = usersRepository.findById(team_id.getTeam_id()).orElseThrow();
-                task.setExecutor_id(user);
-            }
-        }
         tasksRepository.save(task);
         redirectAttributes.addFlashAttribute("successMessage", "Задача успешно добавлена!");
-        emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача "+short_description+" .\n");
+        emailService.sendEmail(author_id.getEmail(), "создана задача", "Здравствуйте, \nСоздана новая задача "+short_description+" .\n");
         if (author_id != executor_id)
-            emailService.sendEmail(executor_id.getEmail(), "создана задача", "Здравсвуйте, \nСоздана новая задача " + short_description + " .\n");
+            emailService.sendEmail(executor_id.getEmail(), "создана задача", "Здравтсвуйте, \nСоздана новая задача " + short_description + " .\n");
         return "redirect:/tasks";
     }
-
-    private boolean isTeam(Long id) {
-        return false;
-    }
-
 
     @GetMapping("/tasks/{task_id}")
     public String taskDetails(@PathVariable(value = "task_id") long id, Model model){
@@ -175,6 +160,7 @@ public class TMSController {
         model.addAttribute("projects", projectRepository.findAll());
         model.addAttribute("users", usersRepository.findAll());
         model.addAttribute("priorities", priorityRepository.findAll());
+        model.addAttribute("teams", teamRepository.findAll());
         Optional <Tasks> tasks = tasksRepository.findById(id);
         tasks.ifPresent(t -> model.addAttribute("task", t));
         return "tasks-edit";
@@ -190,6 +176,7 @@ public class TMSController {
                                  @RequestParam(required = false) LinkedTaskType linked_task_type_id,
                                  @RequestParam @NotNull(message = "Не указана дата") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline,
                                  @RequestParam(required = false) Project project_id,
+                                 @RequestParam(required = false) Team team_id,
                                  @RequestParam(required = false) Users executor_id,
                                  @RequestParam(required = false) Users author_id,
                                  @RequestParam(required = false) Priority priority_id,
@@ -221,6 +208,8 @@ public class TMSController {
                 existingTask.getAuthor_id() !=null ? existingTask.getAuthor_id().getFullName() : "", author_id);
         compareAndAddChange(changedFields, "Исполнитель", existingTask.getExecutor_id(),
                 existingTask.getAuthor_id() !=null ? existingTask.getExecutor_id().getFullName() : "", executor_id);
+        compareAndAddChange(changedFields, "Команда", existingTask.getTeam_id(),
+                existingTask.getTeam_id() !=null ? existingTask.getTeam_id().getTeam_name() : "", team_id);
 
         // Обновляем задачу
         existingTask.setTask_type_id(task_type_id);
@@ -234,6 +223,7 @@ public class TMSController {
         existingTask.setProject_id(project_id);
         existingTask.setAuthor_id(author_id);
         existingTask.setExecutor_id(executor_id);
+        existingTask.setTeam_id(team_id);
 
         // Сохраняем измененную задачу
         tasksRepository.save(existingTask);
@@ -294,6 +284,8 @@ public class TMSController {
                     task.getAuthor_id() != null ? task.getAuthor_id().getSecond_name() + " " + task.getAuthor_id().getFirst_name() : "";
             case "Исполнитель" ->
                     task.getExecutor_id() != null ? task.getExecutor_id().getSecond_name() + " " + task.getExecutor_id().getFirst_name() : "";
+            case "Команда" ->
+                    task.getTeam_id() != null ? task.getTeam_id().getTeam_name() : "";
             default -> "";
         };
     }

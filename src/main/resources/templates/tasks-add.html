@@ -52,14 +52,36 @@
             <option selected value="" disabled>Выберите проект</option>
             <option th:each="el:${projects}" th:value="${el?.project_id}" th:text="${el?.project_name}"></option>
         </select><br>
-        <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
-        <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
-            <option selected value="" disabled>Выберите исполнителя</option>
-            <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+            <label class="form-check-label" for="inlineRadio1">Исполнитель</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Команда</label>
+        </div><br><br>
+        <!--<label for="type" class="form-label">Выбор</label><br>
+        <select id="type" class="form-control" name="type">
+            <option value="executor">Исполнитель</option>
+            <option value="team">Команда</option>
+        </select><br>-->
+        <div id="executorSelection" style="display: block;">
+            <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
+            <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
+                <option selected value="" disabled>Выберите исполнителя</option>
+                <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
         </select><br>
+        </div>
+            <div id="teamSelection" style="display: none;">
+            <label for="SelectTeam1" class="form-label">Команда</label><br>
+            <select class="form-control" id="SelectTeam1" aria-label="Default select example" name="team_id" >
+                <option selected value="" disabled>Выберите команду</option>
+                <option th:each="el:${teams}" th:value="${el?.team_id}" th:text="${el?.team_name}"></option>
+            </select><br>
+        </div>
         <label for="SelectAuthor1" class="form-label">Автор</label><br>
         <select class="form-control" id="SelectAuthor1" aria-label="Default select example" name="author_id" >
-            <option selected value="" disabled>Выберите Автора</option>
+            <option selected th:value="${currentUser.user_id}" th:text="${currentUser.first_name}+' '+${currentUser.second_name}+'('+${currentUser.login}+')'">Выберите Автора</option>
             <option th:each="el:${users}" th:value="${el?.user_id}" th:text="${el?.first_name}+' '+${el?.second_name}+'('+${el?.login}+')'"></option>
         </select><br>
         <label for="SelectPriority1" class="form-label">Приоритет</label><br>
@@ -72,5 +94,18 @@
     </form>
 </div>
 <div th:insert="blocks/footer :: footer"></div>
+<script>
+    document.querySelectorAll('input[name="inlineRadioOptions"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            if (this.value === 'option1') {
+                document.getElementById('executorSelection').style.display = 'block';
+                document.getElementById('teamSelection').style.display = 'none';
+            } else if (this.value === 'option2') {
+                document.getElementById('teamSelection').style.display = 'block';
+                document.getElementById('executorSelection').style.display = 'none';
+            }
+        });
+    });
+</script>
 </body>
 </html>

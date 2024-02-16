@@ -1,12 +1,8 @@
 package com.jark.TMS.controllers;
 
 import com.jark.TMS.models.*;
-import com.jark.TMS.repo.TaskTypeRepository;
-import com.jark.TMS.repo.UsersRepository;
-import com.jark.TMS.repo.StatusRepository;
-import com.jark.TMS.repo.ProjectRepository;
-import com.jark.TMS.repo.LinkedTaskTypeRepository;
-import com.jark.TMS.repo.PriorityRepository;
+import com.jark.TMS.repo.*;
+import com.jark.TMS.services.TeamService;
 import com.jark.TMS.services.UsersService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +12,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,16 +28,23 @@ public class AdminController {
     private final PriorityRepository priorityRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private final UsersService usersService;
+    private final TeamRepository teamRepository;
+    private final TeamService teamService;
 
-    public AdminController(UsersRepository usersRepository, TaskTypeRepository taskTypeRepository, StatusRepository statusRepository, ProjectRepository projectRepository, LinkedTaskTypeRepository linkedTaskTypeRepository, PriorityRepository priorityRepository, UsersService usersService) {
+
+    public AdminController(UsersRepository usersRepository, TaskTypeRepository taskTypeRepository,
+                           StatusRepository statusRepository, ProjectRepository projectRepository,
+                           LinkedTaskTypeRepository linkedTaskTypeRepository, PriorityRepository priorityRepository,
+                           UsersService usersService, TeamRepository teamRepository, TeamService teamService) {
         this.usersRepository = usersRepository;
         this.taskTypeRepository = taskTypeRepository;
         this.statusRepository = statusRepository;
         this.projectRepository = projectRepository;
         this.linkedTaskTypeRepository = linkedTaskTypeRepository;
         this.priorityRepository = priorityRepository;
-
         this.usersService = usersService;
+        this.teamRepository = teamRepository;
+        this.teamService = teamService;
     }
     @GetMapping
     public String adminDashboard(Model model) {
@@ -49,6 +54,7 @@ public class AdminController {
         List<Project> projectList = (List<Project>) projectRepository.findAll();
         List<LinkedTaskType> linkedTaskTypeList = (List<LinkedTaskType>) linkedTaskTypeRepository.findAll();
         List<Priority> priorityList = (List<Priority>) priorityRepository.findAll();
+        List<Team> teamList = (List<Team>)  teamRepository.findAll();
 
         model.addAttribute("users", userList);
         model.addAttribute("taskTypes", taskTypeList);
@@ -56,12 +62,14 @@ public class AdminController {
         model.addAttribute("projects", projectList);
         model.addAttribute("linkedTaskTypes", linkedTaskTypeList);
         model.addAttribute("priorities", priorityList);
+        model.addAttribute("teams", teamList);
         model.addAttribute("newUser", new Users()); // для добавления нового пользователя
         model.addAttribute("newTaskType", new TaskType()); // для добавления нового пользователя
         model.addAttribute("newStatus", new Status()); // для добавления нового статуса
         model.addAttribute("newProject", new Project()); // для добавления нового проекта
         model.addAttribute("newLinkedTaskType", new LinkedTaskType()); // для добавления нового типа связи
         model.addAttribute("newPriority", new Priority());// для добавления нового приоритета
+        model.addAttribute("newTeam", new Team());// для добавления новой команды
         return "admin";
     }
     @PostMapping("/addUser")
@@ -118,6 +126,15 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @PostMapping("/addTeam")
+    public String addTeam(@ModelAttribute("newTeam") Team newTeam, RedirectAttributes redirectAttributes,
+                          @RequestParam String teamName, @RequestParam List<Long> userIds) {
+        // Добавление новой команды
+        teamService.createTeamWithMembers(teamName, userIds);
+        redirectAttributes.addFlashAttribute("successMessage", "Команда успешно добавлена");
+        return "redirect:/admin";
+    }
+
     @GetMapping("/deleteUser/{userId}")
     public String deleteUser(@PathVariable Long userId, RedirectAttributes redirectAttributes) {
         // Удаление пользователя
@@ -162,6 +179,13 @@ public class AdminController {
         // Удаление приоритета
         priorityRepository.deleteById(PriorityId);
         redirectAttributes.addFlashAttribute("successMessage", "Приоритет успешно удален");
+        return "redirect:/admin";
+    }
+    @GetMapping("/deleteTeamId/{TeamId}")
+    public String deleteTeam(@PathVariable Long TeamId, RedirectAttributes redirectAttributes) {
+        // Удаление команды
+        teamRepository.deleteById(TeamId);
+        redirectAttributes.addFlashAttribute("successMessage", "Команда успешно удалена");
         return "redirect:/admin";
     }
     @GetMapping("/editUserId/{UserId}")
@@ -309,5 +333,29 @@ public class AdminController {
         // Перенаправьте на страницу с таблицей проектоа
         return "redirect:/admin";
     }
+
+    @GetMapping("/editTeamId/{TeamId}")
+    public String editTeam(@PathVariable Long TeamId, Model model) {
+        // Получение информации о team по TeamId
+        Team team = teamRepository.findById(TeamId)
+                .orElseThrow(() -> new RuntimeException("Команда не найдена"));
+
+        // Передача информации о команде и ее членах в модель
+        model.addAttribute("editTeam", team);
+        model.addAttribute("members", team.getMembers());
+        model.addAttribute("users", usersRepository.findAll());
+        return "team-edit"; // Название шаблона для страницы редактирования
+    }
+
+    @PostMapping("/editTeam")
+    public String saveEditedTeam(@ModelAttribute("editTeam") Team editedTeam, RedirectAttributes redirectAttributes,
+                                 @RequestParam String team_name, @RequestParam List<Long> userIds) {
+        // Обновляем данные команды
+        teamService.updateTeam(editedTeam.getTeam_id(), team_name, userIds);
+        redirectAttributes.addFlashAttribute("successMessage", "Команда успешно изменена");
+        // Перенаправление на страницу с таблицей проектов
+        return "redirect:/admin";
+    }
+
 
 }
