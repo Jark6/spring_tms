@@ -1,0 +1,13 @@
+<div th:fragment="reports-menu">
+    <div class="col d-flex justify-content-center">
+        <div class="d-flex flex-column justify-content-end align-items-center">
+            <label for="taskPanel" class="form-label mb-0"><small>Выберите вид отчета</small></label><br>
+            <div id="taskPanel" class="btn-group-sm ml-2" role="group" aria-label="taskPanel">
+                <a class="btn btn-secondary" href="/reports/executor">Отчет по исполнителям</a>
+                <a class="btn btn-secondary" href="/reports/author">Отчет по авторам</a>
+                <a class="btn btn-secondary" href="/reports/tasks">Отчет по задачам</a>
+                <a class="btn btn-secondary" href="/gannt">Gannt Chart</a>
+            </div></br>
+        </div>
+    </div>
+</div>

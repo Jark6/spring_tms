@@ -16,17 +16,8 @@
             </div>
         </div>
     </div>
-    <div class="col d-flex justify-content-center">
-        <div class="d-flex flex-column justify-content-end align-items-center">
-            <label for="taskPanel" class="form-label mb-0"><small>Выберите вид отчета</small></label><br>
-            <div id="taskPanel" class="btn-group-sm ml-2" role="group" aria-label="taskPanel">
-                <a class="btn btn-secondary" href="/reports/executor">Отчет по исполнителям</a>
-                <a class="btn btn-secondary" href="/reports/author">Отчет по авторам</a>
-                <a class="btn btn-secondary" href="/reports/tasks">Отчет по задачам</a>
-                <a class="btn btn-secondary" href="/gannt">Gannt Chart</a>
-            </div></br>
-        </div>
-    </div>
+    <div th:insert="~{blocks/reports-menu::reports-menu}"></div>
+    <div th:insert="~{blocks/reports-dates::reports-dates}"></div>
     <div class="container align-items-center justify-content-center">
     <div style="width: 500px;">
         <canvas id="pieChartExecutors"></canvas>
@@ -58,8 +49,17 @@
             const tasksCountByExecutor = {};
             // Подсчитываем количество задач для каждого исполнителя
             tasksData.forEach(task => {
-                const executorName = task.executor_id ? task.executor_id.first_name + ' ' + task.executor_id.second_name : 'Исполнитель отсутсвует';
-                tasksCountByExecutor[executorName] = (tasksCountByExecutor[executorName] || 0) + 1;
+                let label = '';
+
+                // Проверяем наличие исполнителя
+                if (task.executor_id) {
+                    label = task.executor_id.first_name + ' ' + task.executor_id.second_name;
+                } else if (task.team_id) {
+                    label = task.team_id.team_name;
+                } else {
+                    label = 'Нет исполнителя';
+                }
+                tasksCountByExecutor[label] = (tasksCountByExecutor[label] || 0) + 1;
             });
 
             // Преобразование данных в формат, ожидаемый Chart.js

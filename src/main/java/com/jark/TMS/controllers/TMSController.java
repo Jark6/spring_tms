@@ -210,7 +210,7 @@ public class TMSController {
         compareAndAddChange(changedFields, "Автор", existingTask.getAuthor_id(),
                 existingTask.getAuthor_id() !=null ? existingTask.getAuthor_id().getFullName() : "", author_id);
         compareAndAddChange(changedFields, "Исполнитель", existingTask.getExecutor_id(),
-                existingTask.getAuthor_id() !=null ? existingTask.getExecutor_id().getFullName() : "", executor_id);
+                existingTask.getExecutor_id() !=null ? existingTask.getExecutor_id().getFullName() : "", executor_id);
         compareAndAddChange(changedFields, "Команда", existingTask.getTeam_id(),
                 existingTask.getTeam_id() !=null ? existingTask.getTeam_id().getTeam_name() : "", team_id);
 

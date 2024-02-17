@@ -49,12 +49,33 @@
             <option th:each="project:${projects}" th:value="${project.project_id}" th:text="${project.project_name}"
             th:selected="${project.project_id == (task.project_id != null ? task.project_id.getProject_id() : '')}"></option>
         </select><br>
-        <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
-        <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
-            <option selected value="" disabled="disabled">Выберите исполнителя</option>
-            <option th:each="user:${users}" th:value="${user?.user_id}" th:text="${user?.first_name}+' '+${user?.second_name}+'('+${user?.login}+')'"
-                    th:selected="${user.user_id == (task.executor_id != null ? task.executor_id.getUser_id() : null)}"></option>
-        </select><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                <label class="form-check-label" for="inlineRadio1">Исполнитель</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Команда</label>
+            </div><br><br>
+            <div id="executorSelection" style="display: block;">
+                <label for="SelectExecutor1" class="form-label">Исполнитель</label><br>
+                <select class="form-control" id="SelectExecutor1" aria-label="Default select example" name="executor_id" >
+                    <option selected value="" disabled="disabled">Выберите исполнителя</option>
+                    <option th:each="user:${users}"
+                            th:value="${user?.user_id}"
+                            th:text="${user.getFullName() != null ? user.first_name+' '+user.second_name+'('+user.login+')':'Выберите исполнителя'}"
+                            th:selected="${user.user_id == (task.executor_id != null ? task.executor_id.getUser_id() : null)}"></option>
+                </select><br>
+            </div>
+            <div id="teamSelection" style="display: none;">
+                <label for="SelectTeam1" class="form-label">Команда</label><br>
+                <select class="form-control" id="SelectTeam1" aria-label="Default select example" name="team_id" >
+                    <option selected value="" disabled>Выберите команду</option>
+                    <option th:each="team:${teams}" th:value="${team?.team_id}" th:text="${team?.team_name}"
+                    th:selected="${team.team_id == (team.team_id != null ? task.team_id.getTeam_id() : '')}"></option>
+                </select><br>
+            </div>
+
         <label for="SelectAuthor1" class="form-label">Автор</label><br>
         <select class="form-control" id="SelectAuthor1" aria-label="Default select example" name="author_id" >
             <option selected value="" disabled="disabled">Выберите Автора</option>
@@ -73,5 +94,34 @@
     </div>
     </div>
 <div th:insert="~{blocks/footer :: footer}"></div>
+<script>
+    document.querySelectorAll('input[name="inlineRadioOptions"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            if (this.value === 'option1') {
+                document.getElementById('executorSelection').style.display = 'block';
+                document.getElementById('teamSelection').style.display = 'none';
+            } else if (this.value === 'option2') {
+                document.getElementById('teamSelection').style.display = 'block';
+                document.getElementById('executorSelection').style.display = 'none';
+            }
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var executorSelect = document.getElementById('SelectExecutor1');
+        var teamSelect = document.getElementById('SelectTeam1');
+
+        // Обработчик изменения выбора исполнителя
+        executorSelect.addEventListener('change', function () {
+            // Если выбран исполнитель, обнуляем выбор команды
+            teamSelect.value = '';
+        });
+
+        // Обработчик изменения выбора команды
+        teamSelect.addEventListener('change', function () {
+            // Если выбрана команда, обнуляем выбор исполнителя
+            executorSelect.value = '';
+        });
+    });
+</script>
 </body>
 </html>

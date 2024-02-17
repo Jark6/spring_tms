@@ -91,7 +91,22 @@
             }
         });
     });
+    document.addEventListener('DOMContentLoaded', function () {
+        var executorSelect = document.getElementById('SelectExecutor1');
+        var teamSelect = document.getElementById('SelectTeam1');
+
+        // Обработчик изменения выбора исполнителя
+        executorSelect.addEventListener('change', function () {
+            // Если выбран исполнитель, обнуляем выбор команды
+            teamSelect.value = '';
+        });
+
+        // Обработчик изменения выбора команды
+        teamSelect.addEventListener('change', function () {
+            // Если выбрана команда, обнуляем выбор исполнителя
+            executorSelect.value = '';
+        });
+    });
 </script>
->>>>>>> dev
 </body>
 </html>

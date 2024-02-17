@@ -1,0 +1,13 @@
+<div th:fragment="reports-dates">
+    <div class="container">
+        <div class="form-inline">
+            <label for="startDate" class="mr-2">Начальная дата:</label>
+            <input type="date" id="startDate" name="startDate" class="form-control mr-2" pattern="yyyy-MM-dd">
+
+            <label for="endDate" class="mr-2">Конечная дата:</label>
+            <input type="date" id="endDate" name="endDate" class="form-control mr-2" pattern="yyyy-MM-dd">
+
+            <button onclick="updateCharts()" class="btn btn-success">Обновить графики</button>
+        </div>
+    </div><br><br>
+</div>

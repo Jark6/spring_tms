@@ -27,7 +27,8 @@
         <p th:if="${el.author_id != null}" th:text="'Автор: ' + ${el.author_id.first_name}+' '+ ${el.author_id.second_name}+' '+ ${el.author_id.family_name}+' ('+ ${el.author_id.login}+')'"/>
         <p th:unless="${el.author_id != null}">Нет автора</p>
         <p th:if="${el.executor_id != null}" th:text="'Исполнитель: ' + ${el.executor_id.first_name}+' '+ ${el.executor_id.second_name}+' '+ ${el.executor_id.family_name}+' ('+ ${el.executor_id.login}+')'"/>
-        <p th:unless="${el.executor_id != null}">Нет исполнителя</p>
+        <p th:if="${el.executor_id == null and el.team_id != null}" th:text="'Команда: ' + ${el.team_id.team_name}"/>
+        <p th:if="${el.executor_id == null and el.team_id == null}">Нет исполнителя</p>
         <p th:if="${el.priority_id != null}" th:text="'Приоритет: ' + ${el.priority_id.priority}"/>
         <p th:unless="${el.priority_id != null}">Приоритет не установлен</p>
 
